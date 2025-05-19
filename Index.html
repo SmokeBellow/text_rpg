@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Тени Предтеч</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none;
+      opacity: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      background-color: #444;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #splash-dev, #splash-title {
+      font-size: 2em;
+      margin-top: 40vh;
+      transition: opacity 1s ease;
+      z-index: 10;
+    }
+
+    #splash-dev:not(.hidden), #splash-title:not(.hidden) {
+      opacity: 1;
+    }
+
+    #main-menu {
+      z-index: 5;
+    }
+
+    #about-screen, #class-selection, #game-screen {
+      z-index: 5;
+    }
+
+    #travel-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.5s ease;
+      z-index: 20;
+    }
+
+    #travel-screen:not(.hidden) {
+      opacity: 1;
+    }
+
+    #travel-timer {
+      font-size: 1.5em;
+      color: #f0f0f0;
+    }
+
+    #location-desc {
+      padding: 0 5px;
+      text-align: justify;
+    }
+
+    .class-option {
+      cursor: pointer;
+      margin: 10px auto;
+      width: 80%;
+      padding: 10px;
+      border: 1px solid #666;
+      background-color: #222;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .class-option.selected {
+      background-color: #333;
+      border-color: #888;
+    }
+
+    .section-title {
+      margin-top: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      position: relative;
+      padding-right: 20px;
+    }
+
+    .section-title::after {
+      content: "▼";
+      position: absolute;
+      right: 5px;
+      transition: transform 0.3s ease;
+    }
+
+    .section-title.open::after {
+      transform: rotate(180deg);
+    }
+
+    .section-content {
+      margin-left: 10px;
+      margin-bottom: 10px;
+      font-size: 0.95em;
+      color: #ccc;
+    }
+
+    .section-content.hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="splash-dev">Murmyak Games</div>
+  <div id="splash-title">Тени Предтеч</div>
+
+  <div id="main-menu" class="hidden">
+    <h1>Тени Предтеч</h1>
+    <button onclick="newGame()">Новая игра</button>
+    <button onclick="continueGame()">Продолжить игру</button>
+    <button onclick="showAbout()">Об игре</button>
+  </div>
+
+  <div id="about-screen" class="hidden">
+    <h2>Об игре</h2>
+    <p>by merzlyakov</p>
+    <button onclick="backToMenu()">Назад</button>
+  </div>
+
+  <div id="class-selection" class="hidden">
+    <h2>Выберите класс</h2>
+    <div class="class-option" onclick="toggleClassInfo('archer')">
+      <strong>Лучник</strong>
+      <div id="archer-info" class="hidden">
+        Мастер дальнего боя. Снаряжение: лук, кожаная броня, кольчужный капюшон.
+      </div>
+    </div>
+    <div class="class-option" onclick="toggleClassInfo('warrior')">
+      <strong>Воин</strong>
+      <div id="warrior-info" class="hidden">
+        Сильный и выносливый. Снаряжение: меч, щит, стальная броня.
+      </div>
+    </div>
+    <div class="class-option" onclick="toggleClassInfo('rogue')">
+      <strong>Плут</strong>
+      <div id="rogue-info" class="hidden">
+        Ловкий и скрытный. Снаряжение: кинжалы, плащ теней, маска.
+      </div>
+    </div>
+    <button onclick="selectClass()">Выбрать</button>
+  </div>
+
+  <div id="game-screen" class="hidden">
+    <h2 id="location-name"></h2>
+    <p id="location-desc"></p>
+    <div id="location-buttons"></div>
+    <div id="extra-content"></div>
+  </div>
+
+  <div id="travel-screen" class="hidden">
+    <div id="travel-timer">Переход...</div>
+  </div>
+
+  <script>
+    // Сброс всех экранов
+    function resetScreens() {
+      document.querySelectorAll("#splash-dev, #splash-title, #main-menu, #about-screen, #class-selection, #game-screen, #travel-screen")
+        .forEach(el => el.classList.add("hidden"));
+    }
+
+    // Splash-экраны
+    setTimeout(() => {
+      document.getElementById("splash-dev").classList.add("hidden");
+      setTimeout(() => {
+        document.getElementById("splash-title").classList.add("hidden");
+        resetScreens();
+        document.getElementById("main-menu").classList.remove("hidden");
+      }, 3000);
+    }, 3000);
+
+    // Состояние игры
+    let playerData = {
+      class: null,
+      location: "Деревня"
+    };
+
+    // Расстояния от Деревни
+    const locationDistances = {
+      "Деревня": 0,
+      "Лес": 1,
+      "Река": 1,
+      "Горы": 2,
+      "Поляна": 2,
+      "Пещера": 2,
+      "Развалины": 3,
+      "Башня": 3,
+      "Храм": 4,
+      "Портал": 5
+    };
+
+    // Классы
+    function toggleClassInfo(id) {
+      const el = document.getElementById(id + "-info");
+      el.classList.toggle("hidden");
+      // Управление классом selected
+      const options = document.querySelectorAll(".class-option");
+      options.forEach(opt => opt.classList.remove("selected"));
+      if (!el.classList.contains("hidden")) {
+        el.parentElement.classList.add("selected");
+      }
+    }
+
+    function newGame() {
+      playerData = { class: null, location: "Деревня" };
+      resetScreens();
+      document.getElementById("class-selection").classList.remove("hidden");
+      // Сброс выделения
+      document.querySelectorAll(".class-option").forEach(opt => opt.classList.remove("selected"));
+    }
+
+    function continueGame() {
+      const data = localStorage.getItem("mygame-save");
+      if (data) {
+        playerData = JSON.parse(data);
+        startGame();
+      } else {
+        alert("Сохранённой игры не найдено. Начните новую игру.");
+      }
+    }
+
+    function showAbout() {
+      resetScreens();
+      document.getElementById("about-screen").classList.remove("hidden");
+    }
+
+    function backToMenu() {
+      resetScreens();
+      document.getElementById("main-menu").classList.remove("hidden");
+    }
+
+    function selectClass() {
+      if (!playerData.class) {
+        const selected = ["archer", "warrior", "rogue"].find(id =>
+          !document.getElementById(id + "-info").classList.contains("hidden")
+        );
+        playerData.class = selected || "warrior";
+      }
+      resetScreens();
+      startGame();
+    }
+
+    function startGame() {
+      resetScreens();
+      document.getElementById("game-screen").classList.remove("hidden");
+      updateLocation();
+    }
+
+    function saveGame() {
+      localStorage.setItem("mygame-save", JSON.stringify(playerData));
+    }
+
+    function showTravelScreen(targetLocation, duration) {
+      resetScreens();
+      const travelScreen = document.getElementById("travel-screen");
+      const travelTimer = document.getElementById("travel-timer");
+      travelScreen.classList.remove("hidden");
+      let timeLeft = Math.ceil(duration / 1000);
+      travelTimer.innerText = `Переход в ${targetLocation}... ${timeLeft} сек`;
+
+      const interval = setInterval(() => {
+        timeLeft--;
+        if (timeLeft > 0) {
+          travelTimer.innerText = `Переход в ${targetLocation}... ${timeLeft} сек`;
+        } else {
+          clearInterval(interval);
+          playerData.location = targetLocation;
+          saveGame();
+          resetScreens();
+          document.getElementById("game-screen").classList.remove("hidden");
+          updateLocation();
+        }
+      }, 1000);
+    }
+
+    // Локации
+    const locations = {
+      "Деревня": {
+        desc: "Деревня — сердце земель. Здесь живут старейшины, кузнецы, фермеры. Солнечные лучи падают на крыши домов, из дымоходов идёт лёгкий дым.",
+        paths: ["Лес", "Река"],
+        characters: ["Староста Лем", "Кузнец Бран"],
+        monsters: []
+      },
+      "Лес": {
+        desc: "Густой лес с вековыми деревьями. Шепоты листьев скрывают движение лесных созданий и следопытов.",
+        paths: ["Деревня", "Горы", "Поляна"],
+        characters: ["Охотница Элира"],
+        monsters: ["Древесный ужас", "Тенелис"]
+      },
+      "Река": {
+        desc: "Быстрая река с кристальной водой. На её берегах укрываются духи воды и одинокие рыбаки.",
+        paths: ["Деревня", "Пещера"],
+        characters: ["Рыбак Нор"],
+        monsters: ["Водяная тварь"]
+      },
+      "Горы": {
+        desc: "Скалистые пики возвышаются в облака. Камни древних путей покрыты мхом и ледяным налётом.",
+        paths: ["Лес", "Развалины"],
+        characters: [],
+        monsters: ["Горный голем"]
+      },
+      "Поляна": {
+        desc: "Поляна в сердце леса, освещённая луной. Здесь древние духи встречаются на лунных кругах.",
+        paths: ["Лес", "Башня"],
+        characters: ["Мудрец Айрен"],
+        monsters: []
+      },
+      "Пещера": {
+        desc: "Пещера в скале ведёт вниз, туда, где эхо скрывает движение слизней и пауков.",
+        paths: ["Река", "Развалины"],
+        characters: [],
+        monsters: ["Слизень", "Пещерный паук"]
+      },
+      "Развалины": {
+        desc: "Руины старого города. Каменные арки, обросшие плющом, и призраки прошлого бродят среди стен.",
+        paths: ["Горы", "Пещера", "Храм"],
+        characters: [],
+        monsters: ["Призрак легиона"]
+      },
+      "Башня": {
+        desc: "Старая башня на холме. Её окна запечатаны, но магия всё ещё витает внутри.",
+        paths: ["Поляна", "Храм"],
+        characters: ["Страж башни Ролан"],
+        monsters: []
+      },
+      "Храм": {
+        desc: "Полуразрушенный храм древних богов. Пламя светильников горит, несмотря на ветер и дождь.",
+        paths: ["Башня", "Развалины", "Портал"],
+        characters: [],
+        monsters: ["Служитель Тени"]
+      },
+      "Портал": {
+        desc: "Каменный круг и мерцающий портал в его центре. Эфирные энергии пульсируют в воздухе.",
+        paths: ["Храм"],
+        characters: [],
+        monsters: ["Страж Бездны"]
+      }
+    };
+
+    function updateLocation() {
+      const loc = playerData.location;
+      const data = locations[loc];
+      document.getElementById("location-name").innerText = loc;
+      document.getElementById("location-desc").innerText = data.desc;
+
+      const buttons = document.getElementById("location-buttons");
+      buttons.innerHTML = "";
+
+      data.paths.forEach(path => {
+        const btn = document.createElement("button");
+        btn.innerText = path;
+        btn.onclick = () => {
+          const distance = locationDistances[path];
+          const travelTime = Math.min(distance * 5000, 15000); // расстояние * 5 сек, максимум 15 сек
+          showTravelScreen(path, travelTime);
+        };
+        buttons.appendChild(btn);
+      });
+
+      const extraContent = document.getElementById("extra-content");
+      extraContent.innerHTML = "";
+
+      if (data.characters.length > 0) {
+        const charTitle = document.createElement("div");
+        charTitle.className = "section-title";
+        charTitle.innerText = "Персонажи";
+        const content = document.createElement("div");
+        content.className = "section-content hidden";
+
+        data.characters.forEach(name => {
+          const p = document.createElement("div");
+          p.innerText = name;
+          content.appendChild(p);
+        });
+
+        charTitle.onclick = () => {
+          content.classList.toggle("hidden");
+          charTitle.classList.toggle("open");
+        };
+
+        extraContent.appendChild(charTitle);
+        extraContent.appendChild(content);
+      }
+
+      if (data.monsters.length > 0) {
+        const monTitle = document.createElement("div");
+        monTitle.className = "section-title";
+        monTitle.innerText = "Монстры";
+        const content = document.createElement("div");
+        content.className = "section-content hidden";
+
+        data.monsters.forEach(name => {
+          const m = document.createElement("div");
+          m.innerText = name;
+          content.appendChild(m);
+        });
+
+        monTitle.onclick = () => {
+          content.classList.toggle("hidden");
+          monTitle.classList.toggle("open");
+        };
+
+        extraContent.appendChild(monTitle);
+        extraContent.appendChild(content);
+      }
+    }
+  </script>
+</body>
+</html>
