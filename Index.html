@@ -15,10 +15,19 @@
     }
 
     .hidden {
-      display: none;
       opacity: 0;
       z-index: -1;
       pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .hidden:not(.visible) {
+      display: none;
+    }
+
+    .visible {
+      opacity: 1;
+      display: block;
     }
 
     button {
@@ -32,21 +41,21 @@
 
     #splash-dev, #splash-title {
       font-size: 2em;
-      margin-top: 40vh;
-      transition: opacity 1s ease;
+      position: fixed;
+      top: 40vh;
+      width: 100%;
+      transition: opacity 0.5s ease;
       z-index: 10;
-    }
-
-    #splash-dev:not(.hidden), #splash-title:not(.hidden) {
-      opacity: 1;
     }
 
     #main-menu {
       z-index: 5;
+      transition: opacity 0.5s ease;
     }
 
     #about-screen, #class-selection, #game-screen {
       z-index: 5;
+      transition: opacity 0.5s ease;
     }
 
     #travel-screen {
@@ -63,8 +72,9 @@
       z-index: 20;
     }
 
-    #travel-screen:not(.hidden) {
+    #travel-screen.visible {
       opacity: 1;
+      display: flex;
     }
 
     #travel-timer {
@@ -125,7 +135,7 @@
 </head>
 <body>
   <div id="splash-dev">Murmyak Games</div>
-  <div id="splash-title">Тени Предтеч</div>
+  <div id="splash-title" class="hidden">Тени Предтеч</div>
 
   <div id="main-menu" class="hidden">
     <h1>Тени Предтеч</h1>
@@ -171,25 +181,42 @@
   </div>
 
   <div id="travel-screen" class="hidden">
-    <div id="travel-timer">Переход...</div>
+    <div id="travel-timer">Вы идёте...</div>
   </div>
 
   <script>
     // Сброс всех экранов
     function resetScreens() {
       document.querySelectorAll("#splash-dev, #splash-title, #main-menu, #about-screen, #class-selection, #game-screen, #travel-screen")
-        .forEach(el => el.classList.add("hidden"));
+        .forEach(el => {
+          el.classList.remove("visible");
+          el.classList.add("hidden");
+        });
     }
 
     // Splash-экраны
+    resetScreens();
+    document.getElementById("splash-dev").classList.remove("hidden");
+    document.getElementById("splash-dev").classList.add("visible");
+
     setTimeout(() => {
+      document.getElementById("splash-dev").classList.remove("visible");
       document.getElementById("splash-dev").classList.add("hidden");
       setTimeout(() => {
-        document.getElementById("splash-title").classList.add("hidden");
         resetScreens();
-        document.getElementById("main-menu").classList.remove("hidden");
-      }, 3000);
-    }, 3000);
+        document.getElementById("splash-title").classList.remove("hidden");
+        document.getElementById("splash-title").classList.add("visible");
+        setTimeout(() => {
+          document.getElementById("splash-title").classList.remove("visible");
+          document.getElementById("splash-title").classList.add("hidden");
+          setTimeout(() => {
+            resetScreens();
+            document.getElementById("main-menu").classList.remove("hidden");
+            document.getElementById("main-menu").classList.add("visible");
+          }, 500); // Задержка для завершения анимации
+        }, 3000); // Длительность splash-title
+      }, 500); // Задержка для завершения анимации splash-dev
+    }, 3000); // Длительность splash-dev
 
     // Состояние игры
     let playerData = {
@@ -211,6 +238,20 @@
       "Портал": 5
     };
 
+    // Названия локаций в винительном падеже
+    const locationAccusative = {
+      "Деревня": "Деревню",
+      "Лес": "Лес",
+      "Река": "Реку",
+      "Горы": "Горы",
+      "Поляна": "Поляну",
+      "Пещера": "Пещеру",
+      "Развалины": "Развалины",
+      "Башня": "Башню",
+      "Храм": "Храм",
+      "Портал": "Портал"
+    };
+
     // Классы
     function toggleClassInfo(id) {
       const el = document.getElementById(id + "-info");
@@ -227,6 +268,7 @@
       playerData = { class: null, location: "Деревня" };
       resetScreens();
       document.getElementById("class-selection").classList.remove("hidden");
+      document.getElementById("class-selection").classList.add("visible");
       // Сброс выделения
       document.querySelectorAll(".class-option").forEach(opt => opt.classList.remove("selected"));
     }
@@ -244,11 +286,13 @@
     function showAbout() {
       resetScreens();
       document.getElementById("about-screen").classList.remove("hidden");
+      document.getElementById("about-screen").classList.add("visible");
     }
 
     function backToMenu() {
       resetScreens();
       document.getElementById("main-menu").classList.remove("hidden");
+      document.getElementById("main-menu").classList.add("visible");
     }
 
     function selectClass() {
@@ -265,6 +309,7 @@
     function startGame() {
       resetScreens();
       document.getElementById("game-screen").classList.remove("hidden");
+      document.getElementById("game-screen").classList.add("visible");
       updateLocation();
     }
 
@@ -277,19 +322,21 @@
       const travelScreen = document.getElementById("travel-screen");
       const travelTimer = document.getElementById("travel-timer");
       travelScreen.classList.remove("hidden");
+      travelScreen.classList.add("visible");
       let timeLeft = Math.ceil(duration / 1000);
-      travelTimer.innerText = `Переход в ${targetLocation}... ${timeLeft} сек`;
+      travelTimer.innerText = `Вы идёте в ${locationAccusative[targetLocation]}... ${timeLeft} сек`;
 
       const interval = setInterval(() => {
         timeLeft--;
         if (timeLeft > 0) {
-          travelTimer.innerText = `Переход в ${targetLocation}... ${timeLeft} сек`;
+          travelTimer.innerText = `Вы идёте в ${locationAccusative[targetLocation]}... ${timeLeft} сек`;
         } else {
           clearInterval(interval);
           playerData.location = targetLocation;
           saveGame();
           resetScreens();
           document.getElementById("game-screen").classList.remove("hidden");
+          document.getElementById("game-screen").classList.add("visible");
           updateLocation();
         }
       }, 1000);
