@@ -95,7 +95,7 @@
 
   <div id="class-selection" class="hidden">
     <h2>Выберите класс</h2>
-    <div class="class-option" data-class="archer" onclick="toggleClassInfo(this)">
+    <div class="class-option" data-class="archer" onclick="typeof toggleClassInfo === 'function' ? toggleClassInfo(this) : console.error('toggleClassInfo not defined')">
       <div class="class-name-row">
         <img src="Images/npc/archer.png" alt="Следопыт">
         <div class="class-name">Следопыт</div>
@@ -106,7 +106,7 @@
         <p><strong>Снаряжение:</strong> Лук, Кожаная броня, Кольчужный капюшон, Зелье здоровья, Походные сапоги.</p>
       </div>
     </div>
-    <div class="class-option" data-class="warrior" onclick="toggleClassInfo(this)">
+    <div class="class-option" data-class="warrior" onclick="typeof toggleClassInfo === 'function' ? toggleClassInfo(this) : console.error('toggleClassInfo not defined')">
       <div class="class-name-row">
         <img src="Images/npc/warrior.png" alt="Воин">
         <div class="class-name">Воин</div>
@@ -117,7 +117,7 @@
         <p><strong>Снаряжение:</strong> Меч, Щит, Стальная броня, Зелье здоровья, Походные сапоги.</p>
       </div>
     </div>
-    <div class="class-option" data-class="rogue" onclick="toggleClassInfo(this)">
+    <div class="class-option" data-class="rogue" onclick="typeof toggleClassInfo === 'function' ? toggleClassInfo(this) : console.error('toggleClassInfo not defined')">
       <div class="class-name-row">
         <img src="Images/npc/rogue.png" alt="Разбойник">
         <div class="class-name">Разбойник</div>
@@ -161,6 +161,6 @@
     <button onclick="backToGame()">Назад</button>
   </div>
 
-  <script src="script.js"></script>
+  <script defer src="script.js"></script>
 </body>
 </html>
