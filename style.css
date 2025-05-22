@@ -1,0 +1,725 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #111;
+  color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.hidden {
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.hidden:not(.visible) {
+  display: none;
+}
+
+.visible {
+  opacity: 1;
+  display: block;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #444;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 200px;
+}
+
+.menu-button {
+  display: block;
+  margin: 10px auto;
+}
+
+#splash-dev {
+  font-size: 2em;
+  position: fixed;
+  top: 30vh;
+  width: 100%;
+  transition: opacity 0.5s ease;
+  z-index: 10;
+}
+
+#splash-dev img {
+  display: block;
+  width: 200px;
+  height: 200px;
+  min-width: 200px;
+  min-height: 200px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background-color: #222;
+  margin: 20px auto 0;
+}
+
+#splash-title {
+  font-family: 'Uncial Antiqua', serif;
+  font-size: 2em;
+  font-weight: 700;
+  color: #d9e4dd;
+  position: fixed;
+  top: 40vh;
+  width: 100%;
+  transition: opacity 0.5s ease;
+  z-index: 10;
+  white-space: normal;
+  overflow-wrap: break-word;
+  line-height: 1.2;
+  letter-spacing: 2px;
+  text-shadow: 0 0 5px rgba(217, 228, 221, 0.3), 0 0 10px rgba(217, 228, 221, 0.2);
+  -webkit-text-stroke: 1px #333;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px rgba(217, 228, 221, 0.3), 0 0 10px rgba(217, 228, 221, 0.2);
+  }
+  to {
+    text-shadow: 0 0 8px rgba(217, 228, 221, 0.4), 0 0 12px rgba(217, 228, 221, 0.3);
+  }
+}
+
+#main-menu {
+  z-index: 5;
+  transition: opacity 0.5s ease;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#main-menu h1 {
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+#about-screen, #class-selection, #game-screen, #npc-dialog, #quests-screen, #inventory-screen {
+  z-index: 5;
+  transition: opacity 0.5s ease;
+}
+
+#travel-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.5s ease;
+  z-index: 20;
+  flex-direction: column;
+}
+
+#travel-screen.visible {
+  opacity: 1;
+  display: flex;
+}
+
+#travel-timer {
+  font-size: 1.5em;
+  color: #f0f0f0;
+}
+
+#travel-text {
+  font-size: 0.9em;
+  color: #ccc;
+  margin-top: 10px;
+  text-align: center;
+  max-width: 80%;
+}
+
+#location-desc {
+  padding: 0 5px;
+  text-align: justify;
+}
+
+#location-buttons button {
+  margin: 2px;
+}
+
+.class-option {
+  cursor: pointer;
+  margin: 10px auto;
+  width: 80%;
+  padding: 5px;
+  border: 1px solid #666;
+  background-color: #222;
+  transition: background-color 0.3s ease, border-color 0.3s ease, max-height 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 70px;
+  box-sizing: border-box;
+}
+
+.class-option.selected {
+  background-color: #333;
+  border-color: #888;
+}
+
+.class-option:hover {
+  background-color: #333;
+}
+
+.class-name-row {
+  display: flex;
+  align-items: center;
+  height: 70px;
+}
+
+.class-option img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  margin: 5px 10px;
+}
+
+.class-name {
+  font-size: 1em;
+  font-weight: bold;
+  flex: 1;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+
+.class-details {
+  max-height: 0;
+  overflow: hidden;
+  margin: 0 10px 10px 10px;
+  padding: 0 10px;
+  background-color: #333;
+  border: 1px solid #777;
+  font-size: 0.95em;
+  color: #ccc;
+  text-align: left;
+  transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.class-details:not(.hidden) {
+  max-height: 300px;
+  padding: 10px;
+  opacity: 1;
+}
+
+.class-details p {
+  margin: 5px 0;
+}
+
+.class-details strong {
+  color: #f0f0f0;
+}
+
+#extra-content {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.section-title {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  display: block;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-title::after {
+  content: "\25BC";
+  display: inline-block;
+  margin-left: 5px;
+  transition: transform 0.3s ease;
+}
+
+.section-title.open::after {
+  transform: rotate(180deg);
+}
+
+.section-content {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 0.95em;
+  color: #ccc;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-content.hidden {
+  display: none;
+}
+
+#menu-button {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 30;
+  background-color: #444;
+  border: none;
+  color: white;
+  font-size: 30px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#menu-button:hover {
+  background-color: #555;
+}
+
+#sidebar-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 66.67%;
+  height: 100%;
+  background-color: #333333;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  padding: 64px 20px 20px 20px;
+  box-sizing: border-box;
+}
+
+#sidebar-menu.open {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+#sidebar-menu.open ~ #menu-button {
+  display: none;
+}
+
+#sidebar-menu button {
+  background-color: #444;
+  color: #f0f0f0;
+  margin: 10px 0;
+  width: 100%;
+  text-align: left;
+  transition: background-color 0.3s ease;
+  font-family: Arial, 'Segoe UI Emoji', sans-serif;
+}
+
+#sidebar-menu button:hover {
+  background-color: #555;
+}
+
+#sidebar-close {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px;
+  min-height: 40px;
+  background-color: #444;
+  color: #ffffff !important;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-sizing: border-box;
+  padding: 0;
+  border: none;
+  overflow: hidden;
+  appearance: none;
+  -webkit-appearance: none;
+  z-index: 30;
+}
+
+#sidebar-close:hover {
+  background-color: #555;
+}
+
+#npc-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #111;
+  z-index: 25;
+  transition: opacity 0.5s ease;
+  box-sizing: border-box;
+  padding: 20px;
+  padding-bottom: 80px;
+  display: grid;
+  grid-template-columns: 33.33% 66.67%;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 10px;
+}
+
+#npc-dialog.visible {
+  opacity: 1;
+  display: grid;
+}
+
+#npc-image {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin: 15px;
+}
+
+#npc-name {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  color: #f0f0f0;
+  font-size: 1.8em;
+  margin: 15px 15px 5px 15px;
+  text-align: left;
+}
+
+#npc-desc {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  color: #ccc;
+  font-size: 1em;
+  margin: 50px 15px 15px 15px;
+  text-align: left;
+  max-width: 600px;
+}
+
+#npc-text {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  color: #f0f0f0;
+  font-size: 1.1em;
+  margin: 10px 15px;
+  text-align: left;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+#quest-limit-msg {
+  position: fixed;
+  bottom: 105px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #f88;
+  font-size: 0.9em;
+  margin: 0;
+  width: 200px;
+  text-align: center;
+}
+
+#npc-quest {
+  position: fixed;
+  bottom: 65px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #444;
+  color: white;
+  width: 200px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+#npc-quest:hover:not(:disabled) {
+  background-color: #555;
+}
+
+#npc-quest:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #333;
+}
+
+#npc-exit {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #444;
+  color: white;
+  width: 200px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#npc-exit:hover {
+  background-color: #555;
+}
+
+#quests-screen {
+  padding: 20px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+#quests-screen h2 {
+  margin-bottom: 20px;
+}
+
+.quest-item {
+  cursor: pointer;
+  margin: 10px auto;
+  padding: 10px;
+  border: 1px solid #666;
+  background-color: #222;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  width: 80%;
+}
+
+.quest-item:hover {
+  background-color: #333;
+  border-color: #888;
+}
+
+.quest-details {
+  margin-top: 5px;
+  padding: 10px;
+  background-color: #333;
+  border: 1px solid #777;
+  font-size: 0.95em;
+  color: #ccc;
+  text-align: left;
+}
+
+.quest-details.hidden {
+  display: none;
+}
+
+#inventory-screen {
+  padding: 20px;
+}
+
+#inventory-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tab-button {
+  background-color: #333;
+  border: 1px solid #666;
+  color: #f0f0f0;
+  font-size: 1.5em;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0 5px;
+}
+
+.tab-button.active {
+  background-color: #555;
+  border-color: #888;
+}
+
+.tab-button:hover {
+  background-color: #444;
+}
+
+#inventory-list {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.inventory-item {
+  display: flex;
+  align-items: center;
+  height: 70px;
+  background-color: #222;
+  border: 1px solid #666;
+  margin-bottom: 5px;
+  box-sizing: border-box;
+}
+
+.inventory-item.empty {
+  background-color: #333;
+  border: 1px solid #555;
+}
+
+.inventory-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  margin: 5px 10px;
+}
+
+.inventory-item .item-text {
+  flex: 1;
+  text-align: left;
+  padding-right: 10px;
+}
+
+.inventory-item .item-name {
+  font-size: 1em;
+  font-weight: bold;
+  overflow-wrap: break-word;
+}
+
+.inventory-item .item-desc {
+  font-size: 0.8em;
+  color: #ccc;
+  overflow-wrap: break-word;
+  line-height: 1.2;
+}
+
+#inventory-empty {
+  font-size: 1em;
+  color: #ccc;
+  margin: 20px auto;
+}
+
+@media (max-width: 600px) {
+  #splash-title {
+    font-size: 1.5em;
+    letter-spacing: 1px;
+    -webkit-text-stroke: 0.5px #333;
+    text-shadow: 0 0 4px rgba(217, 228, 221, 0.3), 0 0 8px rgba(217, 228, 221, 0.2);
+  }
+
+  #npc-dialog {
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto auto 1fr;
+    padding: 10px;
+    padding-bottom: 80px;
+  }
+
+  #npc-image {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    width: 100px;
+    height: 100px;
+    margin: 10px auto;
+  }
+
+  #npc-name {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    font-size: 1.5em;
+    margin: 10px;
+    text-align: center;
+  }
+
+  #npc-desc {
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+    font-size: 0.9em;
+    margin: 0 10px 10px 10px;
+    text-align: center;
+  }
+
+  #npc-text {
+    grid-column: 1 / 2;
+    grid-row: 4 / 5;
+    font-size: 1em;
+    margin: 10px;
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+  }
+
+  #quest-limit-msg {
+    bottom: 95px;
+    width: 150px;
+    font-size: 0.8em;
+  }
+
+  #npc-quest {
+    bottom: 55px;
+    width: 150px;
+  }
+
+  #npc-exit {
+    bottom: 10px;
+    width: 150px;
+  }
+
+  #quests-screen {
+    width: 90%;
+    padding: 10px;
+  }
+
+  .quest-item {
+    width: 90%;
+  }
+
+  #inventory-tabs {
+    margin-bottom: 10px;
+  }
+
+  .tab-button {
+    font-size: 1.2em;
+    padding: 8px 15px;
+    margin: 0 3px;
+  }
+
+  #inventory-list {
+    width: 95%;
+    max-width: 400px;
+  }
+
+  .inventory-item {
+    height: 50px;
+    margin-bottom: 3px;
+  }
+
+  .inventory-item img {
+    width: 40px;
+    height: 40px;
+    margin: 5px 8px;
+  }
+
+  .inventory-item .item-name {
+    font-size: 0.9em;
+  }
+
+  .inventory-item .item-desc {
+    font-size: 0.7em;
+  }
+
+  .class-option {
+    min-height: 50px;
+    padding: 3px;
+  }
+
+  .class-name-row {
+    height: 50px;
+  }
+
+  .class-option img {
+    width: 40px;
+    height: 40px;
+    margin: 5px 8px;
+  }
+
+  .class-name {
+    font-size: 0.9em;
+  }
+
+  .class-details {
+    font-size: 0.85em;
+    padding: 0 8px;
+    margin: 0 8px 8px 8px;
+  }
+
+  .class-details:not(.hidden) {
+    padding: 8px;
+  }
+}
