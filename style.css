@@ -748,3 +748,12 @@ button {
     font-size: 26px !important;
   }
 }
+
+
+#sidebar-close {
+  background-image: url('close.png');
+  background-size: cover;
+  background-position: center;
+  color: transparent !important;
+  font-size: 0 !important;
+}
