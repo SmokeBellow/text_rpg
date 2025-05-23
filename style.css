@@ -188,6 +188,7 @@ button {
 }
 
 .class-details {
+  font-size: 1.1em;
   max-height: 0;
   overflow: hidden;
   margin: 0 10px 10px 10px;
@@ -708,6 +709,7 @@ button {
   }
 
   .class-details {
+  font-size: 1.1em;
     font-size: 0.85em;
     padding: 0 8px;
     margin: 0 8px 8px 8px;
@@ -716,4 +718,14 @@ button {
   .class-details:not(.hidden) {
     padding: 8px;
   }
+}
+
+#location-name {
+  margin-top: 5px;
+}
+
+#location-name, #location-desc {
+  padding-left: 50px;
+  padding-right: 10px;
+  box-sizing: border-box;
 }
