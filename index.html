@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
@@ -72,7 +33,10 @@
     Murmyak Games
     <img src="Images/logo.png" alt="Murmyak Games Logo">
   </div>
-  <div id="splash-title" class="hidden">Endless Adventure</div>
+  <div id="splash-title" class="hidden">
+    <span class="title-line">Endless</span><br>
+    <span class="title-line">Adventure</span>
+  </div>
 
   <div id="main-menu" class="hidden">
     <h1>Endless Adventure</h1>
@@ -95,40 +59,7 @@
 
   <div id="class-selection" class="hidden">
     <h2>Выберите класс</h2>
-    <div class="class-option" data-class="archer" onclick="typeof toggleClassInfo === 'function' ? toggleClassInfo(this) : console.error('toggleClassInfo not defined')">
-      <div class="class-name-row">
-        <img src="Images/npc/archer.jpg" alt="Следопыт">
-        <div class="class-name">Следопыт</div>
-      </div>
-      <div class="class-details hidden">
-        <p><strong>Описание:</strong> Искры глаз следят за каждым движением в чаще, а стрелы бьют без промаха.</p>
-        <p><strong>Особенность:</strong> Перемещается на 10% быстрее.</p>
-        <p><strong>Снаряжение:</strong> Лук, Кожаная броня, Кольчужный капюшон.</p>
-      </div>
-    </div>
-    <div class="class-option" data-class="warrior" onclick="typeof toggleClassInfo === 'function' ? toggleClassInfo(this) : console.error('toggleClassInfo not defined')">
-      <div class="class-name-row">
-        <img src="Images/npc/warrior.jpg" alt="Воин">
-        <div class="class-name">Воин</div>
-      </div>
-      <div class="class-details hidden">
-        <p><strong>Описание:</strong> Сильный и выносливый боец, готовый стоять до последнего.</p>
-        <p><strong>Особенность:</strong> Получает на 15% меньше урона.</p>
-        <p><strong>Снаряжение:</strong> Меч, Щит, Стальная броня.</p>
-      </div>
-    </div>
-    <div class="class-option" data-class="rogue" onclick="typeof toggleClassInfo === 'function' ? toggleClassInfo(this) : console.error('toggleClassInfo not defined')">
-      <div class="class-name-row">
-        <img src="Images/npc/rogue.jpg" alt="Разбойник">
-        <div class="class-name">Разбойник</div>
-      </div>
-      <div class="class-details hidden">
-        <p><strong>Описание:</strong> Тень, что крадётся в ночи, с клинком, готовым к удару.</p>
-        <p><strong>Особенность:</strong> Наносит на 20% больше урона при скрытной атаке.</p>
-        <p><strong>Снаряжение:</strong> Кинжалы, Плащ, Маска.</p>
-      </div>
-    </div>
-    <button onclick="selectClass()">Выбрать</button>
+    <!-- Классы и кнопка выбора -->
   </div>
 
   <div id="game-screen" class="hidden">
@@ -148,9 +79,7 @@
     <h2 id="npc-name"></h2>
     <p id="npc-desc"></p>
     <p id="npc-text"></p>
-    <p id="quest-limit-msg" class="hidden">
-      У вас не может больше четырёх активных квестов. Сначала завершите уже начатые квесты.
-    </p>
+    <p id="quest-limit-msg" class="hidden">У вас не может больше четырёх активных квестов. Сначала завершите уже начатые квесты.</p>
     <button id="npc-quest" onclick="takeQuest()">Взять задание</button>
     <button id="npc-exit" onclick="closeNpcDialog()">Выйти</button>
   </div>

@@ -62,10 +62,6 @@ button {
   font-family: 'Uncial Antiqua', serif;
   font-size: 4em;
   font-weight: 700;
-  color: transparent;
-  background: url('Images/wood-light.jpg') repeat;
-  -webkit-background-clip: text;
-  background-clip: text;
   position: fixed;
   top: 40vh;
   width: 100%;
@@ -75,6 +71,612 @@ button {
   overflow-wrap: break-word;
   line-height: 1.2;
   letter-spacing: 2px;
+  background-image: url('Images/wood-light.jpg');
+  background-size: cover;
+  background-position: center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-/* Остальная часть файла остаётся без изменений */
+#main-menu {
+  z-index: 5;
+  transition: opacity 0.5s ease;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#main-menu h1 {
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+#about-screen, #class-selection, #game-screen, #npc-dialog, #quests-screen, #inventory-screen {
+  z-index: 5;
+  transition: opacity 0.5s ease;
+}
+
+#travel-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.5s ease;
+  z-index: 20;
+  flex-direction: column;
+}
+
+#travel-screen.visible {
+  opacity: 1;
+  display: flex;
+}
+
+#travel-timer {
+  font-size: 1.5em;
+  color: #f0f0f0;
+}
+
+#travel-text {
+  font-size: 0.9em;
+  color: #ccc;
+  margin-top: 10px;
+  text-align: center;
+  max-width: 80%;
+}
+
+#location-desc {
+  padding: 0 5px;
+  text-align: justify;
+}
+
+#location-buttons button {
+  margin: 2px;
+}
+
+.class-option {
+  cursor: pointer;
+  margin: 10px auto;
+  width: 80%;
+  padding: 5px;
+  border: 1px solid #666;
+  background-color: #222;
+  transition: background-color 0.3s ease, border-color 0.3s ease, max-height 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 70px;
+  box-sizing: border-box;
+}
+
+.class-option.selected {
+  background-color: #333;
+  border-color: #888;
+}
+
+.class-option:hover {
+  background-color: #333;
+}
+
+.class-name-row {
+  display: flex;
+  align-items: center;
+  height: 70px;
+}
+
+.class-option img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  margin: 5px 10px;
+}
+
+.class-name {
+  font-size: 1em;
+  font-weight: bold;
+  flex: 1;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+
+.class-details {
+  max-height: 0;
+  overflow: hidden;
+  margin: 0 10px 10px 10px;
+  padding: 0 10px;
+  background-color: #333;
+  border: 1px solid #777;
+  font-size: 0.95em;
+  color: #ccc;
+  text-align: left;
+  transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.class-details:not(.hidden) {
+  max-height: 300px;
+  padding: 10px;
+  opacity: 1;
+}
+
+.class-details p {
+  margin: 5px 0;
+}
+
+.class-details strong {
+  color: #f0f0f0;
+}
+
+#extra-content {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.section-title {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  display: block;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-title::after {
+  content: "\25BC";
+  display: inline-block;
+  margin-left: 5px;
+  transition: transform 0.3s ease;
+}
+
+.section-title.open::after {
+  transform: rotate(180deg);
+}
+
+.section-content {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 0.95em;
+  color: #ccc;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-content.hidden {
+  display: none;
+}
+
+#menu-button {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 30;
+  background-color: #444;
+  border: none;
+  color: white;
+  font-size: 30px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#menu-button:hover {
+  background-color: #555;
+}
+
+#sidebar-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 66.67%;
+  height: 100%;
+  background-color: #333333;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  padding: 64px 20px 20px 20px;
+  box-sizing: border-box;
+}
+
+#sidebar-menu.open {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+#sidebar-menu.open ~ #menu-button {
+  display: none;
+}
+
+#sidebar-menu button {
+  background-color: #444;
+  color: #f0f0f0;
+  margin: 10px 0;
+  width: 100%;
+  text-align: left;
+  transition: background-color 0.3s ease;
+  font-family: Arial, 'Segoe UI Emoji', sans-serif;
+}
+
+#sidebar-menu button:hover {
+  background-color: #555;
+}
+
+#sidebar-close {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  width: 40px !important;
+  min-width: 40px;
+  min-height: 40px;
+  background-color: #444;
+  color: #ffffff !important;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-sizing: border-box;
+  padding: 0;
+  border: none;
+  overflow: hidden;
+  appearance: none;
+  -webkit-appearance: none;
+  z-index: 30;
+}
+
+#sidebar-close:hover {
+  background-color: #555;
+}
+
+#npc-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #111;
+  z-index: 25;
+  transition: opacity 0.5s ease;
+  box-sizing: border-box;
+  padding: 20px;
+  padding-bottom: 80px;
+  display: grid;
+  grid-template-columns: 33.33% 66.67%;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 10px;
+}
+
+#npc-dialog.visible {
+  opacity: 1;
+  display: grid;
+}
+
+#npc-image {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin: 15px;
+}
+
+#npc-name {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  color: #f0f0f0;
+  font-size: 1.8em;
+  margin: 15px 15px 5px 15px;
+  text-align: left;
+}
+
+#npc-desc {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  color: #ccc;
+  font-size: 1em;
+  margin: 50px 15px 15px 15px;
+  text-align: left;
+  max-width: 600px;
+}
+
+#npc-text {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  color: #f0f0f0;
+  font-size: 1.1em;
+  margin: 10px 15px;
+  text-align: left;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+#quest-limit-msg {
+  position: fixed;
+  bottom: 105px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #f88;
+  font-size: 0.9em;
+  margin: 0;
+  width: 200px;
+  text-align: center;
+}
+
+#npc-quest {
+  position: fixed;
+  bottom: 65px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #444;
+  color: white;
+  width: 200px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+#npc-quest:hover:not(:disabled) {
+  background-color: #555;
+}
+
+#npc-quest:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #333;
+}
+
+#npc-exit {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #444;
+  color: white;
+  width: 200px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#npc-exit:hover {
+  background-color: #555;
+}
+
+#quests-screen {
+  padding: 20px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+#quests-screen h2 {
+  margin-bottom: 20px;
+}
+
+.quest-item {
+  cursor: pointer;
+  margin: 10px auto;
+  padding: 10px;
+  border: 1px solid #666;
+  background-color: #222;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  width: 80%;
+}
+
+.quest-item:hover {
+  background-color: #333;
+  border-color: #888;
+}
+
+.quest-details {
+  margin-top: 5px;
+  padding: 10px;
+  background-color: #333;
+  border: 1px solid #777;
+  font-size: 0.95em;
+  color: #ccc;
+  text-align: left;
+}
+
+.quest-details.hidden {
+  display: none;
+}
+
+#inventory-screen {
+  padding: 20px;
+}
+
+#inventory-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tab-button {
+  background-color: #333;
+  border: 1px solid #666;
+  color: #f0f0f0;
+  font-size: 1.5em;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0 5px;
+}
+
+.tab-button.active {
+  background-color: #555;
+  border-color: #888;
+}
+
+.tab-button:hover {
+  background-color: #444;
+}
+
+#inventory-list {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.inventory-item {
+  display: flex;
+  align-items: center;
+  height: 70px;
+  background-color: #222;
+  border: 1px solid #666;
+  margin-bottom: 5px;
+  box-sizing: border-box;
+}
+
+.inventory-item.empty {
+  background-color: #333;
+  border: 1px solid #555;
+}
+
+.inventory-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  margin: 5px 10px;
+}
+
+.inventory-item .item-text {
+  flex: 1;
+  text-align: left;
+  padding-right: 10px;
+}
+
+.inventory-item .item-name {
+  font-size: 1em;
+  font-weight: bold;
+  overflow-wrap: break-word;
+}
+
+.inventory-item .item-desc {
+  font-size: 0.8em;
+  color: #ccc;
+  overflow-wrap: break-word;
+  line-height: 1.2;
+}
+
+#inventory-empty {
+  font-size: 1em;
+  color: #ccc;
+  margin: 20px auto;
+}
+
+@media (max-width: 600px) {
+  #splash-title {
+    font-size: 3em;
+    letter-spacing: 1px;
+  }
+
+  #npc-dialog {
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto auto 1fr;
+    padding: 10px;
+    padding-bottom: 80px;
+  }
+
+  #npc-image {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    width: 100px;
+    height: 100px;
+    margin: 10px auto;
+  }
+
+  #npc-name {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    font-size: 1.5em;
+    margin: 10px;
+    text-align: center;
+  }
+
+  #npc-desc {
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+    font-size: 0.9em;
+    margin: 0 10px 10px 10px;
+    text-align: center;
+  }
+
+  #npc-text {
+    grid-column: 1 / 2;
+    grid-row: 4 / 5;
+    font-size: 1em;
+    margin: 10px;
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+  }
+
+  #quest-limit-msg {
+    bottom: 95px;
+    width: 150px;
+    font-size: 0.8em;
+  }
+
+  #npc-quest {
+    bottom: 55px;
+    width: 150px;
+  }
+
+  #npc-exit {
+    bottom: 10px;
+    width: 150px;
+  }
+
+  #quests-screen {
+    width: 90%;
+    padding: 10px;
+  }
+
+  .quest-item {
+    width: 90%;
+  }
+
+  #inventory-tabs {
+   торой файл `index.html` или `script.js`, так как они не влияют на отображение названия игры.
+
+### Что нужно сделать
+1. **Обновите файл**:
+   - Замените содержимое `style.css` на предоставленное выше.
+2. **Проверьте изображение**:
+   - Убедитесь, что файл `Images/wood-light.jpg` существует в папке `Images/` и доступен. Если файл отсутствует или путь неверный, текст названия станет невидимым (прозрачным).
+3. **Протестируйте**:
+   - Откройте `index.html` через локальный сервер (например, с помощью `http-server` или расширения VS Code Live Server), чтобы избежать проблем с загрузкой локальных файлов из-за CORS.
+   - Дождитесь появления экрана с названием игры ("Endless Adventure"), который отображается после заставки разработчика (`#splash-dev`).
+   - Убедитесь, что текст "Endless Adventure" имеет текстуру дерева из `wood-light.jpg`, а не белый цвет.
+   - Проверьте на разных устройствах:
+     - На десктопе: текст должен быть размером 4em.
+     - На мобильных устройствах (ширина < 600px): текст должен быть размером 3em (согласно медиа-запросу).
+   - Если текстура не отображается, откройте DevTools (F12 → Network) и проверьте, загружается ли `Images/wood-light.jpg`. Если нет, проверьте правильность пути или наличие файла.
+4. **Отладка**:
+   - Если текст остаётся прозрачным без текстуры, проверьте в DevTools (F12 → Elements), применяются ли стили `background-image`, `-webkit-background-clip: text`, и `color: transparent` к `#splash-title`.
+   - Если текстура отображается некорректно (например, растянута или обрезана), экспериментируйте с `background-size` (например, замените `cover` на `contain` или конкретные значения вроде `100px 100px`) в `style.css`.
+   - Очистите кэш браузера (Ctrl+Shift+R), чтобы применить изменения стилей.
+   - Если эффект не работает в некоторых браузерах (например, Firefox), это может быть связано с отсутствием поддержки `-webkit-background-clip: text`. В таком случае текст будет прозрачным. Если это критично, можно добавить резервный цвет (например, `color: #d9e4dd;`) через условные стили, но это не требуется по вашему запросу.
+
+### Примечания
+- **Название игры**: Изменение касается только экрана `#splash-title` ("Endless Adventure"), который появляется на старте игры. Название в `#main-menu` (`<h1>Endless Adventure</h1>`) остаётся белым (`color: #f0f0f0;` от `body`), так как вы указали изменение только для названия игры, а `#splash-title` — это начальный экран с названием.
+- **Качество текстуры**: Убедитесь, что `wood-light.jpg` имеет достаточное разрешение, чтобы текстура выглядела чётко при `font-size: 4em` (или `3em` на мобильных). Если текстура выглядит размытой, попробуйте заменить изображение на версию с более высоким разрешением.
+- **Совместимость**: Свойство `background-clip: text` поддерживается в современных браузерах (Chrome, Safari, Edge, Firefox), но для старых браузеров (например, IE) эффект не сработает, и текст будет прозрачным. Если нужна поддержка старых браузеров, уточните, и я добавлю резервный стиль.
+- **Файлы `index.html` и `script.js`**: Они не требуют изменений, так как не влияют на стиль `#splash-title`. Подтверждаю, что текущие версии файлов корректны и включают предыдущие изменения (например, добавление "Зелье здоровья" и "Походные сапоги" в `script.js`).
+- **Производительность**: Добавление текстуры не должно существенно повлиять на производительность, так как это статическое изображение, применяемое к небольшому элементу.
+
+Если текстура не отображается как ожидалось, нужны дополнительные настройки (например, изменение `background-size` или добавление резервного цвета), или вы хотите применить текстуру также к `#main-menu h1`, напишите, и я обновлю решение!
