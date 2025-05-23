@@ -569,12 +569,12 @@ function selectClass() {
   } else if (playerData.class === "rogue") {
     playerData.inventory.weapons.push("Кинжалы");
     playerData.inventory.armor.push("Плащ");
-    playerData.inventory.keyItems.push("Маска");
+    playerData.inventory.armor.push("Маска");
   }
 
   // Добавляем общие предметы для всех классов
   playerData.inventory.potions.push("Зелье здоровья");
-  playerData.inventory.keyItems.push("Походные сапоги");
+  playerData.inventory.armor.push("Походные сапоги");
 
   saveGame();
   resetScreens();
