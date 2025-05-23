@@ -48,16 +48,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div id="inventory-screen" class="hidden">
-    <h2>Инвентарь</h2>
-    <div id="inventory-tabs">
+<div id="inventory-tabs">
   <button class="tab-button" data-tab="weapons">⚔️</button>
-  <button class="tab-button" data-tab="armor">🛡️</button>
+  <button class="tab-button" data-tab="armor">
+    <img src="Images/items/shield.png" alt="Броня" style="width:31px; height:31px; vertical-align:middle;">
+  </button>
   <button class="tab-button" data-tab="potions">
-    <img src="Images/items/healthpotion.png" alt="Зелья" style="width:26px; height:26px; vertical-align:middle;">
+    <img src="Images/items/healthpotion.png" alt="Зелья" style="width:31px; height:31px; vertical-align:middle;">
   </button>
   <button class="tab-button" data-tab="keyItems">🔑</button>
 </div>
+
 
     <div id="inventory-list"></div>
     <div id="inventory-empty" class="hidden">Раздел пуст</div>
