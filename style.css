@@ -564,6 +564,7 @@ button {
 }
 
 .inventory-item .item-text {
+  width: calc(100% - 120px);
   flex: 1;
   text-align: left;
   padding-right: 10px;
@@ -795,9 +796,17 @@ button {
 }
 
 .inventory-item .item-text {
+  width: calc(100% - 120px);
   word-wrap: break-word;
   overflow-wrap: anywhere;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.inventory-item button {
+  width: 100px;
+  margin-top: 5px;
+  align-self: flex-start;
+  font-size: 0.85em;
 }
