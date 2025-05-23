@@ -60,7 +60,7 @@ button {
 
 #splash-title {
   font-family: 'Uncial Antiqua', serif;
-  font-size: 2em;
+  font-size: 4em;
   font-weight: 700;
   color: #d9e4dd;
   position: fixed;
@@ -72,18 +72,6 @@ button {
   overflow-wrap: break-word;
   line-height: 1.2;
   letter-spacing: 2px;
-  text-shadow: 0 0 5px rgba(217, 228, 221, 0.3), 0 0 10px rgba(217, 228, 221, 0.2);
-  -webkit-text-stroke: 1px #333;
-  animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-  from {
-    text-shadow: 0 0 5px rgba(217, 228, 221, 0.3), 0 0 10px rgba(217, 228, 221, 0.2);
-  }
-  to {
-    text-shadow: 0 0 8px rgba(217, 228, 221, 0.4), 0 0 12px rgba(217, 228, 221, 0.3);
-  }
 }
 
 #main-menu {
@@ -588,10 +576,8 @@ button {
 
 @media (max-width: 600px) {
   #splash-title {
-    font-size: 1.5em;
+    font-size: 3em;
     letter-spacing: 1px;
-    -webkit-text-stroke: 0.5px #333;
-    text-shadow: 0 0 4px rgba(217, 228, 221, 0.3), 0 0 8px rgba(217, 228, 221, 0.2);
   }
 
   #npc-dialog {
@@ -686,7 +672,7 @@ button {
   }
 
   .inventory-item .item-name {
-    font in-size: 0.9em;
+    font-size: 0.9em;
   }
 
   .inventory-item .item-desc {

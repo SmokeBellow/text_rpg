@@ -131,7 +131,7 @@ const itemIcons = {
   "Щит": "Images/items/shield.png",
   "Стальная броня": "Images/items/steelarmor.png",
   "Кинжалы": "Images/items/daggers.png",
-  "Плащ теней": "Images/items/shadowcloak.png",
+  "Плащ": "Images/items/shadowcloak.png",
   "Маска": "Images/items/mask.png"
 };
 
@@ -146,7 +146,7 @@ const itemDescriptions = {
   "Щит": "Блокирует 30% входящего урона.",
   "Стальная броня": "Тяжёлая броня, добавляет 20 защиты.",
   "Кинжалы": "Быстрое оружие, наносит 12 урона с шансом критического удара.",
-  "Плащ теней": "Увеличивает уклонение на 15%.",
+  "Плащ": "Лёгкий плащ, улучшающий манёвренность и скрытность.",
   "Маска": "Скрывает личность, повышает скрытность."
 };
 
@@ -157,21 +157,21 @@ const classData = {
     image: "Images/npc/archer.jpg",
     desc: "Искры глаз следят за каждым движением в чаще, а стрелы бьют без промаха.",
     feature: "Перемещается на 10% быстрее.",
-    equipment: ["Лук", "Кожаная броня", "Кольчужный капюшон", "Зелье здоровья", "Походные сапоги"]
+    equipment: ["Лук", "Кожаная броня", "Кольчужный капюшон"]
   },
   warrior: {
     name: "Воин",
     image: "Images/npc/warrior.jpg",
     desc: "Сильный и выносливый боец, готовый стоять до последнего.",
     feature: "Получает на 15% меньше урона.",
-    equipment: ["Меч", "Щит", "Стальная броня", "Зелье здоровья", "Походные сапоги"]
+    equipment: ["Меч", "Щит", "Стальная броня"]
   },
   rogue: {
     name: "Разбойник",
     image: "Images/npc/rogue.jpg",
     desc: "Тень, что крадётся в ночи, с клинком, готовым к удару.",
     feature: "Наносит на 20% больше урона при скрытной атаке.",
-    equipment: ["Кинжалы", "Плащ теней", "Маска", "Зелье здоровья", "Походные сапоги"]
+    equipment: ["Кинжалы", "Плащ", "Маска"]
   }
 };
 
@@ -557,8 +557,6 @@ function selectClass() {
 
   // Добавляем начальные предметы
   const classInfo = classData[playerData.class];
-  playerData.inventory.potions.push("Зелье здоровья");
-  playerData.inventory.keyItems.push("Походные сапоги");
 
   if (playerData.class === "archer") {
     playerData.inventory.weapons.push("Лук");
@@ -568,7 +566,7 @@ function selectClass() {
     playerData.inventory.armor.push("Щит", "Стальная броня");
   } else if (playerData.class === "rogue") {
     playerData.inventory.weapons.push("Кинжалы");
-    playerData.inventory.armor.push("Плащ теней");
+    playerData.inventory.armor.push("Плащ");
     playerData.inventory.keyItems.push("Маска");
   }
 
