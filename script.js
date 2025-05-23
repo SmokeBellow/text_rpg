@@ -217,6 +217,9 @@ function toggleMenu() {
   }
 }
 
+
+
+document.getElementById("sidebar-close").addEventListener("click", toggleMenu);
 // Экран разговора с NPC
 let currentNpc = null;
 
