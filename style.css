@@ -84,6 +84,29 @@ button {
   white-space: nowrap;
 }
 
+.main-menu-title {
+  font-family: 'Uncial Antiqua', serif;
+  font-size: clamp(2rem, 10vw, 4.5rem); /* чуть меньше, чтобы не давило кнопки */
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 2px;
+  background-image: url('Images/wood-light.jpg');
+  background-size: cover;
+  background-position: center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+.main-menu-title div {
+  white-space: nowrap;
+}
+
+
 #main-menu {
   z-index: 5;
   transition: opacity 0.5s ease;
