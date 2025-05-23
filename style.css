@@ -60,15 +60,13 @@ button {
 
 #splash-title {
   font-family: 'Uncial Antiqua', serif;
-  font-size: 4em;
+  font-size: clamp(2rem, 10vw, 6rem);
   font-weight: 700;
   position: fixed;
-  top: 40vh;
+  top: 35vh;
   width: 100%;
   transition: opacity 0.5s ease;
   z-index: 10;
-  white-space: normal;
-  overflow-wrap: break-word;
   line-height: 1.2;
   letter-spacing: 2px;
   background-image: url('Images/wood-light.jpg');
@@ -77,6 +75,13 @@ button {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#splash-title div {
+  white-space: nowrap;
 }
 
 #main-menu {
@@ -581,7 +586,6 @@ button {
 
 @media (max-width: 600px) {
   #splash-title {
-    font-size: 3em;
     letter-spacing: 1px;
   }
 
@@ -651,32 +655,65 @@ button {
   }
 
   #inventory-tabs {
-   торой файл `index.html` или `script.js`, так как они не влияют на отображение названия игры.
+    margin-bottom: 10px;
+  }
 
-### Что нужно сделать
-1. **Обновите файл**:
-   - Замените содержимое `style.css` на предоставленное выше.
-2. **Проверьте изображение**:
-   - Убедитесь, что файл `Images/wood-light.jpg` существует в папке `Images/` и доступен. Если файл отсутствует или путь неверный, текст названия станет невидимым (прозрачным).
-3. **Протестируйте**:
-   - Откройте `index.html` через локальный сервер (например, с помощью `http-server` или расширения VS Code Live Server), чтобы избежать проблем с загрузкой локальных файлов из-за CORS.
-   - Дождитесь появления экрана с названием игры ("Endless Adventure"), который отображается после заставки разработчика (`#splash-dev`).
-   - Убедитесь, что текст "Endless Adventure" имеет текстуру дерева из `wood-light.jpg`, а не белый цвет.
-   - Проверьте на разных устройствах:
-     - На десктопе: текст должен быть размером 4em.
-     - На мобильных устройствах (ширина < 600px): текст должен быть размером 3em (согласно медиа-запросу).
-   - Если текстура не отображается, откройте DevTools (F12 → Network) и проверьте, загружается ли `Images/wood-light.jpg`. Если нет, проверьте правильность пути или наличие файла.
-4. **Отладка**:
-   - Если текст остаётся прозрачным без текстуры, проверьте в DevTools (F12 → Elements), применяются ли стили `background-image`, `-webkit-background-clip: text`, и `color: transparent` к `#splash-title`.
-   - Если текстура отображается некорректно (например, растянута или обрезана), экспериментируйте с `background-size` (например, замените `cover` на `contain` или конкретные значения вроде `100px 100px`) в `style.css`.
-   - Очистите кэш браузера (Ctrl+Shift+R), чтобы применить изменения стилей.
-   - Если эффект не работает в некоторых браузерах (например, Firefox), это может быть связано с отсутствием поддержки `-webkit-background-clip: text`. В таком случае текст будет прозрачным. Если это критично, можно добавить резервный цвет (например, `color: #d9e4dd;`) через условные стили, но это не требуется по вашему запросу.
+  .tab-button {
+    font-size: 1.2em;
+    padding: 8px 15px;
+    margin: 0 3px;
+  }
 
-### Примечания
-- **Название игры**: Изменение касается только экрана `#splash-title` ("Endless Adventure"), который появляется на старте игры. Название в `#main-menu` (`<h1>Endless Adventure</h1>`) остаётся белым (`color: #f0f0f0;` от `body`), так как вы указали изменение только для названия игры, а `#splash-title` — это начальный экран с названием.
-- **Качество текстуры**: Убедитесь, что `wood-light.jpg` имеет достаточное разрешение, чтобы текстура выглядела чётко при `font-size: 4em` (или `3em` на мобильных). Если текстура выглядит размытой, попробуйте заменить изображение на версию с более высоким разрешением.
-- **Совместимость**: Свойство `background-clip: text` поддерживается в современных браузерах (Chrome, Safari, Edge, Firefox), но для старых браузеров (например, IE) эффект не сработает, и текст будет прозрачным. Если нужна поддержка старых браузеров, уточните, и я добавлю резервный стиль.
-- **Файлы `index.html` и `script.js`**: Они не требуют изменений, так как не влияют на стиль `#splash-title`. Подтверждаю, что текущие версии файлов корректны и включают предыдущие изменения (например, добавление "Зелье здоровья" и "Походные сапоги" в `script.js`).
-- **Производительность**: Добавление текстуры не должно существенно повлиять на производительность, так как это статическое изображение, применяемое к небольшому элементу.
+  #inventory-list {
+    width: 95%;
+    max-width: 400px;
+  }
 
-Если текстура не отображается как ожидалось, нужны дополнительные настройки (например, изменение `background-size` или добавление резервного цвета), или вы хотите применить текстуру также к `#main-menu h1`, напишите, и я обновлю решение!
+  .inventory-item {
+    height: 50px;
+    margin-bottom: 3px;
+  }
+
+  .inventory-item img {
+    width: 40px;
+    height: 40px;
+    margin: 5px 8px;
+  }
+
+  .inventory-item .item-name {
+    font-size: 0.9em;
+  }
+
+  .inventory-item .item-desc {
+    font-size: 0.7em;
+  }
+
+  .class-option {
+    min-height: 50px;
+    padding: 3px;
+  }
+
+  .class-name-row {
+    height: 50px;
+  }
+
+  .class-option img {
+    width: 40px;
+    height: 40px;
+    margin: 5px 8px;
+  }
+
+  .class-name {
+    font-size: 0.9em;
+  }
+
+  .class-details {
+    font-size: 0.85em;
+    padding: 0 8px;
+    margin: 0 8px 8px 8px;
+  }
+
+  .class-details:not(.hidden) {
+    padding: 8px;
+  }
+}
