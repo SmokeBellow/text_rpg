@@ -749,11 +749,41 @@ button {
   }
 }
 
+#character-screen {
+  padding: 20px;
+  text-align: center;
+}
 
-#sidebar-close {
-  background-image: url('close.png');
-  background-size: cover;
-  background-position: center;
-  color: transparent !important;
-  font-size: 0 !important;
+#character-equipment {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 20px 0;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.equipment-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.equipment-slot {
+  width: 100px;
+  height: 60px;
+  background-color: #222;
+  border: 1px solid #666;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85em;
+}
+
+.character-image img {
+  width: 180px;
+  height: auto;
+  border: 2px solid #444;
+  background-color: #111;
 }

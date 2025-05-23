@@ -346,9 +346,7 @@ function backToGame() {
 }
 
 // Заглушки для других кнопок меню
-function showAboutCharacter() {
-  alert("Раздел 'Об игроке' в разработке!");
-}
+
 
 function showInventory() {
   resetScreens();
@@ -385,6 +383,7 @@ function showInventory() {
               <div class="item-name">${item}</div>
               <div class="item-desc">${itemDescriptions[item]}</div>
             </div>
+            <button onclick="equipItem(\'${item}\', getItemType(\'${item}\'))">Надеть</button>
           `;
         }
         inventoryList.appendChild(itemElement);
@@ -787,4 +786,36 @@ function updateLocation() {
     extraContent.appendChild(monTitle);
     extraContent.appendChild(content);
   }
+}
+function showAboutCharacter() {
+  resetScreens();
+  const screen = document.getElementById("character-screen");
+  const charImg = document.getElementById("character-image");
+
+  const classMap = {
+    archer: "archer_profile.jpg",
+    warrior: "warrior_profile.jpg",
+    rogue: "rogue_profile.jpg"
+  };
+
+  charImg.innerHTML = `<img src="Images/${classMap[playerData.class]}" alt="Персонаж" class="profile-image">`;
+
+  document.querySelectorAll(".equipment-slot").forEach(slot => {
+    const slotName = slot.dataset.slot;
+    const item = playerData.equipment?.[slotName];
+    slot.innerHTML = item ? `<div class="equipment-item">${item}</div>` : slot.innerText;
+  });
+
+  screen.classList.remove("hidden");
+  screen.classList.add("visible");
+  document.getElementById("menu-button").classList.remove("hidden");
+  document.getElementById("menu-button").classList.add("visible");
+}
+
+function getItemType(item) {
+  if (["Лук", "Меч", "Кинжалы"].includes(item)) return "weapon";
+  if (["Кожаная броня", "Стальная броня", "Плащ"].includes(item)) return "armor";
+  if (["Кольчужный капюшон", "Маска"].includes(item)) return "helmet";
+  if (["Походные сапоги"].includes(item)) return "boots";
+  return "amulet";
 }
