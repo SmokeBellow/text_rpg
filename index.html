@@ -48,6 +48,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet">
 </head>
 <body>
+
 <div id="inventory-screen" class="hidden">
   <h2>Инвентарь</h2>
   <div id="inventory-tabs">
@@ -64,11 +65,6 @@
   <div id="inventory-empty" class="hidden">Раздел пуст</div>
   <button onclick="backToGame()">Назад</button>
 </div>
-
-    <div id="inventory-list"></div>
-    <div id="inventory-empty" class="hidden">Раздел пуст</div>
-    <button onclick="backToGame()">Назад</button>
-  </div>
 
 <div id="menu-button" class="hidden" onclick="toggleMenu()">☰</div>
 
@@ -181,12 +177,12 @@
       <div class="equipment-slot" data-slot="weapon1">Оружие 1</div>
     </div>
     <div id="character-image" class="character-image"></div>
-<div class="equipment-slot" data-slot="amulet">Амулет</div>
+    <div class="equipment-slot" data-slot="amulet">Амулет</div>
     <div class="equipment-column">
       <div class="equipment-slot" data-slot="weapon2">Оружие 2</div>
       <div class="equipment-slot" data-slot="pants">Штаны</div>
       <div class="equipment-slot" data-slot="boots">Обувь</div>
-          </div>
+    </div>
   </div>
   <button onclick="backToGame()">Назад</button>
 </div>
