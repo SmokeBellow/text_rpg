@@ -170,22 +170,30 @@
 
 <div id="character-screen" class="hidden">
   <h2>О персонаже</h2>
-  <div id="character-equipment">
-    <div class="equipment-column">
+  <div id="character-equipment" style="display: flex; justify-content: center; align-items: flex-start; gap: 40px; flex-wrap: wrap;">
+    <!-- Левая колонка -->
+    <div class="equipment-column" style="display: flex; flex-direction: column; gap: 15px;">
       <div class="equipment-slot" data-slot="helmet">Шлем</div>
       <div class="equipment-slot" data-slot="armor">Броня</div>
-      <div class="equipment-slot" data-slot="weapon1">Оружие 1</div>
-    </div>
-    <div id="character-image" class="character-image"></div>
-    <div class="equipment-slot" data-slot="amulet">Амулет</div>
-    <div class="equipment-column">
-      <div class="equipment-slot" data-slot="weapon2">Оружие 2</div>
       <div class="equipment-slot" data-slot="pants">Штаны</div>
+    </div>
+    <!-- Центр с картинкой -->
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <div id="character-image" class="character-image" style="display: flex; justify-content: center;">
+        <img src="Images/archer_profile.jpg" alt="Персонаж" style="width: 180px; height: 240px; object-fit: cover; border: 2px solid #444; background-color: #111; border-radius: 6px;">
+      </div>
+      <div class="equipment-slot" data-slot="amulet" style="margin-top: 16px;">Амулет</div>
+    </div>
+    <!-- Правая колонка -->
+    <div class="equipment-column" style="display: flex; flex-direction: column; gap: 15px;">
+      <div class="equipment-slot" data-slot="weapon1">Оружие 1</div>
+      <div class="equipment-slot" data-slot="weapon2">Оружие 2</div>
       <div class="equipment-slot" data-slot="boots">Обувь</div>
     </div>
   </div>
   <button onclick="backToGame()">Назад</button>
 </div>
+
 </body>
 
 </html>
