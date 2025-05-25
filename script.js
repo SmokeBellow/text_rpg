@@ -905,13 +905,13 @@ function showAboutCharacter() {
   document.getElementById("menu-button").classList.add("visible");
 }
 
-
-
 function getItemType(item) {
-  if (["Лук", "Меч", "Кинжал"].includes(item)) return "weapon";
+  if (item === "Лук") return "twohanded";
+  if (["Меч", "Кинжал"].includes(item)) return "weapon";
   if (["Кожаная броня", "Стальная броня", "Плащ"].includes(item)) return "armor";
   if (["Кольчужный капюшон", "Маска"].includes(item)) return "helmet";
   if (["Походные сапоги"].includes(item)) return "boots";
   if (["Зелье здоровья"].includes(item)) return "potion";
   return "amulet";
 }
+
