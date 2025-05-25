@@ -1,8 +1,5 @@
 console.log("script.js loaded");
 
-// Глобальная переменная для хранения текущего раздела инвентаря
-let currentInventoryTab = "weapons";
-
 // Данные NPC
 const npcData = {
   "Староста Лем": {
@@ -185,10 +182,8 @@ function resetScreens() {
       el.classList.remove("visible");
       el.classList.add("hidden");
     });
-  const sidebarMenu = document.getElementById("sidebar-menu");
-  const menuButton = document.getElementById("menu-button");
-  if (sidebarMenu) sidebarMenu.classList.remove("open");
-  if (menuButton) menuButton.classList.add("hidden");
+  document.getElementById("sidebar-menu").classList.remove("open");
+  document.getElementById("menu-button").classList.add("hidden");
 }
 
 // Управление боковым меню
@@ -196,7 +191,7 @@ function closeMenuOnOutsideClick(event) {
   const sidebar = document.getElementById("sidebar-menu");
   const menuButton = document.getElementById("menu-button");
   const sidebarClose = document.getElementById("sidebar-close");
-  if (sidebar && sidebar.classList.contains("open") &&
+  if (sidebar.classList.contains("open") &&
       !event.target.closest("#sidebar-menu") &&
       !event.target.closest("#menu-button") &&
       !event.target.closest("#sidebar-close")) {
@@ -206,7 +201,6 @@ function closeMenuOnOutsideClick(event) {
 
 function toggleMenu() {
   const sidebar = document.getElementById("sidebar-menu");
-  if (!sidebar) return;
   sidebar.classList.toggle("open");
   if (sidebar.classList.contains("open")) {
     sidebar.classList.remove("hidden");
@@ -223,55 +217,7 @@ function toggleMenu() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const sidebarClose = document.getElementById("sidebar-close");
-  if (sidebarClose) {
-    sidebarClose.addEventListener("click", toggleMenu);
-  }
-
-  // Splash-экраны
-  console.log("Starting splash screen sequence");
-  resetScreens();
-  const splashDev = document.getElementById("splash-dev");
-  if (splashDev) {
-    splashDev.classList.remove("hidden");
-    splashDev.classList.add("visible");
-    console.log("Showing splash-dev");
-  } else {
-    console.error("Element #splash-dev not found");
-  }
-
-  setTimeout(() => {
-    if (splashDev) {
-      splashDev.classList.remove("visible");
-      splashDev.classList.add("hidden");
-      console.log("Hiding splash-dev");
-    }
-    const splashTitle = document.getElementById("splash-title");
-    if (splashTitle) {
-      splashTitle.classList.remove("hidden");
-      splashTitle.classList.add("visible");
-      console.log("Showing splash-title");
-    } else {
-      console.error("Element #splash-title not found");
-    }
-    setTimeout(() => {
-      if (splashTitle) {
-        splashTitle.classList.remove("visible");
-        splashTitle.classList.add("hidden");
-        console.log("Hiding splash-title");
-      }
-      const mainMenu = document.getElementById("main-menu");
-      if (mainMenu) {
-        mainMenu.classList.remove("hidden");
-        mainMenu.classList.add("visible");
-        console.log("Showing main-menu");
-      } else {
-        console.error("Element #main-menu not found");
-      }
-    }, 3000);
-  }, 3000);
-});
+document.getElementById("sidebar-close").addEventListener("click", toggleMenu);
 
 // Экран разговора с NPC
 let currentNpc = null;
@@ -279,42 +225,33 @@ let currentNpc = null;
 function showNpcDialog(name) {
   resetScreens();
   const dialog = document.getElementById("npc-dialog");
-  if (!dialog) return;
-  const npcName = document.getElementById("npc-name");
-  const npcDesc = document.getElementById("npc-desc");
-  const npcText = document.getElementById("npc-text");
-  const npcImage = document.getElementById("npc-image");
-  if (npcName) npcName.innerText = name;
-  if (npcDesc) npcDesc.innerText = npcData[name].desc;
-  if (npcText) npcText.innerText = npcData[name].text;
-  if (npcImage) npcImage.src = npcData[name].image;
+  document.getElementById("npc-name").innerText = name;
+  document.getElementById("npc-desc").innerText = npcData[name].desc;
+  document.getElementById("npc-text").innerText = npcData[name].text;
+  document.getElementById("npc-image").src = npcData[name].image;
   currentNpc = name;
 
   const questButton = document.getElementById("npc-quest");
   const questLimitMsg = document.getElementById("quest-limit-msg");
 
   if (name === "Мудрая жаба") {
-    if (questButton) questButton.classList.add("hidden");
-    if (questLimitMsg) questLimitMsg.classList.add("hidden");
+    questButton.classList.add("hidden");
+    questLimitMsg.classList.add("hidden");
   } else {
     const alreadyTaken = playerData.quests.find(q => q.npc === name);
     const tooManyQuests = playerData.quests.length >= 4;
 
     if (alreadyTaken) {
-      if (questButton) questButton.classList.add("hidden");
-      if (questLimitMsg) questLimitMsg.classList.add("hidden");
+      questButton.classList.add("hidden");
+      questLimitMsg.classList.add("hidden");
     } else if (tooManyQuests) {
-      if (questButton) {
-        questButton.disabled = true;
-        questButton.classList.remove("hidden");
-      }
-      if (questLimitMsg) questLimitMsg.classList.remove("hidden");
+      questButton.disabled = true;
+      questButton.classList.remove("hidden");
+      questLimitMsg.classList.remove("hidden");
     } else {
-      if (questButton) {
-        questButton.disabled = false;
-        questButton.classList.remove("hidden");
-      }
-      if (questLimitMsg) questLimitMsg.classList.add("hidden");
+      questButton.disabled = false;
+      questButton.classList.remove("hidden");
+      questLimitMsg.classList.add("hidden");
     }
   }
 
@@ -324,16 +261,10 @@ function showNpcDialog(name) {
 
 function closeNpcDialog() {
   resetScreens();
-  const gameScreen = document.getElementById("game-screen");
-  const menuButton = document.getElementById("menu-button");
-  if (gameScreen) {
-    gameScreen.classList.remove("hidden");
-    gameScreen.classList.add("visible");
-  }
-  if (menuButton) {
-    menuButton.classList.remove("hidden");
-    menuButton.classList.add("visible");
-  }
+  document.getElementById("game-screen").classList.remove("hidden");
+  document.getElementById("game-screen").classList.add("visible");
+  document.getElementById("menu-button").classList.remove("hidden");
+  document.getElementById("menu-button").classList.add("visible");
   currentNpc = null;
   updateLocation();
 }
@@ -360,8 +291,6 @@ function showQuests() {
   resetScreens();
   const questsScreen = document.getElementById("quests-screen");
   const questsList = document.getElementById("quests-list");
-  if (!questsScreen || !questsList) return;
-
   questsList.innerHTML = "";
 
   if (playerData.quests.length === 0) {
@@ -393,11 +322,8 @@ function showQuests() {
 
   questsScreen.classList.remove("hidden");
   questsScreen.classList.add("visible");
-  const menuButton = document.getElementById("menu-button");
-  if (menuButton) {
-    menuButton.classList.remove("hidden");
-    menuButton.classList.add("visible");
-  }
+  document.getElementById("menu-button").classList.remove("hidden");
+  document.getElementById("menu-button").classList.add("visible");
 
   document.addEventListener("click", closeQuestDetailsOnOutsideClick);
 }
@@ -410,16 +336,10 @@ function closeQuestDetailsOnOutsideClick(event) {
 
 function backToGame() {
   resetScreens();
-  const gameScreen = document.getElementById("game-screen");
-  const menuButton = document.getElementById("menu-button");
-  if (gameScreen) {
-    gameScreen.classList.remove("hidden");
-    gameScreen.classList.add("visible");
-  }
-  if (menuButton) {
-    menuButton.classList.remove("hidden");
-    menuButton.classList.add("visible");
-  }
+  document.getElementById("game-screen").classList.remove("hidden");
+  document.getElementById("game-screen").classList.add("visible");
+  document.getElementById("menu-button").classList.remove("hidden");
+  document.getElementById("menu-button").classList.add("visible");
   document.removeEventListener("click", closeQuestDetailsOnOutsideClick);
   updateLocation();
 }
@@ -478,8 +398,8 @@ function equipItem(item, itemType) {
   // Сохраняем изменения
   saveGame();
 
-  // Обновляем отображение инвентаря с сохранением текущего раздела
-  showInventory(currentInventoryTab);
+  // Обновляем отображение инвентаря
+  showInventory();
 
   // Если находимся на экране персонажа, обновляем его
   if (!document.getElementById("character-screen").classList.contains("hidden")) {
@@ -488,21 +408,19 @@ function equipItem(item, itemType) {
 }
 
 // Экран инвентаря
-function showInventory(tab = currentInventoryTab) {
+function showInventory() {
   resetScreens();
   const inventoryScreen = document.getElementById("inventory-screen");
   const inventoryList = document.getElementById("inventory-list");
   const inventoryEmpty = document.getElementById("inventory-empty");
   const tabs = document.querySelectorAll(".tab-button");
 
-  if (!inventoryScreen || !inventoryList || !inventoryEmpty) return;
-
-  // Устанавливаем активную вкладку
-  currentInventoryTab = tab;
-  tabs.forEach(t => {
-    t.classList.remove("active");
-    if (t.dataset.tab === currentInventoryTab) {
-      t.classList.add("active");
+  // По умолчанию показываем раздел оружия
+  let currentTab = "weapons";
+  tabs.forEach(tab => {
+    tab.classList.remove("active");
+    if (tab.dataset.tab === currentTab) {
+      tab.classList.add("active");
     }
   });
 
@@ -535,32 +453,51 @@ function showInventory(tab = currentInventoryTab) {
   }
 
   // Начальный рендеринг
-  renderInventory(currentInventoryTab);
+  renderInventory(currentTab);
 
   // Обработчики вкладок
   tabs.forEach(tab => {
-    tab.removeEventListener("click", tab._clickHandler); // Удаляем старые обработчики
-    tab._clickHandler = () => {
-      currentInventoryTab = tab.dataset.tab;
+    tab.addEventListener("click", () => {
+      currentTab = tab.dataset.tab;
       tabs.forEach(t => t.classList.remove("active"));
       tab.classList.add("active");
-      renderInventory(currentInventoryTab);
-    };
-    tab.addEventListener("click", tab._clickHandler);
+      renderInventory(currentTab);
+    });
   });
 
   inventoryScreen.classList.remove("hidden");
   inventoryScreen.classList.add("visible");
-  const menuButton = document.getElementById("menu-button");
-  if (menuButton) {
-    menuButton.classList.remove("hidden");
-    menuButton.classList.add("visible");
-  }
+  document.getElementById("menu-button").classList.remove("hidden");
+  document.getElementById("menu-button").classList.add("visible");
 }
 
 function showSkills() {
   alert("Раздел 'Умения' в разработке!");
 }
+
+// Splash-экраны
+resetScreens();
+document.getElementById("splash-dev").classList.remove("hidden");
+document.getElementById("splash-dev").classList.add("visible");
+
+setTimeout(() => {
+  document.getElementById("splash-dev").classList.remove("visible");
+  document.getElementById("splash-dev").classList.add("hidden");
+  setTimeout(() => {
+    resetScreens();
+    document.getElementById("splash-title").classList.remove("hidden");
+    document.getElementById("splash-title").classList.add("visible");
+    setTimeout(() => {
+      document.getElementById("splash-title").classList.remove("visible");
+      document.getElementById("splash-title").classList.add("hidden");
+      setTimeout(() => {
+        resetScreens();
+        document.getElementById("main-menu").classList.remove("hidden");
+        document.getElementById("main-menu").classList.add("visible");
+      }, 500);
+    }, 3000);
+  }, 500);
+}, 3000);
 
 // Состояние игры
 let playerData = {
@@ -658,11 +595,8 @@ function newGame() {
     }
   };
   resetScreens();
-  const classSelection = document.getElementById("class-selection");
-  if (classSelection) {
-    classSelection.classList.remove("hidden");
-    classSelection.classList.add("visible");
-  }
+  document.getElementById("class-selection").classList.remove("hidden");
+  document.getElementById("class-selection").classList.add("visible");
   document.querySelectorAll(".class-option").forEach(opt => {
     opt.classList.remove("selected");
     opt.querySelector(".class-details").classList.add("hidden");
@@ -673,16 +607,6 @@ function continueGame() {
   const data = localStorage.getItem("mygame-save");
   if (data) {
     playerData = JSON.parse(data);
-    if (!playerData.equipment) {
-      playerData.equipment = {
-        weapon1: null,
-        weapon2: null,
-        helmet: null,
-        armor: null,
-        boots: null,
-        amulet: null
-      };
-    }
     startGame();
   } else {
     alert("Сохранённой игры не найдено. Начните новую игру.");
@@ -691,20 +615,14 @@ function continueGame() {
 
 function showAbout() {
   resetScreens();
-  const aboutScreen = document.getElementById("about-screen");
-  if (aboutScreen) {
-    aboutScreen.classList.remove("hidden");
-    aboutScreen.classList.add("visible");
-  }
+  document.getElementById("about-screen").classList.remove("hidden");
+  document.getElementById("about-screen").classList.add("visible");
 }
 
 function backToMenu() {
   resetScreens();
-  const mainMenu = document.getElementById("main-menu");
-  if (mainMenu) {
-    mainMenu.classList.remove("hidden");
-    mainMenu.classList.add("visible");
-  }
+  document.getElementById("main-menu").classList.remove("hidden");
+  document.getElementById("main-menu").classList.add("visible");
 }
 
 function selectClass() {
@@ -742,16 +660,10 @@ function selectClass() {
 
 function startGame() {
   resetScreens();
-  const gameScreen = document.getElementById("game-screen");
-  const menuButton = document.getElementById("menu-button");
-  if (gameScreen) {
-    gameScreen.classList.remove("hidden");
-    gameScreen.classList.add("visible");
-  }
-  if (menuButton) {
-    menuButton.classList.remove("hidden");
-    menuButton.classList.add("visible");
-  }
+  document.getElementById("game-screen").classList.remove("hidden");
+  document.getElementById("game-screen").classList.add("visible");
+  document.getElementById("menu-button").classList.remove("hidden");
+  document.getElementById("menu-button").classList.add("visible");
   updateLocation();
 }
 
@@ -764,8 +676,6 @@ function showTravelScreen(targetLocation, duration) {
   const travelScreen = document.getElementById("travel-screen");
   const travelTimer = document.getElementById("travel-timer");
   const travelText = document.getElementById("travel-text");
-  if (!travelScreen || !travelTimer || !travelText) return;
-
   travelScreen.classList.remove("hidden");
   travelScreen.classList.add("visible");
   let timeLeft = Math.ceil(duration / 1000);
@@ -781,16 +691,10 @@ function showTravelScreen(targetLocation, duration) {
       playerData.location = targetLocation;
       saveGame();
       resetScreens();
-      const gameScreen = document.getElementById("game-screen");
-      const menuButton = document.getElementById("menu-button");
-      if (gameScreen) {
-        gameScreen.classList.remove("hidden");
-        gameScreen.classList.add("visible");
-      }
-      if (menuButton) {
-        menuButton.classList.remove("hidden");
-        menuButton.classList.add("visible");
-      }
+      document.getElementById("game-screen").classList.remove("hidden");
+      document.getElementById("game-screen").classList.add("visible");
+      document.getElementById("menu-button").classList.remove("hidden");
+      document.getElementById("menu-button").classList.add("visible");
       updateLocation();
     }
   }, 1000);
@@ -874,7 +778,7 @@ const locations = {
     desc: "Красный каньон, высеченный ветрами веков. Его стены покрыты знаками древних племён.",
     paths: ["Горы", "Равнина"],
     characters: ["Скиталец Кайр"],
-    monsters: []
+    monsters: ["Песчаный ящер"]
   },
   "Равнина": {
     desc: "Бескрайняя равнина, где травы шепчут о забытых битвах. Вдалеке виднеются силуэты древних курганов.",
@@ -886,20 +790,17 @@ const locations = {
     desc: "Полуразрушенная крепость, чьи башни всё ещё стоят. В её залах звучат отголоски рыцарских клятв.",
     paths: ["Равнина", "Храм"],
     characters: ["Комендант Рейн"],
-    monsters: []
+    monsters: ["Оживший доспех"]
   }
 };
 
 function updateLocation() {
   const loc = playerData.location;
   const data = locations[loc];
-  const locationName = document.getElementById("location-name");
-  const locationDesc = document.getElementById("location-desc");
-  const buttons = document.getElementById("location-buttons");
-  if (!locationName || !locationDesc || !buttons) return;
+  document.getElementById("location-name").innerText = loc;
+  document.getElementById("location-desc").innerText = data.desc;
 
-  locationName.innerText = loc;
-  locationDesc.innerText = data.desc;
+  const buttons = document.getElementById("location-buttons");
   buttons.innerHTML = "";
 
   data.paths.forEach(path => {
@@ -914,7 +815,6 @@ function updateLocation() {
   });
 
   const extraContent = document.getElementById("extra-content");
-  if (!extraContent) return;
   extraContent.innerHTML = "";
 
   if (data.characters.length > 0) {
@@ -969,26 +869,25 @@ function showAboutCharacter() {
   resetScreens();
   const screen = document.getElementById("character-screen");
   const charImg = document.getElementById("character-image");
-  if (!screen || !charImg) return;
 
   const classMap = {
     archer: "archer_profile.png",
     warrior: "warrior_profile.png",
-    rogue: "rogue_image.png"
+    rogue: "rogue_profile.png"
   };
 
-  charImg.src = `Images/${classMap[playerData.class] || "default.png"}`;
+  charImg.src = `Images/${classMap[playerData.class]}`;
 
   document.querySelectorAll(".equipment-slot").forEach(slot => {
     const slotName = slot.dataset.slot;
     const item = playerData.equipment[slotName];
-    slot.innerHTML = item
-      ? `<img class="equipment-item" src="${itemIcons[item]}" alt="${item}" />`
-      : slotName.charAt(0).toUpperCase() + slotName.slice(1);
+    slot.innerHTML = item ? `<div class="equipment-item">${item}</div>` : slotName.charAt(0).toUpperCase() + slotName.slice(1);
   });
 
   screen.classList.remove("hidden");
   screen.classList.add("visible");
+  document.getElementById("menu-button").classList.remove("hidden");
+  document.getElementById("menu-button").classList.add("visible");
 }
 
 function getItemType(item) {
