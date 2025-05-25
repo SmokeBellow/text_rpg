@@ -904,7 +904,7 @@ function showAboutCharacter() {
 
     if (item) {
       const iconSrc = itemIcons[item] || "Images/items/unknown.png";
-      slot.innerHTML = `<div class="equipment-item"><img src="${iconSrc}" alt="${item}" title="${item}" style="width:40px; height:40px; object-fit:contain;"/><div class="equipment-label">${item}</div></div>`;
+      slot.innerHTML = `<div class="equipment-item"><img src="${iconSrc}" alt="${item}" title="${item}" style="width:40px; height:40px; object-fit:contain;"/></div>`;
     } else {
       slot.innerHTML = slotName.charAt(0).toUpperCase() + slotName.slice(1);
     }
