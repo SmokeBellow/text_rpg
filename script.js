@@ -538,6 +538,12 @@ let playerData = {
     armor: null,
     boots: null,
     amulet: null
+  },
+   stats: {
+    strength: 5,     // Сила
+    agility: 5,      // Ловкость
+    endurance: 5,    // Выносливость
+    luck: 5          // Удача
   }
 };
 
@@ -655,17 +661,19 @@ function selectClass() {
     playerData.class = selectedClass;
   }
 
-  // Добавляем начальные предметы
+  // Добавляем начальные предметы и характеристики
   if (playerData.class === "archer") {
+    playerData.stats = { strength: 4, agility: 7, endurance: 5, luck: 5 };
     playerData.inventory.weapons.push("Лук");
     playerData.inventory.armor.push("Кожаная броня", "Кольчужный капюшон");
   } else if (playerData.class === "warrior") {
+    playerData.stats = { strength: 7, agility: 4, endurance: 7, luck: 4 };
     playerData.inventory.weapons.push("Меч");
     playerData.inventory.armor.push("Щит", "Стальная броня");
   } else if (playerData.class === "rogue") {
-    playerData.inventory.weapons.push("Кинжал", "Кинжал"); // <-- Два отдельных кинжала
-    playerData.inventory.armor.push("Плащ");
-    playerData.inventory.armor.push("Маска");
+    playerData.stats = { strength: 5, agility: 7, endurance: 4, luck: 6 };
+    playerData.inventory.weapons.push("Кинжал", "Кинжал");
+    playerData.inventory.armor.push("Плащ", "Маска");
   }
 
   // Добавляем общие предметы для всех классов
@@ -920,6 +928,24 @@ function showAboutCharacter() {
       slot.innerHTML = `<img src="${emptyIcon}" alt="Пусто" title="Пусто" style="width:40px; height:40px; opacity:0.4;" />`;
     }
   });
+
+  // --- ХАРАКТЕРИСТИКИ ---
+  let statsBlock = document.getElementById("character-stats");
+  if (!statsBlock) {
+    statsBlock = document.createElement("div");
+    statsBlock.id = "character-stats";
+    statsBlock.style.marginTop = "20px";
+    statsBlock.style.fontSize = "1.1em";
+    screen.appendChild(statsBlock);
+  }
+  const stats = playerData.stats || {strength:0, agility:0, endurance:0, luck:0};
+  statsBlock.innerHTML = `
+    <b>Характеристики:</b><br>
+    🦾 Сила: <b>${stats.strength}</b> &nbsp;
+    🗡️ Ловкость: <b>${stats.agility}</b> &nbsp;
+    ❤️ Выносливость: <b>${stats.endurance}</b> &nbsp;
+    🍀 Удача: <b>${stats.luck}</b>
+  `;
 
   screen.classList.remove("hidden");
   screen.classList.add("visible");
