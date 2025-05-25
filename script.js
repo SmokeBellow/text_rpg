@@ -793,9 +793,9 @@ function showAboutCharacter() {
   const charImg = document.getElementById("character-image");
 
   const classMap = {
-    archer: "archer_profile.jpg",
-    warrior: "warrior_profile.jpg",
-    rogue: "rogue_profile.jpg"
+    archer: "archer_profile.png",
+    warrior: "warrior_profile.png",
+    rogue: "rogue_profile.png"
   };
 
   charImg.src = `Images/${classMap[playerData.class]}`;
