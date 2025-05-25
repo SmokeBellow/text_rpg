@@ -180,11 +180,19 @@ const classData = {
 
 // Сброс всех экранов
 function resetScreens() {
-  document.querySelectorAll("#splash-dev, #splash-title, #main-menu, #about-screen, #class-selection, #game-screen, #travel-screen, #npc-dialog, #character-screen, #quests-screen, #inventory-screen")
-    .forEach(el => {
-      el.classList.remove("visible");
-      el.classList.add("hidden");
-    });
+  document.querySelectorAll(".equipment-slot").forEach(slot => {
+  const slotName = slot.dataset.slot;
+  const item = playerData.equipment[slotName];
+
+  if (item) {
+    // Ищем подходящую иконку (или плейсхолдер, если вдруг нет картинки)
+    const iconSrc = itemIcons[item] || "Images/items/unknown.png";
+    slot.innerHTML = `<div class="equipment-item"><img src="${iconSrc}" alt="${item}" title="${item}" style="width:40px; height:40px; object-fit:contain;"/><div class="equipment-label">${item}</div></div>`;
+  } else {
+    slot.innerHTML = slotName.charAt(0).toUpperCase() + slotName.slice(1);
+  }
+});
+
   document.getElementById("sidebar-menu").classList.remove("open");
   document.getElementById("menu-button").classList.add("hidden");
 }
