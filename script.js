@@ -411,15 +411,16 @@ function equipItem(item, itemType) {
 }
 
 // Экран инвентаря
-function showInventory() {
+function showInventory(tabToShow) {
   resetScreens();
   const inventoryScreen = document.getElementById("inventory-screen");
   const inventoryList = document.getElementById("inventory-list");
   const inventoryEmpty = document.getElementById("inventory-empty");
   const tabs = document.querySelectorAll(".tab-button");
 
-  // По умолчанию показываем раздел оружия
-  let currentTab = "weapons";
+  // Используем либо tabToShow, либо текущий сохранённый таб
+  if (tabToShow) currentInventoryTab = tabToShow;
+  let currentTab = currentInventoryTab || "weapons";
   tabs.forEach(tab => {
     tab.classList.remove("active");
     if (tab.dataset.tab === currentTab) {
@@ -460,12 +461,12 @@ function showInventory() {
 
   // Обработчики вкладок
   tabs.forEach(tab => {
-    tab.addEventListener("click", () => {
-      currentTab = tab.dataset.tab;
+    tab.onclick = () => {
+      currentInventoryTab = tab.dataset.tab;
       tabs.forEach(t => t.classList.remove("active"));
       tab.classList.add("active");
-      renderInventory(currentTab);
-    });
+      renderInventory(currentInventoryTab);
+    };
   });
 
   inventoryScreen.classList.remove("hidden");
@@ -473,6 +474,7 @@ function showInventory() {
   document.getElementById("menu-button").classList.remove("hidden");
   document.getElementById("menu-button").classList.add("visible");
 }
+
 
 function showSkills() {
   alert("Раздел 'Умения' в разработке!");
