@@ -133,7 +133,7 @@ const itemIcons = {
   "Меч": "Images/items/sword.png",
   "Щит": "Images/items/shield.png",
   "Стальная броня": "Images/items/steelarmor.png",
-  "Кинжалы": "Images/items/daggers.png",
+  "Кинжал": "Images/items/daggers.png",
   "Плащ": "Images/items/shadowcloak.png",
   "Маска": "Images/items/mask.png"
 };
@@ -148,7 +148,7 @@ const itemDescriptions = {
   "Меч": "Мощное оружие ближнего боя, наносит 20 урона.",
   "Щит": "Блокирует 30% входящего урона.",
   "Стальная броня": "Тяжёлая броня, добавляет 20 защиты.",
-  "Кинжалы": "Быстрое оружие, наносит 12 урона с шансом критического удара.",
+  "Кинжал": "Быстрое оружие, наносит 12 урона с шансом критического удара.",
   "Плащ": "Лёгкий плащ, улучшающий манёвренность и скрытность.",
   "Маска": "Скрывает личность, повышает скрытность."
 };
@@ -643,8 +643,6 @@ function selectClass() {
   }
 
   // Добавляем начальные предметы
-  const classInfo = classData[playerData.class];
-
   if (playerData.class === "archer") {
     playerData.inventory.weapons.push("Лук");
     playerData.inventory.armor.push("Кожаная броня", "Кольчужный капюшон");
@@ -652,7 +650,7 @@ function selectClass() {
     playerData.inventory.weapons.push("Меч");
     playerData.inventory.armor.push("Щит", "Стальная броня");
   } else if (playerData.class === "rogue") {
-    playerData.inventory.weapons.push("Кинжалы");
+    playerData.inventory.weapons.push("Кинжал", "Кинжал"); // <-- Два отдельных кинжала
     playerData.inventory.armor.push("Плащ");
     playerData.inventory.armor.push("Маска");
   }
@@ -665,6 +663,7 @@ function selectClass() {
   resetScreens();
   startGame();
 }
+
 
 function startGame() {
   resetScreens();
@@ -909,7 +908,7 @@ function showAboutCharacter() {
 
 
 function getItemType(item) {
-  if (["Лук", "Меч", "Кинжалы"].includes(item)) return "weapon";
+  if (["Лук", "Меч", "Кинжал"].includes(item)) return "weapon";
   if (["Кожаная броня", "Стальная броня", "Плащ"].includes(item)) return "armor";
   if (["Кольчужный капюшон", "Маска"].includes(item)) return "helmet";
   if (["Походные сапоги"].includes(item)) return "boots";
