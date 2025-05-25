@@ -1,5 +1,8 @@
 console.log("script.js loaded");
 
+let currentInventoryTab = "weapons"; // по умолчанию оружие
+
+
 // Данные NPC
 const npcData = {
   "Староста Лем": {
