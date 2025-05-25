@@ -881,7 +881,15 @@ function showAboutCharacter() {
   document.querySelectorAll(".equipment-slot").forEach(slot => {
     const slotName = slot.dataset.slot;
     const item = playerData.equipment[slotName];
-    slot.innerHTML = item ? `<div class="equipment-item">${item}</div>` : slotName.charAt(0).toUpperCase() + slotName.slice(1);
+
+    if (item) {
+      // Ищем подходящую иконку (или плейсхолдер, если вдруг нет картинки)
+      const iconSrc = itemIcons[item] || "Images/items/unknown.png";
+      slot.innerHTML = `<div class="equipment-item"><img src="${iconSrc}" alt="${item}" title="${item}" style="width:40px; height:40px; object-fit:contain;"/><div class="equipment-label">${item}</div></div>`;
+    } else {
+      // Отображаем название слота
+      slot.innerHTML = slotName.charAt(0).toUpperCase() + slotName.slice(1);
+    }
   });
 
   screen.classList.remove("hidden");
@@ -889,6 +897,7 @@ function showAboutCharacter() {
   document.getElementById("menu-button").classList.remove("hidden");
   document.getElementById("menu-button").classList.add("visible");
 }
+
 
 function getItemType(item) {
   if (["Лук", "Меч", "Кинжалы"].includes(item)) return "weapon";
