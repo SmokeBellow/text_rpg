@@ -832,8 +832,8 @@ button {
     gap: 12px;
   }
   .character-image {
-    width: 88px;
-    height: 118px;
+    width: 180px;
+    height: 240px;
   }
 }
 .equipment-slot {
