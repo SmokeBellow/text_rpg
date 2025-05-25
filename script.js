@@ -351,15 +351,13 @@ function backToGame() {
 
 // Экипировка предметов
 function equipItem(item, itemType) {
-  // Проверяем, что предмет можно экипировать (не зелье)
   if (itemType === "potion") {
     alert("Зелья нельзя экипировать!");
     return;
   }
 
-  // Определяем раздел инвентаря
   let inventorySection;
-  if (itemType === "weapon") {
+  if (itemType === "weapon" || itemType === "twohanded") {
     inventorySection = "weapons";
   } else if (itemType === "armor" || itemType === "helmet" || itemType === "boots") {
     inventorySection = "armor";
@@ -367,7 +365,6 @@ function equipItem(item, itemType) {
     inventorySection = "keyItems";
   }
 
-  // Удаляем предмет из инвентаря
   const itemIndex = playerData.inventory[inventorySection].indexOf(item);
   if (itemIndex !== -1) {
     playerData.inventory[inventorySection].splice(itemIndex, 1);
@@ -376,42 +373,58 @@ function equipItem(item, itemType) {
     return;
   }
 
-  // Определяем слот для экипировки
-  let equipSlot;
-  if (itemType === "weapon") {
-    // Если weapon1 занят, пробуем weapon2
-    if (!playerData.equipment.weapon1) {
-      equipSlot = "weapon1";
-    } else if (!playerData.equipment.weapon2) {
-      equipSlot = "weapon2";
-    } else {
-      // Если оба слота заняты, возвращаем старый предмет из weapon1 в инвентарь
+  if (itemType === "twohanded") {
+    // Если в любом из оружейных слотов уже что-то есть — вернуть их в инвентарь
+    if (playerData.equipment.weapon1) {
       playerData.inventory.weapons.push(playerData.equipment.weapon1);
-      equipSlot = "weapon1";
+    }
+    if (playerData.equipment.weapon2) {
+      // если уже оба заняты одним и тем же луком — не возвращаем дважды
+      if (playerData.equipment.weapon2 !== "Лук") {
+        playerData.inventory.weapons.push(playerData.equipment.weapon2);
+      }
+    }
+    // Экипируем лук сразу в оба слота
+    playerData.equipment.weapon1 = item;
+    playerData.equipment.weapon2 = item;
+  } else if (itemType === "weapon") {
+    // Как обычно: ищем свободный слот
+    if (!playerData.equipment.weapon1) {
+      playerData.equipment.weapon1 = item;
+    } else if (!playerData.equipment.weapon2) {
+      playerData.equipment.weapon2 = item;
+    } else {
+      // Если оба заняты, возвращаем старый предмет из weapon1 в инвентарь
+      playerData.inventory.weapons.push(playerData.equipment.weapon1);
+      playerData.equipment.weapon1 = item;
+    }
+    // Если в любом из слотов был лук (двуручное) — убираем его из обоих слотов
+    if (playerData.equipment.weapon1 === "Лук" && item !== "Лук") {
+      playerData.equipment.weapon1 = null;
+      playerData.equipment.weapon2 = null;
+      // потом поставить выбранное одноручное в weapon1
+      playerData.equipment.weapon1 = item;
+    }
+    if (playerData.equipment.weapon2 === "Лук" && item !== "Лук") {
+      playerData.equipment.weapon2 = null;
     }
   } else {
-    equipSlot = itemType === "helmet" ? "helmet" : itemType === "armor" ? "armor" : itemType === "boots" ? "boots" : "amulet";
-    // Если слот занят, возвращаем старый предмет в инвентарь
+    // броня и т.п.
+    const equipSlot = itemType === "helmet" ? "helmet" : itemType === "armor" ? "armor" : itemType === "boots" ? "boots" : "amulet";
     if (playerData.equipment[equipSlot]) {
       playerData.inventory[inventorySection].push(playerData.equipment[equipSlot]);
     }
+    playerData.equipment[equipSlot] = item;
   }
 
-  // Экипируем предмет
-  playerData.equipment[equipSlot] = item;
-
-  // Сохраняем изменения
   saveGame();
+  showInventory(currentInventoryTab);
 
-  // Обновляем отображение инвентаря
-showInventory(currentInventoryTab);
-
-
-  // Если находимся на экране персонажа, обновляем его
   if (!document.getElementById("character-screen").classList.contains("hidden")) {
     showAboutCharacter();
   }
 }
+
 
 // Экран инвентаря
 function showInventory(tabToShow) {
