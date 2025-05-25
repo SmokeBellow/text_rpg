@@ -898,6 +898,16 @@ function showAboutCharacter() {
 
   charImg.src = `Images/${classMap[playerData.class]}`;
 
+  // Карта для заглушек
+  const slotPlaceholders = {
+    helmet: "Images/items/helmet_empty.png",
+    armor: "Images/items/armor_empty.png",
+    boots: "Images/items/boots_empty.png",
+    weapon1: "Images/items/weapon_empty.png",
+    weapon2: "Images/items/weapon_empty.png",
+    amulet: "Images/items/amulet_empty.png"
+  };
+
   document.querySelectorAll(".equipment-slot").forEach(slot => {
     const slotName = slot.dataset.slot;
     const item = playerData.equipment[slotName];
@@ -906,7 +916,8 @@ function showAboutCharacter() {
       const iconSrc = itemIcons[item] || "Images/items/unknown.png";
       slot.innerHTML = `<div class="equipment-item"><img src="${iconSrc}" alt="${item}" title="${item}" style="width:40px; height:40px; object-fit:contain;"/></div>`;
     } else {
-      slot.innerHTML = slotName.charAt(0).toUpperCase() + slotName.slice(1);
+      const emptyIcon = slotPlaceholders[slotName] || "Images/items/unknown.png";
+      slot.innerHTML = `<img src="${emptyIcon}" alt="Пусто" title="Пусто" style="width:40px; height:40px; opacity:0.4;" />`;
     }
   });
 
