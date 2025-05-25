@@ -217,8 +217,6 @@ function toggleMenu() {
   }
 }
 
-
-
 document.getElementById("sidebar-close").addEventListener("click", toggleMenu);
 // Экран разговора с NPC
 let currentNpc = null;
@@ -346,8 +344,6 @@ function backToGame() {
 }
 
 // Заглушки для других кнопок меню
-
-
 function showInventory() {
   resetScreens();
   const inventoryScreen = document.getElementById("inventory-screen");
@@ -474,18 +470,18 @@ const locationDistances = {
 const locationAccusative = {
   "Деревня": "Деревню",
   "Лес": "Лес",
-  "Река": "Реку",
+  "Река": "к Реке",
   "Горы": "Горы",
-  "Поляна": "Поляну",
+  "Поляна": "к Поляне",
   "Пещера": "Пещеру",
   "Развалины": "Развалины",
   "Башня": "Башню",
   "Храм": "Храм",
-  "Портал": "Портал",
-  "Озеро": "Озеро",
-  "Болото": "Болото",
+  "Портал": "к Порталу",
+  "Озеро": "к Озеру",
+  "Болото": "к Болотам",
   "Каньон": "Каньон",
-  "Равнина": "Равнину",
+  "Равнина": "к Равнине",
   "Крепость": "Крепость"
 };
 
@@ -602,13 +598,13 @@ function showTravelScreen(targetLocation, duration) {
   travelScreen.classList.remove("hidden");
   travelScreen.classList.add("visible");
   let timeLeft = Math.ceil(duration / 1000);
-  travelTimer.innerText = `Вы идёте в ${locationAccusative[targetLocation]}... ${timeLeft} сек`;
+  travelTimer.innerText = `Вы идёте ${locationAccusative[targetLocation]}... ${timeLeft} сек`;
   travelText.innerText = travelTexts[targetLocation] || "Путь манит вперёд...";
 
   const interval = setInterval(() => {
     timeLeft--;
     if (timeLeft > 0) {
-      travelTimer.innerText = `Вы идёте в ${locationAccusative[targetLocation]}... ${timeLeft} сек`;
+      travelTimer.innerText = `Вы идёте ${locationAccusative[targetLocation]}... ${timeLeft} сек`;
     } else {
       clearInterval(interval);
       playerData.location = targetLocation;
