@@ -402,7 +402,8 @@ function equipItem(item, itemType) {
   saveGame();
 
   // Обновляем отображение инвентаря
-  showInventory();
+showInventory(currentInventoryTab);
+
 
   // Если находимся на экране персонажа, обновляем его
   if (!document.getElementById("character-screen").classList.contains("hidden")) {
