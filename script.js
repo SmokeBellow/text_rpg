@@ -798,7 +798,7 @@ function showAboutCharacter() {
     rogue: "rogue_profile.jpg"
   };
 
-  charImg.innerHTML = `<img src="Images/${classMap[playerData.class]}" alt="Персонаж" class="profile-image">`;
+  charImg.src = `Images/${classMap[playerData.class]}`;
 
   document.querySelectorAll(".equipment-slot").forEach(slot => {
     const slotName = slot.dataset.slot;
