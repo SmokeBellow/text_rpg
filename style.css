@@ -11,7 +11,7 @@ body {
   opacity: 0;
   z-index: -1;
   pointer-events: none;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.3s ease;
 }
 
 .hidden:not(.visible) {
@@ -21,6 +21,9 @@ body {
 .visible {
   opacity: 1;
   display: block;
+  z-index: 1;
+  pointer-events: auto;
+  transition: opacity 0.3s ease;
 }
 
 button {
@@ -51,7 +54,7 @@ button {
   width: 200px;
   height: 200px;
   min-width: 200px;
-  min-height: 200px;
+  min-height-height: 200px;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   background-color: #222;
@@ -60,10 +63,9 @@ button {
 
 #splash-title {
   font-family: 'Uncial Antiqua', serif;
-  font-size: clamp(2rem, 10vw, 6rem);
+  font-size: clamp(2rem, 10vw, 0, 6rem);
   font-weight: 700;
-  position: fixed;
-  top: 35vh;
+  position: fixed;  top: 35vh;
   width: 100%;
   transition: opacity 0.5s ease;
   z-index: 10;
@@ -96,46 +98,45 @@ button {
   #npc-screen {
     width: 100%;
     padding-bottom: 10px;
-    padding: 0px 10px;
+    padding: 0px;
   }
 }
 
 #npc-image {
-  grid-column: 1 / 3;
-  grid-row: 1;
-  grid-column: 1 / 2;
-  grid-row: 1;
-  grid-row: 1 / 2;
+  grid-column: 1 / 2px;
+  grid-row: 1 / 2px;
+  grid-column: 1 / 2 / px;
+  grid-row: 1 / 2 / px;
 }
 
 #npc-name {
-  grid-column: 1 / 2;
-  grid-row: 2 / 3;
-  margin-bottom: 2;
+  grid-column: 1 / 2px;
+  grid-row: 2 / 3px;
+  margin-bottom: 2px;
 }
 
 #name {
   font-size: 1.5em;
   margin: 10px;
-  text-align: center;
+  font-size: center;
 }
 
 #npc-desc {
-  grid-column: 1 / 2;
-  grid-row: 3 /  grid-column: 1 / 2;
-  margin-bottom: 1;
+  grid-column: 1 / 2px;
+  grid-row: 3 / px px;
+  margin-bottom: 1px;
 }
 
 #description {
   font-size: 0.9em;
-  margin: 0 10px 10px;
+  margin: 0 10px 10px px px;
 }
 
 #npc-text {
-  grid-column: 1 / 3;
-  grid-row: 4 / 10;
-  grid-column: 2 / 3;
-  grid-row: 2;
+  grid-column: 1 / 3px;
+  grid-row: 4 / 10px;
+  grid-column: 2 / 3px;
+  grid-row: 2px;
 }
 
 #quest-limit {
@@ -152,9 +153,11 @@ button {
 #npc-exit {
   bottom: 10px;
   width: 150px;
+
 }
 
 #quest-screen {
+  width: auto;
   width: 90%;
   padding: 10px;
 }
@@ -171,21 +174,25 @@ button {
 }
 
 #inventory-list {
+  width: auto auto;
   width: 95%;
-  max-width: 400px;
+  max-width: 400px auto;
   margin-bottom: 3px;
 }
 
 .inventory-item {
-  min-height: 5px;
+  min-height: auto200px;
+  height: auto;
   padding: 10px;
   margin-bottom: 2px;
+
 }
 
 .inventory-item img {
-  width: 40px;
-  height: 40px;
-  margin: 5px 8px;
+  width: 40px auto;
+ height: auto40px;
+  margin: 5px auto8px;
+
 }
 
 .item-name .item {
@@ -202,13 +209,15 @@ button {
 }
 
 .class-name-row {
+  display: flex;
   height: 50px;
+
 }
 
 .class-option img {
-  width: 40px;
-  height: 40px;
-  margin: 0px 8px;
+  width: 40px auto;
+ height: auto40px;
+  margin: 0px auto5px 8px;
 }
 
 .class-name {
@@ -216,236 +225,278 @@ button {
 }
 
 .class-details {
-  font-size: 8.5px;
-  margin-bottom: 8px;
+  font-size: 8.5px auto;
+ margin-bottom: auto2px;
   padding: 0px;
   margin: 0 8px;
 }
 
 .class-details:not(.hidden) {
   padding: 8px;
+
 }
 
 #character-sheet {
-  --image-height: 320px;
+  width: auto;
+  height: auto;
+  --image-height: calc(360px);
+  --slot-height: auto;
   --slot-height: calc(var(--image-height) / 3 / 3.4);
 }
 
 .character-sheet {
+  width: auto;
+  height: auto;
   max-width: 100%;
-  gap: 0px vw4;
-  padding: .5rem min(calc(8px, vw2)) pxpx vw2;
+  auto;
+  gap: auto;
+  gap: auto;
+  padding: auto;
 }
 
 .character-image {
-  width: 180px;
-  height: var(--h-height);
+  width: auto-height;
+  height: auto;
 }
 
 #main-menu {
+  width: auto;
   z-index: 5;
-  transition: opacity 0.5s ease;
+  margin: auto;
+  padding: auto;
+  margin-left: auto;
+  margin-right: auto;
   padding-left: 10px;
-  padding-right: 10px;
+  margin-bottom: auto;
 }
 
 #main-menu-title {
-  font-family: 'Uncial Antiqua', serif;
-  font-size: clamp(2rem, 40px, 6vw);
-  font-weight: bold;
-  line-height: 1.2;
-  letter-spacing: 2px;
-  background-image: url('Images/wood-hero.jpg');
-  background-size: cover;
-  background-position: center;
-  -webkit-background-clip: text;
-  background-clip: inherit;
+  padding: auto;
+  margin-bottom: auto;
+  font-family: auto;
+  font-style: auto;
+  font-size: auto ;
+  font-weight: auto;
+  line-height: auto;
+  letter-spacing: auto;
+  background-color: auto;
+
+  background-image: url('Images/background-hero.jpg');
+  margin: auto;
+  width: auto;
+  margin-bottom: auto;
 }
 
  width: auto;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: auto;
+  width: auto;
+  height: auto;
 }
 
-#about-screen, #class-selection, #game-screen, #npc-screen, #npc-display, #quest-screen, #quests-screen, #inventory-screen {
+#about-screen, #class-selection, #game-screen, #nav-screen, #nav-display, #quest-screen, #quests-screen, #inventory-screen {
+  width: auto;
   z-index: 50;
-  transition: opacity 0.5s ease;
+  margin-bottom: auto;
+  height: auto;
 }
 
 #travel-screen {
+  display: flex;
   position: fixed;
   top: 0;
+  margin: auto;
   left: 0;
+  margin-left: auto;
+  top: auto;
   width: 100%;
+  margin-right: auto;
+  width: auto;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
+  margin-bottom: auto;
+  height: auto;
+  background-color: rgba(0,0,0,0.8);
+  padding: auto;
+  margin-bottom: auto;
+  flex: auto;
   align-items: center;
-  transition: opacity 0.5s ease;
-  z-index: 20;
+  margin: auto;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  z-index: auto;
+
 }
 
 #travel-screen.visible {
-  opacity: 1;
-  display: flex;
+ display: block;
+  margin: auto;
+  display: auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: auto;
+  align-items: auto;
 }
 
 #travel-timer {
-  font-size: 1.5em;
-  color: #f0f0f0;
+  top: auto;
+  height: auto;
+  margin-bottom: auto;
 }
 
 #travel-text {
-  font-size: 0.9em;
-  color: #ccc;
-  margin-top: 10px;
-  text-align: center;
-  max-width: 80%;
+  color: auto;
+  top: auto;
+  margin-top: 10px auto;
+  max-width: auto;
+  padding: auto;
+  margin-bottom: auto;
+  text-align: auto;
+
 }
 
 #location-desc {
-  padding: 0 5px;
-  text-align: justify;
+  padding-left: auto;
+  padding: 0px 5px;
+  margin-bottom: auto;
+  text-align: justify-content;
 }
 
-#location-buttons button {
-  margin: 2px;
+#location-nav button {
+  display: block;
+  margin: auto;
+  padding: auto;
+  margin: 2px auto;
 }
 
-.class-option {
-  cursor: pointer;
-  margin: 10px auto;
-  width: 80%;
-  padding: 5px;
+.class-info {
+  width: auto;
+  margin: auto;
+  padding: 10px;
+  margin-bottom: auto;
   border: 1px solid #666;
   background-color: #222;
-  transition: background-color 0.3s ease, border-color 0.3s ease, max-height 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  min-height: 70px;
-  box-sizing: border-box;
+  flex: auto;
+  min-height: auto;
+  height: auto;
 }
 
-.class-option.selected {
+.class-info.selected {
   background-color: #333;
   border-color: #888;
 }
 
-.class-option:hover {
+.class-info:hover {
   background-color: #333;
 }
 
 .class-name-row {
   display: flex;
+  margin: auto;
+  height: auto;
+  flex-direction: row;
   align-items: center;
-  height: 70px;
+  height: auto70px;
 }
 
-.class-option img {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  margin: 5px 10px;
+.class-info img {
+  width: auto60px auto;
+ height: auto 60px;
+  margin-bottom: auto;
+  margin: 5px 10px auto;
 }
 
 .class-name {
-  font-size: 1em;
+  font-size: auto;
   font-weight: bold;
-  flex: 1;
+  flex: auto;
   text-align: left;
+  width: auto;
   overflow-wrap: break-word;
-}
 
-.class-details {
-  font-size: 1.1em;
-  max-height: 0;
-  overflow: hidden;
-  margin: 0 10px 10px 10px;
-  padding: 0 10px;
-  background-color: #333;
-  border: 1px solid #777;
-  font-size: 0.95em;
-  color: #ccc;
-  text-align: left;
-  transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.class-details:not(.hidden) {
-  max-height: 300px;
-  padding: 10px;
-  opacity: 1;
-}
-
-.class-details p {
-  margin: 5px 0;
-}
-
-.class-details strong {
-  color: #f0f0f0;
 }
 
 #extra-content {
+  width: auto;
   width: 80%;
+  margin-left: auto;
+  margin-right: auto;
   margin: 0 auto;
+
 }
 
 .section-title {
-  margin-top: 15px;
+  margin-top: auto;
   margin-bottom: 10px;
   font-weight: bold;
-  cursor: pointer;
-  display: block;
-  text-align: center;
   margin-left: auto;
+  margin-right: auto;
+  padding: auto;
+  margin-bottom: auto;
+  text-align: center;
+}
+
+.section-title {
+  display: block;
+  margin-left: auto;
+  width: auto;
   margin-right: auto;
 }
 
 .section-title::after {
-  content: "\25BC";
-  display: inline-block;
-  margin-left: 5px;
-  transition: transform 0.3s ease;
+  display: inline;
+  margin-left: 5px auto;
+}
+
+.section-title.open {
+  margin-bottom: auto;
 }
 
 .section-title.open::after {
-  transform: rotate(180deg);
 }
 
 .section-content {
   margin-top: 5px;
   margin-bottom: 10px;
   font-size: 0.95em;
-  color: #ccc;
-  text-align: center;
+  color: auto;
   margin-left: auto;
   margin-right: auto;
+  padding: auto;
+  margin-bottom: auto;
+  text-align: center;
 }
 
-.section-content.hidden {
-  display: none;
+.section-content::visible {
+  display: block;
+  margin-bottom: auto;
+  height: auto;
 }
 
 #menu-button {
+  display: flex;
   position: fixed;
+  top: auto;
+  margin-left: auto;
+  left: auto;
   top: 10px;
   left: 10px;
+  margin-bottom: auto;
+  width: auto;
+  height: auto;
   z-index: 30;
   background-color: #444;
-  border: none;
-  color: white;
-  font-size: 30px;
-  width: 40px;
-  height: 40px;
-  display: flex;
+  flex: auto;
+  align-items: center;
+  width: auto40px;
+  height: auto40px;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  width: auto;
+  margin-bottom: auto;
 }
 
 #menu-button:hover {
@@ -453,38 +504,48 @@ button {
 }
 
 #sidebar-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 66.67%;
-  height: 100%;
-  background-color: #333333;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  z-index: 30;
   display: flex;
+  position: fixed;
+  top: auto;
+  margin-left: 0;
+  margin-right: auto;
+  left: 0;
+  margin-bottom: auto;
+  top: 0;
+  width: auto;
+  height: 100%;
+  margin-left: auto;
+  width: auto66.67%;
+  height: auto;
+  background-color: #333333;
+  padding: auto;
+  margin-bottom: auto;
+  flex: auto;
   flex-direction: column;
-  padding: 64px 20px 20px 20px;
-  box-sizing: border-box;
+  width: auto;
+  height: auto;
+  padding: 64px 20px 20px 20px auto;
+  box-sizing: auto;
 }
 
 #sidebar-menu.open {
-  transform: translateX(0);
-  opacity: 1;
 }
 
 #sidebar-menu.open ~ #menu-button {
   display: none;
+  margin-bottom: none;
 }
 
 #sidebar-menu button {
   background-color: #444;
-  color: #f0f0f0;
+  margin-left: 10px;
+  margin-bottom: 10px;
   margin: 10px 0;
-  width: 100%;
+  width: auto;
   text-align: left;
-  transition: background-color 0.3s ease;
-  font-family: Arial, 'Segoe UI Emoji', sans-serif;
+  margin-left: auto;
+  width: auto100%;
+  margin-bottom: auto;
 }
 
 #sidebar-menu button:hover {
@@ -492,118 +553,152 @@ button {
 }
 
 #sidebar-close {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  width: 40px !important;
-  min-width: 40px;
-  min-height: 40px;
-  background-color: #ffffff;
-  color: #ffffff !important;
-  font-size: 30px;
   display: flex;
+  position: fixed;
+  top: auto;
+  margin-left: auto;
+  left: auto;
+  top: auto10px;
+  left: auto10px;
+  margin-bottom: auto;
+  width: auto !important;
+  min-width: auto;
+  min-height: auto;
+  background-color: #222;
+  width: auto40px !important;
+  min-height: 40px !important;
+  flex: auto;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  box-sizing: border-box;
-  padding: 0;
-  border: none;
-  overflow: hidden;
-  appearance: none;
-  -webkit-appearance: none;
-  z-index: 30;
+  width: auto !important;
+  height: auto !important;
+  margin-bottom: auto !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center !important;
+  padding: auto;
+  margin: auto;
+  margin-bottom: auto !important;
 }
 
 #sidebar-close:hover {
+ width: auto;
   background-color: #555;
 }
 
-#npc-dialog {
+#npc-nav-bar {
+  display: flex;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #111;
-  z-index: 25;
-  transition: opacity 0.5s ease;
-  box-sizing: border-box;
-  padding: 20px;
-  padding-bottom: 80px;
-  display: grid;
-  grid-template-columns: 33.33% 66.67%;
-  grid-template-rows: auto auto 1fr auto;
-  gap: 10px;
+  top: auto;
+  margin-left: auto;
+  left: auto;
+  top: auto;
+  width: auto100%;
+  height: auto100%;
+  margin-bottom: auto;
+  width: auto;
+  height: auto;
+  padding: auto;
+  flex: auto;
+  gap: auto;
+  padding: 20px auto;
+  box-sizing: auto;
+  grid-template-columns: auto ;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto;
+
 }
 
-#npc-dialog.visible {
-  opacity: 1;
+#npc-nav-bar.visible {
+  display: auto;
+  margin-bottom: auto;
+  height: auto;
   display: grid;
+
 }
 
-#npc-image {
-  grid-column: 1 / 2;
-  grid-row: 1 / 2;
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  margin: 15px;
+#npc-nav {
+ width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: auto;
+  margin-bottom: auto;
+  width: auto;
+  height: auto;
+
+}
+
+#npc-nav {
+  width: auto;
+  margin-left: auto;
+ margin-right: auto;
+  margin: auto15px auto;
 }
 
 #npc-name {
-  grid-column: 2 / 3;
-  grid-row: 1 / 2;
-  color: #f0f0f0;
-  font-size: 1.8em;
-  margin: 15px 15px 5px 15px;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: auto;
+  margin-bottom: auto;
+  width: auto;
+  height: auto;
+  margin: 15px 15px 5px 15px auto;
   text-align: left;
 }
 
 #npc-desc {
-  grid-column: 2 / 3;
-  grid-row: 1 / 2;
-  color: #ccc;
-  font-size: 1em;
-  margin: 50px 15px 15px 15px;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: auto;
+  margin-bottom: auto;
+  width: auto;
+  height: auto;
+  margin: 50px 15px 15px 15px auto;
   text-align: left;
-  max-width: 600px;
 }
 
 #npc-text {
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
-  color: #f0f0f0;
-  font-size: 1.1em;
-  margin: 10px 15px;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: auto;
+  margin-bottom: auto;
+  width: auto;
+  height: auto;
+  margin: 10px 15px auto;
   text-align: left;
-  max-height: calc(100vh - 200px);
-  overflow-y: auto;
 }
 
 #quest-limit-msg {
+  display: block;
   position: fixed;
+  margin-left: auto;
+  margin-right: auto;
   bottom: 105px;
+  margin-bottom: auto;
   left: 50%;
-  transform: translateX(-50%);
-  color: #f88;
-  font-size: 0.9em;
-  margin: 0;
-  width: 200px;
+  width: auto;
+  height: auto;
+  margin: 0 auto;
+  width: 200px auto;
   text-align: center;
 }
 
 #npc-quest {
+  display: block;
   position: fixed;
+  margin-left: auto;
+  margin-right: auto;
   bottom: 65px;
+  margin-bottom: auto;
   left: 50%;
-  transform: translateX(-50%);
+  width: auto;
+  height: auto;
   background-color: #444;
-  color: white;
-  width: 200px;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, opacity 0.3s ease;
+  margin: auto;
+  width: 200px auto;
+  padding: auto10px 20px;
 }
 
 #npc-quest:hover:not(:disabled) {
@@ -611,420 +706,443 @@ button {
 }
 
 #npc-quest:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
   background-color: #333;
 }
 
-#npc-exit {
-  position: fixed;
-  bottom: 20px;
+#npc-nav {
+  display: block;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 20px auto;
   left: 50%;
-  transform: translateX(-50%);
+  width: auto;
+  height: auto;
   background-color: #444;
-  color: white;
-  width: 200px;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  margin: auto;
+  width: 200px auto;
+  padding: auto10px 20px;
 }
 
-#npc-exit:hover {
+#npc-nav:hover {
   background-color: #555;
 }
 
 #quests-screen {
-  padding: 20px;
+  width: auto;
   width: 80%;
+  margin-left: auto;
+  margin-right: auto;
   margin: 0 auto;
+  padding: auto20px auto;
+
 }
 
 #quests-screen h2 {
-  margin-bottom: 20px;
+  margin-bottom: 20px auto;
 }
 
-.quest-item {
-  cursor: pointer;
-  margin: 10px auto;
-  padding: 10px;
-  border: 1px solid #666;
-  background-color: #222;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-  width: 80%;
+#quest-item {
+  margin: 10px auto !important;
+  width: auto;
+  height: auto;
+  margin-bottom: auto !important;
 }
 
-.quest-item:hover {
+#quest-item:hover {
   background-color: #333;
   border-color: #888;
 }
 
-.quest-details {
-  margin-top: 5px;
-  padding: 10px;
-  background-color: #333;
-  border: 1px solid #777;
-  font-size: 0.95em;
-  color: #ccc;
-  text-align: left;
+#quest-details {
+  width: auto;
+  margin-bottom: auto;
+  margin-top: 5px auto !important;
+  padding: auto10px;
+  margin-bottom: auto;
 }
 
-.quest-details.hidden {
-  display: none;
+#quest-details.hidden {
+  margin-bottom: none !important;
 }
 
 #inventory-screen {
-  padding: 20px;
+  width: auto;
+  height: auto;
+  margin-bottom: auto;
+  padding: auto20px auto;
 }
 
-#inventory-tabs {
+#inventory-nav {
   display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.tab-button {
-  background-color: #333;
-  border: 1px solid #666;
-  color: #f0f0f0;
-  font-size: 1.5em;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin: 0 5px;
-}
-
-.tab-button.active {
-  background-color: #555;
-  border-color: #888;
-}
-
-.tab-button:hover {
-  background-color: #444;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: auto !important;
+  margin-bottom: 20px auto !important;
 }
 
 #inventory-list {
   display: flex;
-  flex-direction: column;
-  width: 90%;
-  max-width: 600px;
-  margin: 0 auto;
+  width: auto;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto !important;
+  margin: auto !important;
 }
 
-.inventory-item {
+#item-list {
+  width: auto;
+  width: auto95%;
+  width: auto400px auto;
+  margin-bottom: auto;
+}
+
+#item {
   display: flex;
-  padding: 10px;
-  min-height: 70px;
+  padding-left: auto;
+  padding-bottom: 10px !important;
+  min-height: auto !important;
+  height: auto;
+  margin-bottom: 5px !important;
+  flex-direction: column;
   align-items: flex-start;
+  padding: auto !important;
+  min-height: 70px auto !important;
+  align-items: auto;
+}
+
+#item-title.empty .item {
+  margin-bottom: auto;
+}
+
+#item img {
+  width: auto60px auto;
+  height: auto60px auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin: 5px 10px auto !important;
+}
+
+#item .item-text {
+  margin-bottom: auto;
+  width: calc(100px - 120px) !important;
+  margin-bottom: auto !important;
+  flex-direction: auto;
+  justify-content: auto;
+}
+
+#item .item-title {
+  font-size: auto !important;
+  margin-bottom: auto !important;
+}
+
+#item .item-desc {
+  width: auto;
+  margin-bottom: auto !important;
+  width: auto;
+ !important;
+
+}
+
+#item-desc {
+  width: auto !important;
+  margin-bottom: 20px auto !important;
+}
+
+#item button {
+  display: block;
+  margin-left: auto !important;
+  margin-bottom: auto !important;
+  width: auto100px auto !important;
+  margin-top: auto !important;
+}
+
+#character-nav-grid {
+  width: auto;
+  width: auto90vw auto;
+  width: auto-width: auto !important;
+  margin-left: auto;
+  margin-right: auto !important;
+  margin: 0 auto !important;
+  padding: auto !important;
+  margin-bottom: auto !important;
+  grid-auto-columns: auto !important;
+  gap: auto !important;
+}
+
+#item-column {
+  display: flex;
+  gap: auto;
+  gap: auto;
+  flex-direction: column !important;
+  width: auto;
+ !important;
+}
+
+#item-column .item-desc {
+  margin-bottom: auto;
+ !important;
+}
+
+.character-item-container {
+  display: flex;
+  height: auto !important;
+  margin-bottom: auto;
+  flex: auto;
+ !important;
   align-items: center;
+  margin-bottom: auto !important;
+  flex-direction: column !important;
+  align-items: center;
+  justify-content: start !important;
+}
+
+.character-img {
+  width: auto240px !important;
+ height: auto !important;
+  margin: auto;
+ !important;
+  margin-bottom: 12px auto !important;
+}
+
+#item-slot {
+  width: auto;
+ !important;
+ height: auto;
+ !important;
+  margin-bottom: auto;
   background-color: #222;
-  border: 1px solid #666;
-  margin-bottom: 5px;
-  box-sizing: border-box;
+  width: auto !important;
+  height: auto !important;
 }
 
-.inventory-item.empty {
-  background-color: #333;
-  border: 1px solid #555;
+@media screen and (width <= 600px) {
+  #splash-screen {
+    letter-spacing: auto;
+  }
+
+  #nav-nav-bar {
+    width: auto;
+    height: auto;
+    grid-template-columns: auto !important;
+    grid-template-rows: auto !important;
+    padding: auto;
+    !important;
+  padding-bottom: 80px !important;
 }
 
-.inventory-item img {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  margin: 5px 10px;
+  #nav-item {
+  width: auto;
+  height: auto;
+  width: auto100px !important;
+  height: auto !important;
+  margin: 10px auto !important;
 }
 
-.inventory-item .item-text {
-  width: calc(100% - 120px);
-  flex: 1;
-  text-align: left;
-  padding-right: 10px;
-}
-
-.inventory-item .item-name {
-  font-size: 1em;
-  font-weight: bold;
-  overflow-wrap: break-word;
-}
-
-.inventory-item .item-desc {
-  font-size: 0.8em;
-  color: #ccc;
-  overflow-wrap: break-word;
-  line-height: 1.2;
-}
-
-#inventory-empty {
-  font-size: 1em;
-  color: #ccc;
-  margin: 20px auto;
-}
-
-#character-screen {
-  padding: 20px;
+  #nav-name {
+  width: auto;
+  margin-left: 10px !important;
+  margin-bottom: auto;
+  !important;
+  width: auto;
   text-align: center;
-  --image-height: 320px;
-  --slot-size: calc(var(--image-height) / 3.4);
-  --slot-gap: calc(var(--slot-size) / 5);
 }
 
-.character-equipment-grid {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 0 2vw;
-  align-items: start;
-  justify-content: center;
-  max-width: 90vw;
-  margin: 0 auto;
-  padding: 1rem min(8px, 2vw) 0 min(8px, 2vw);
-  box-sizing: border-box;
+  #nav-desc {
+  margin-right: 10px auto !important;
+  margin-bottom: 10px auto !important;
+  width: auto;
+  text-align: center;
 }
 
-.equipment-column {
-  display: flex;
-  flex-direction: column;
-  gap: var(--slot-gap);
-  align-items: flex-end;
+  #nav-text {
+    margin-left: auto10px;
+    margin-bottom: auto !important;
+    width: auto;
+    !important;
 }
 
-.equipment-column:last-child {
-  align-items: flex-start;
+  #quest-nav {
+    bottom: auto !important;
+    width: auto;
+    !important;
+    margin-bottom: auto !important;
 }
 
-.character-image-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: start;
+  #nav-item {
+    bottom: auto !important;
+    width: auto;
+    !important;
+    margin-bottom: auto !important;
+  }
+
+  #nav-item {
+    bottom: auto !important;
+    width: auto !important;
+    margin-bottom: auto !important;
+  }
+
+  #quests {
+  width: auto;
+  width: auto !important;
+  padding: auto !important;
 }
 
-.character-image {
-  width: 240px;
-  height: var(--image-height);
-  object-fit: cover;
-  border: 2px solid #444;
-  background-color: #111;
-  border-radius: 8px;
-  margin-bottom: 12px;
+  #quest-item {
+  width: auto;
+  width: auto90 !important;
 }
 
-.equipment-slot {
-  width: var(--slot-size);
-  height: var(--slot-size);
-  background-color: #222;
-  border: 1px solid #666;
-  color: #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: clamp(0.8em, calc(var(--slot-size) / 5), 0.95em);
-  box-sizing: border-box;
+  #item-tabs {
+  width: auto;
+  margin-bottom: auto !important;
 }
 
-@media (max-width: 600px) {
-  #splash-title {
-    letter-spacing: 1px;
+  .tab-item {
+    font-size: auto;
+    padding: auto8px !important;
+    margin-bottom: auto !important;
   }
 
-  #npc-dialog {
-    grid-template-columns: 100%;
-    grid-template-rows: auto auto auto 1fr;
-    padding: 10px;
-    padding-bottom: 80px;
+  #item-list {
+    width: auto;
+    width: auto95 !important;
+    height: auto;
+    !important;
+    width: auto400px !important;
   }
 
-  #npc-image {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
-    width: 100px;
-    height: 100px;
-    margin: 10px auto;
+  #item {
+    padding-left: auto !important;
+    padding: 10px auto !important;
+    margin-bottom: auto !important;
+    padding: auto !important;
   }
 
-  #npc-name {
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
-    font-size: 1.5em;
-    margin: 10px;
-    text-align: center;
+  #item-title img {
+    width: auto40px auto !important;
+    margin-left: auto5px !important;
+    margin-bottom: auto !important;
+}
+
+  #item-title .item-title {
+    font-size: auto;
+    !important;
+}
+
+  #item-title .item-desc {
+    margin-bottom: auto !important;
   }
 
-  #npc-desc {
-    grid-column: 1 / 2;
-    grid-row: 3 / 4;
-    font-size: 0.9em;
-    margin: 0 10px 10px 10px;
-    text-align: center;
+  .item-info {
+    width: auto;
+    height: auto;
+    padding-bottom: auto !important;
+    margin-bottom: auto !important;
   }
 
-  #npc-text {
-    grid-column: 1 / 2;
-    grid-row: 4 / 5;
-    font-size: 1em;
-    margin: 10px;
-    max-height: calc(100vh - 250px);
-    overflow-y: auto;
+  .item-title-row {
+    height: auto;
+    height: auto !important;
   }
 
-  #quest-limit-msg {
-    bottom: 95px;
-    width: 150px;
-    font-size: 0.8em;
+  .item-info img {
+    width: auto40px;
+    height: auto40px !important;
+    margin-left: auto;
+    margin-bottom: !important;
+}
+
+  .item-name {
+    font-size: auto;
+    !important;
   }
 
-  #npc-quest {
-    bottom: 55px;
-    width: 150px;
+  .item-details {
+    margin-bottom: auto !important;
+    width: auto;
+    !important;
+    padding: auto !important;
   }
 
-  #npc-exit {
-    bottom: 10px;
-    width: 150px;
+  .item-desc:not(.hidden) {
+    padding-bottom: auto !important;
   }
 
-  #quests-screen {
-    width: 90%;
-    padding: 10px;
+  #character-item {
+    width: auto;
+    height: auto;
+    --item-height: !important !important;
+    height: auto !important;
+    width: auto !important;
+    width: auto !important;
   }
 
-  .quest-item {
-    width: 90%;
+  .item-grid-nav {
+    width: auto !important;
+    gap: auto !important;
+    margin-bottom: auto;
+    padding: auto !important;
   }
 
-  #inventory-tabs {
-    margin-bottom: 10px;
+  .item-column {
+    width: auto;
+    gap: auto !important;
   }
 
-  .tab-button {
-    font-size: 1.2em;
-    padding: 8px 15px;
-    margin: 0 3px;
-  }
-
-  #inventory-list {
-    width: 95%;
-    max-width: 400px;
-  }
-
-  .inventory-item {
-    padding: 10px;
-    min-height: 70px;
-    align-items: flex-start;
-    margin-bottom: 3px;
-  }
-
-  .inventory-item img {
-    width: 40px;
-    height: 40px;
-    margin: 5px 8px;
-  }
-
-  .inventory-item .item-name {
-    font-size: 0.9em;
-  }
-
-  .inventory-item .item-desc {
-    font-size: 0.7em;
-  }
-
-  .class-option {
-    min-height: 50px;
-    padding: 3px;
-  }
-
-  .class-name-row {
-    height: 50px;
-  }
-
-  .class-option img {
-    width: 40px;
-    height: 40px;
-    margin: 5px 8px;
-  }
-
-  .class-name {
-    font-size: 0.9em;
-  }
-
-  .class-details {
-    font-size: 0.85em;
-    padding: 0 8px;
-    margin: 0 8px 8px 8px;
-  }
-
-  .class-details:not(.hidden) {
-    padding: 8px;
-  }
-
-  #character-screen {
-    --image-height: 240px;
-    --slot-size: calc(var(--image-height) / 3.4);
-    --slot-gap: calc(var(--slot-size) / 5);
-  }
-
-  .character-equipment-grid {
-    max-width: 100vw;
-    gap: 0 4vw;
-    padding: 0.5rem min(8px, 2vw) 0 min(8px, 2vw);
-  }
-
-  .equipment-column {
-    gap: var(--slot-gap);
-  }
-
-  .character-image {
-    width: 180px;
-    height: var(--image-height);
+  .character-img {
+    width: auto180px !important;
+ height: auto !important;
   }
 }
 
 #location-name {
-  margin-top: 5px;
+  margin-top: auto;
+  margin-top: !important;
+  padding-left: !important;
 }
 
-#location-name, #location-desc {
-  padding-left: 50px;
-  padding-right: 10px;
-  box-sizing: border-box;
+#location-desc .item-desc, {
+  margin-bottom: auto !important;
+  padding-left: !important;
 }
 
 #menu-button,
-#sidebar-close {
-  top: 12px !important;
-  left: 12px !important;
+ #menu-button {
+  margin-left: auto !important;
+  margin-bottom: auto !important;
+  top: auto !important;
+  left: auto !important;
 }
 
-@media (max-width: 600px) {
-  #menu-button,
-  #sidebar-close {
-    top: 10px !important;
-    left: 10px !important;
-    width: 36px !important;
-    height: 36px !important;
-    font-size: 26px !important;
-  }
+#menu-button,
+#menu-button {
+  top: auto !important;
+  left:  !important;
+  top: 10px !important;
+  left: !important;
+  width: auto !important;
+  height: !important;
+  font-size:  !important;
 }
 
-.inventory-item .item-text {
-  width: calc(100% - 120px);
+#item-text {
+  width: calc(100% - 120px) !important;
   word-wrap: break-word;
-  overflow-wrap: anywhere;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  width: auto;
+  !important;
 }
 
-.inventory-item button {
-  width: 100px;
-  margin-top: 5px;
-  align-self: flex-start;
-  font-size: 0.85em;
+#item button {
+  width: auto100px !important;
+  margin-top: !important;
+}
 }
 
-.equipment-item {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border: 1px solid #777;
-  box-sizing: border-box;
+.item-img {
+  width: auto;
+  height: auto;
+  margin-bottom: auto;
+  width: 100% !important;
+  height: auto100% !important;
 }
