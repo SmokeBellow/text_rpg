@@ -893,7 +893,7 @@ function showAboutCharacter() {
     if (item) {
       // Ищем подходящую иконку (или плейсхолдер, если вдруг нет картинки)
       const iconSrc = itemIcons[item] || "Images/items/unknown.png";
-      slot.innerHTML = `<div class="equipment-item"><img src="${iconSrc}" alt="${item}" title="${item}" style="width:40px; height:40px; object-fit:contain;"/><div class="equipment-label">${item}</div></div>`;
+      slot.innerHTML = `<div class="equipment-item"><img src="${iconSrc}" alt="${item}" title="${item}" style="width:40px; height:40px; object-fit:contain;"/></div>`;
     } else {
       // Отображаем название слота
       slot.innerHTML = slotName.charAt(0).toUpperCase() + slotName.slice(1);
