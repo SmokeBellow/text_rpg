@@ -8,13 +8,13 @@ const npcData = {
     image: "Images/npc/oldman.jpg"
   },
   "Кузнец Бран": {
-    text: "Без хорошего угля я не могу сковать ни меча, ни подкову. Шахта к югу опустела, но уголь там всё ещё есть. Добудь немного — и я отблагодарю.",
+    text: "Без хорошего угля я не смогу ковать ни меча, ни подкову. Шахта к югу опустела, но уголь там всё ещё есть. Добудь немного — и я отблагодарю.",
     desc: "Грубый, но мастеровитый кузнец, чьи руки создают оружие легенд.",
     image: "Images/npc/blacksmith.jpg"
   },
   "Охотница Элира": {
     text: "Я нашла следы — крупные, с кровью. Это не волк. Что-то убивает зверей и пугает лес. Я иду на охоту. Не хочешь пойти со мной? Вдвоём у нас больше шансов.",
-    desc: "Ловкий следопыт, чьё сердце принадлежит дикому лесу.",
+    desc: "Ловкая следопытка, чьё сердце принадлежит дикому лесу.",
     image: "Images/npc/hunter.jpg"
   },
   "Рыбак Нор": {
@@ -34,17 +34,17 @@ const npcData = {
   },
   "Старец Вейн": {
     text: "Заклятие рассыпается, как песок сквозь пальцы... Мне нужна одна старая книга. Её хранят руины на востоке. Опасное место, но ты справишься. Я чувствую это.",
-    desc: "Хранитель озёрных легенд, чей взор устремлён к звёздам.",
+    desc: "Хранитель озёрных легенд, чей взор устремлён в глубины.",
     image: "Images/npc/elder.jpg"
   },
   "Скиталец Кайр": {
     text: "Люди исчезают на старом тракте. Без шума, без следа. Я слышу шорохи в ночи, не похожие на зверей. Пройди по той дороге... но будь готов к теням.",
-    desc: "Бродяга с острым умом, знающий пустоши, как свои пять пальцев.",
+    desc: "Бродяга с острым умом, знающий каждый уголок каньона.",
     image: "Images/npc/wanderer.jpg"
   },
   "Комендант Рейн": {
     text: "Кто-то из моих стражей что-то скрывает. Я вижу взгляды, слышу шёпоты. Мне нужен тот, кому я могу доверять. Помоги мне выяснить правду — пока не поздно.",
-    desc: "Бывший лидер крепости.",
+    desc: "Бывший лидер крепости, жаждущий вернуть её былую славу.",
     image: "Images/npc/commander.jpg"
   }
 };
@@ -218,6 +218,7 @@ function toggleMenu() {
 }
 
 document.getElementById("sidebar-close").addEventListener("click", toggleMenu);
+
 // Экран разговора с NPC
 let currentNpc = null;
 
@@ -343,7 +344,70 @@ function backToGame() {
   updateLocation();
 }
 
-// Заглушки для других кнопок меню
+// Экипировка предметов
+function equipItem(item, itemType) {
+  // Проверяем, что предмет можно экипировать (не зелье)
+  if (itemType === "potion") {
+    alert("Зелья нельзя экипировать!");
+    return;
+  }
+
+  // Определяем раздел инвентаря
+  let inventorySection;
+  if (itemType === "weapon") {
+    inventorySection = "weapons";
+  } else if (itemType === "armor" || itemType === "helmet" || itemType === "boots") {
+    inventorySection = "armor";
+  } else {
+    inventorySection = "keyItems";
+  }
+
+  // Удаляем предмет из инвентаря
+  const itemIndex = playerData.inventory[inventorySection].indexOf(item);
+  if (itemIndex !== -1) {
+    playerData.inventory[inventorySection].splice(itemIndex, 1);
+  } else {
+    console.error(`Предмет ${item} не найден в инвентаре ${inventorySection}`);
+    return;
+  }
+
+  // Определяем слот для экипировки
+  let equipSlot;
+  if (itemType === "weapon") {
+    // Если weapon1 занят, пробуем weapon2
+    if (!playerData.equipment.weapon1) {
+      equipSlot = "weapon1";
+    } else if (!playerData.equipment.weapon2) {
+      equipSlot = "weapon2";
+    } else {
+      // Если оба слота заняты, возвращаем старый предмет из weapon1 в инвентарь
+      playerData.inventory.weapons.push(playerData.equipment.weapon1);
+      equipSlot = "weapon1";
+    }
+  } else {
+    equipSlot = itemType === "helmet" ? "helmet" : itemType === "armor" ? "armor" : itemType === "boots" ? "boots" : "amulet";
+    // Если слот занят, возвращаем старый предмет в инвентарь
+    if (playerData.equipment[equipSlot]) {
+      playerData.inventory[inventorySection].push(playerData.equipment[equipSlot]);
+    }
+  }
+
+  // Экипируем предмет
+  playerData.equipment[equipSlot] = item;
+
+  // Сохраняем изменения
+  saveGame();
+
+  // Обновляем отображение инвентаря
+  showInventory();
+
+  // Если находимся на экране персонажа, обновляем его
+  if (!document.getElementById("character-screen").classList.contains("hidden")) {
+    showAboutCharacter();
+  }
+}
+
+// Экран инвентаря
 function showInventory() {
   resetScreens();
   const inventoryScreen = document.getElementById("inventory-screen");
@@ -373,13 +437,14 @@ function showInventory() {
         const itemElement = document.createElement("div");
         itemElement.className = "inventory-item" + (item ? "" : " empty");
         if (item) {
+          const itemType = getItemType(item);
           itemElement.innerHTML = `
             <img src="${itemIcons[item]}" alt="${item}">
             <div class="item-text">
               <div class="item-name">${item}</div>
               <div class="item-desc">${itemDescriptions[item]}</div>
             </div>
-            <button onclick="equipItem(\'${item}\', getItemType(\'${item}\'))">Надеть</button>
+            ${itemType !== "potion" ? `<button onclick="equipItem('${item}', '${itemType}')">Надеть</button>` : ""}
           `;
         }
         inventoryList.appendChild(itemElement);
@@ -444,6 +509,14 @@ let playerData = {
     armor: [],
     potions: [],
     keyItems: []
+  },
+  equipment: {
+    weapon1: null,
+    weapon2: null,
+    helmet: null,
+    armor: null,
+    boots: null,
+    amulet: null
   }
 };
 
@@ -511,6 +584,14 @@ function newGame() {
       armor: [],
       potions: [],
       keyItems: []
+    },
+    equipment: {
+      weapon1: null,
+      weapon2: null,
+      helmet: null,
+      armor: null,
+      boots: null,
+      amulet: null
     }
   };
   resetScreens();
@@ -783,6 +864,7 @@ function updateLocation() {
     extraContent.appendChild(content);
   }
 }
+
 function showAboutCharacter() {
   resetScreens();
   const screen = document.getElementById("character-screen");
@@ -798,8 +880,8 @@ function showAboutCharacter() {
 
   document.querySelectorAll(".equipment-slot").forEach(slot => {
     const slotName = slot.dataset.slot;
-    const item = playerData.equipment?.[slotName];
-    slot.innerHTML = item ? `<div class="equipment-item">${item}</div>` : slot.innerText;
+    const item = playerData.equipment[slotName];
+    slot.innerHTML = item ? `<div class="equipment-item">${item}</div>` : slotName.charAt(0).toUpperCase() + slotName.slice(1);
   });
 
   screen.classList.remove("hidden");
@@ -813,5 +895,6 @@ function getItemType(item) {
   if (["Кожаная броня", "Стальная броня", "Плащ"].includes(item)) return "armor";
   if (["Кольчужный капюшон", "Маска"].includes(item)) return "helmet";
   if (["Походные сапоги"].includes(item)) return "boots";
+  if (["Зелье здоровья"].includes(item)) return "potion";
   return "amulet";
 }
