@@ -73,7 +73,7 @@ button {
   background-size: cover;
   background-position: center;
   -webkit-background-clip: text;
-  background-clip: text;
+  background-clip: inherit;
   color: transparent;
   display: flex;
   flex-direction: column;
@@ -82,6 +82,164 @@ button {
 
 #splash-title div {
   white-space: nowrap;
+}
+
+#splash-title {
+  letter-spacing: 1px;
+}
+
+#npc-screen {
+  grid-template-columns: repeat(100%, 1fr);
+}
+
+@media not all and (min-width: 601px) {
+  #npc-screen {
+    width: 100%;
+    padding-bottom: 10px;
+    padding: 0px 10px;
+  }
+}
+
+#npc-image {
+  grid-column: 1 / 3;
+  grid-row: 1;
+  grid-column: 1 / 2;
+  grid-row: 1;
+  grid-row: 1 / 2;
+}
+
+#npc-name {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  margin-bottom: 2;
+}
+
+#name {
+  font-size: 1.5em;
+  margin: 10px;
+  text-align: center;
+}
+
+#npc-desc {
+  grid-column: 1 / 2;
+  grid-row: 3 /  grid-column: 1 / 2;
+  margin-bottom: 1;
+}
+
+#description {
+  font-size: 0.9em;
+  margin: 0 10px 10px;
+}
+
+#npc-text {
+  grid-column: 1 / 3;
+  grid-row: 4 / 10;
+  grid-column: 2 / 3;
+  grid-row: 2;
+}
+
+#quest-limit {
+  bottom: 95px;
+  width: 150px;
+  font-size: 12px;
+}
+
+#npc-quest {
+  bottom: 55px;
+  width: 150px;
+}
+
+#npc-exit {
+  bottom: 10px;
+  width: 150px;
+}
+
+#quest-screen {
+  width: 90%;
+  padding: 10px;
+}
+
+#inventory-tabs {
+  background-color: #333;
+  margin-bottom: 2px;
+}
+
+.tab-button {
+  font-size: 24px;
+  padding: 8px 15px;
+  margin: 0 3px;
+}
+
+#inventory-list {
+  width: 95%;
+  max-width: 400px;
+  margin-bottom: 3px;
+}
+
+.inventory-item {
+  min-height: 5px;
+  padding: 10px;
+  margin-bottom: 2px;
+}
+
+.inventory-item img {
+  width: 40px;
+  height: 40px;
+  margin: 5px 8px;
+}
+
+.item-name .item {
+  font-size: 10px;
+}
+
+.item-desc {
+  font-size: 7px;
+}
+
+.class-option {
+  min-height: 50px;
+  padding: 3px;
+}
+
+.class-name-row {
+  height: 50px;
+}
+
+.class-option img {
+  width: 40px;
+  height: 40px;
+  margin: 0px 8px;
+}
+
+.class-name {
+  font-size: 9px;
+}
+
+.class-details {
+  font-size: 8.5px;
+  margin-bottom: 8px;
+  padding: 0px;
+  margin: 0 8px;
+}
+
+.class-details:not(.hidden) {
+  padding: 8px;
+}
+
+#character-sheet {
+  --image-height: 320px;
+  --slot-height: calc(var(--image-height) / 3 / 3.4);
+}
+
+.character-sheet {
+  max-width: 100%;
+  gap: 0px vw4;
+  padding: .5rem min(calc(8px, vw2)) pxpx vw2;
+}
+
+.character-image {
+  width: 180px;
+  height: var(--h-height);
 }
 
 #main-menu {
@@ -93,27 +251,25 @@ button {
 
 #main-menu-title {
   font-family: 'Uncial Antiqua', serif;
-  font-size: clamp(2rem, 10vw, 6rem);
-  font-weight: 700;
+  font-size: clamp(2rem, 40px, 6vw);
+  font-weight: bold;
   line-height: 1.2;
   letter-spacing: 2px;
-  background-image: url('Images/wood-light.jpg');
+  background-image: url('Images/wood-hero.jpg');
   background-size: cover;
   background-position: center;
   -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  background-clip: inherit;
+}
+
+ width: auto;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
-#main-menu-title div {
-  white-space: nowrap;
-}
-
-#about-screen, #class-selection, #game-screen, #npc-dialog, #quests-screen, #inventory-screen {
-  z-index: 5;
+#about-screen, #class-selection, #game-screen, #npc-screen, #npc-display, #quest-screen, #quests-screen, #inventory-screen {
+  z-index: 50;
   transition: opacity 0.5s ease;
 }
 
@@ -863,4 +1019,12 @@ button {
   margin-top: 5px;
   align-self: flex-start;
   font-size: 0.85em;
+}
+
+.equipment-item {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid #777;
+  box-sizing: border-box;
 }
