@@ -825,7 +825,7 @@ button {
 #location-name {
   text-align: center;
   font-size: 24px;
-  margin: 10px 0;
+  margin: 20px 0 10px; /* увеличенный отступ сверху */
   padding: 0 10px;
 }
 
@@ -834,9 +834,13 @@ button {
   padding: 0 10px;
   box-sizing: border-box;
   max-width: 800px;
-  margin: 0 auto;
+  margin: 0 auto 20px; /* увеличенный отступ снизу */
 }
 
+#location-buttons {
+  margin-bottom: 30px; /* добавлено для дополнительного отступа снизу */
+  text-align: center;
+}
 
 #menu-button,
 #sidebar-close {
