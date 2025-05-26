@@ -894,7 +894,7 @@ button {
   display: block;
   margin: 30px auto 10px;
   padding: 12px 24px;
-  font-size: 18px;
+  font-size: 14 px;
   background-color: #444;
   color: white;
   border: none;
@@ -910,7 +910,7 @@ button {
 @media (max-width: 480px) {
   .back-button {
     width: 90%;
-    font-size: 16px;
+    font-size: 12px;
     padding: 10px;
   }
 }
