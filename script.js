@@ -417,12 +417,15 @@ function equipItem(item, itemType) {
     playerData.equipment[equipSlot] = item;
   }
 
-  saveGame();
-  showInventory(currentInventoryTab);
+recalculateModifiers(); // добавлено
 
-  if (!document.getElementById("character-screen").classList.contains("hidden")) {
-    showAboutCharacter();
-  }
+saveGame();
+showInventory(currentInventoryTab);
+
+if (!document.getElementById("character-screen").classList.contains("hidden")) {
+  showAboutCharacter();
+}
+
 }
 
 
@@ -539,13 +542,19 @@ let playerData = {
     boots: null,
     amulet: null
   },
-   stats: {
+  stats: {
     strength: 5,     // Сила
     agility: 5,      // Ловкость
     endurance: 5,    // Выносливость
     luck: 5          // Удача
+  },
+  modifiers: {
+    speedFactor: 1.0,
+    damageReduction: 1.0,
+    damageBoost: 1.0
   }
 };
+
 
 // Расстояния от Деревни
 const locationDistances = {
@@ -661,22 +670,23 @@ function selectClass() {
     playerData.class = selectedClass;
   }
 
-  // Добавляем начальные предметы и характеристики
   if (playerData.class === "archer") {
     playerData.stats = { strength: 4, agility: 7, endurance: 5, luck: 5 };
+    playerData.modifiers = { speedFactor: 0.9, damageReduction: 1.0, damageBoost: 1.0 };
     playerData.inventory.weapons.push("Лук");
     playerData.inventory.armor.push("Кожаная броня", "Кольчужный капюшон");
   } else if (playerData.class === "warrior") {
     playerData.stats = { strength: 7, agility: 4, endurance: 7, luck: 4 };
+    playerData.modifiers = { speedFactor: 1.0, damageReduction: 0.9, damageBoost: 1.0 };
     playerData.inventory.weapons.push("Меч");
     playerData.inventory.armor.push("Щит", "Стальная броня");
   } else if (playerData.class === "rogue") {
     playerData.stats = { strength: 5, agility: 7, endurance: 4, luck: 6 };
+    playerData.modifiers = { speedFactor: 1.0, damageReduction: 1.0, damageBoost: 1.1 };
     playerData.inventory.weapons.push("Кинжал", "Кинжал");
     playerData.inventory.armor.push("Плащ", "Маска");
   }
 
-  // Добавляем общие предметы для всех классов
   playerData.inventory.potions.push("Зелье здоровья");
   playerData.inventory.armor.push("Походные сапоги");
 
@@ -684,6 +694,8 @@ function selectClass() {
   resetScreens();
   startGame();
 }
+
+
 
 
 function startGame() {
@@ -706,7 +718,11 @@ function showTravelScreen(targetLocation, duration) {
   const travelText = document.getElementById("travel-text");
   travelScreen.classList.remove("hidden");
   travelScreen.classList.add("visible");
-  let timeLeft = Math.ceil(duration / 1000);
+
+  // Учитываем ускорение передвижения
+  const speedFactor = playerData.modifiers?.speedFactor || 1.0;
+  let timeLeft = Math.max(1, Math.round((duration * speedFactor) / 1000));
+
   travelTimer.innerText = `Вы идёте ${locationAccusative[targetLocation]}... ${timeLeft} сек`;
   travelText.innerText = travelTexts[targetLocation] || "Путь манит вперёд...";
 
@@ -727,6 +743,7 @@ function showTravelScreen(targetLocation, duration) {
     }
   }, 1000);
 }
+
 
 // Локации
 const locations = {
@@ -898,6 +915,8 @@ function showAboutCharacter() {
   const screen = document.getElementById("character-screen");
   const charImg = document.getElementById("character-image");
 
+  recalculateModifiers(); // добавлено
+
   const classMap = {
     archer: "archer_profile.png",
     warrior: "warrior_profile.png",
@@ -906,14 +925,13 @@ function showAboutCharacter() {
 
   charImg.src = `Images/${classMap[playerData.class]}`;
 
-  // Карта для заглушек
   const slotPlaceholders = {
-    helmet: "Images/items/helmet_empty.png",
-    armor: "Images/items/armor_empty.png",
-    boots: "Images/items/boots_empty.png",
-    weapon1: "Images/items/weapon_empty.png",
-    weapon2: "Images/items/weapon_empty.png",
-    amulet: "Images/items/amulet_empty.png"
+    helmet: "Images/empty_items/helmet_empty.png",
+    armor: "Images/empty_items/armor_empty.png",
+    boots: "Images/empty_items/boots_empty.png",
+    weapon1: "Images/empty_items/weapon_empty.png",
+    weapon2: "Images/empty_items/shield_empty.png",
+    amulet: "Images/empty_items/amulet_empty.png"
   };
 
   document.querySelectorAll(".equipment-slot").forEach(slot => {
@@ -925,25 +943,26 @@ function showAboutCharacter() {
       slot.innerHTML = `<div class="equipment-item"><img src="${iconSrc}" alt="${item}" title="${item}" style="width:40px; height:40px; object-fit:contain;"/></div>`;
     } else {
       const emptyIcon = slotPlaceholders[slotName] || "Images/items/unknown.png";
-      slot.innerHTML = `<img src="${emptyIcon}" alt="Пусто" title="Пусто" style="width:40px; height:40px; opacity:0.4;" />`;
+      slot.innerHTML = `<img src="${emptyIcon}" alt="Пусто" title="Пусто" style="width:100%; height:100%; object-fit:contain; opacity:0.4;" />`;
     }
   });
 
-  // --- ХАРАКТЕРИСТИКИ ---
   let statsBlock = document.getElementById("character-stats");
   if (!statsBlock) {
     statsBlock = document.createElement("div");
     statsBlock.id = "character-stats";
     statsBlock.style.marginTop = "20px";
     statsBlock.style.fontSize = "1.1em";
+    statsBlock.style.textAlign = "center";
     screen.appendChild(statsBlock);
   }
+
   const stats = playerData.stats || {strength:0, agility:0, endurance:0, luck:0};
   statsBlock.innerHTML = `
     <b>Характеристики:</b><br>
-    🦾 Сила: <b>${stats.strength}</b> &nbsp;
-    🗡️ Ловкость: <b>${stats.agility}</b> &nbsp;
-    ❤️ Выносливость: <b>${stats.endurance}</b> &nbsp;
+    🦾 Сила: <b>${stats.strength}</b><br>
+    🗡️ Ловкость: <b>${stats.agility}</b><br>
+    ❤️ Выносливость: <b>${stats.endurance}</b><br>
     🍀 Удача: <b>${stats.luck}</b>
   `;
 
@@ -964,3 +983,34 @@ function getItemType(item) {
   return "amulet";
 }
 
+function getCritChance() {
+  const agi = playerData.stats?.agility || 0;
+  return 5 + Math.floor(agi / 10); // базово 5% + 1% за каждые 10 ловкости
+}
+
+function getDropChanceBonus() {
+  const luck = playerData.stats?.luck || 0;
+  return Math.floor(luck / 10); // +1% за каждые 10 удачи
+}
+
+
+function recalculateModifiers() {
+  const baseModifiers = {
+    speedFactor: 1.0,
+    damageReduction: 1.0,
+    damageBoost: 1.0
+  };
+
+  // Классовые бонусы
+  if (playerData.class === "archer") baseModifiers.speedFactor = 0.9;
+  if (playerData.class === "warrior") baseModifiers.damageReduction = 0.9;
+  if (playerData.class === "rogue") baseModifiers.damageBoost = 1.1;
+
+  // Предмет: Походные сапоги
+  const boots = playerData.equipment.boots;
+  if (boots === "Походные сапоги") {
+    baseModifiers.speedFactor *= 0.9;
+  }
+
+  playerData.modifiers = baseModifiers;
+}
