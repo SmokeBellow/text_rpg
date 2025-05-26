@@ -864,3 +864,17 @@ button {
   align-self: flex-start;
   font-size: 0.85em;
 }
+
+#character-stats {
+  margin-top: 20px;
+  font-size: 1.1em;
+  text-align: left;
+  display: inline-block;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  min-width: 200px;
+  margin: 4px 0;
+}
