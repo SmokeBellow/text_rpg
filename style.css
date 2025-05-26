@@ -890,3 +890,19 @@ button {
   width: 200px;
   text-align: center;
 }
+.back-button {
+  display: block;
+  margin: 30px auto 10px;
+  padding: 12px 24px;
+  font-size: 18px;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #666;
+}
