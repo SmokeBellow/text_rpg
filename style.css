@@ -878,3 +878,15 @@ button {
   min-width: 200px;
   margin: 4px 0;
 }
+#character-back {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 20px;
+  background-color: #444;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  width: 200px;
+  text-align: center;
+}
