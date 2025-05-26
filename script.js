@@ -991,16 +991,6 @@ function showAboutCharacter() {
     <div class="stat-row"><span>🍀 Удача:</span> <span><b>${stats.luck}</b></span></div>
   `;
 
-  // Добавляем кнопку "Назад", если её нет
-  let backButton = document.getElementById("character-back");
-  if (!backButton) {
-    backButton = document.createElement("button");
-    backButton.id = "character-back";
-    backButton.innerText = "Назад";
-    backButton.onclick = backToGame;
-    screen.appendChild(backButton);
-  }
-
   screen.classList.remove("hidden");
   screen.classList.add("visible");
   document.getElementById("menu-button").classList.remove("hidden");
