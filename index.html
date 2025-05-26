@@ -19,7 +19,7 @@
     </div>
     <div id="inventory-list"></div>
     <div id="inventory-empty" class="hidden">Раздел пуст</div>
-    <button onclick="backToGame()">Назад</button>
+  <button class="back-button" onclick="backToGame()">Назад</button>
   </div>
 
   <div id="menu-button" class="hidden" onclick="toggleMenu()">☰</div>
@@ -55,7 +55,7 @@
   <div id="about-screen" class="hidden">
     <h1>Об игре</h1>
     <p>by merzlyakov</p>
-    <button onclick="backToMenu()">Назад</button>
+   <button class="back-button" onclick="backToGame()">Назад</button>
   </div>
 
   <div id="class-selection" class="hidden">
@@ -121,7 +121,7 @@
   <div id="quests-screen" class="hidden">
     <h2>Квесты</h2>
     <div id="quests-list"></div>
-    <button onclick="backToGame()">Назад</button>
+ <button class="back-button" onclick="backToGame()">Назад</button>
   </div>
 
   <div id="character-screen" class="hidden">
@@ -143,7 +143,8 @@
         </div>
         <div id="character-stats"></div>
     
-    <button id="character-back" onclick="backToGame()">Назад</button>
+   <button class="back-button" onclick="backToGame()">Назад</button>
+
   </div>
 </body>
 </html>
