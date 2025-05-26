@@ -943,7 +943,7 @@ function showAboutCharacter() {
   const screen = document.getElementById("character-screen");
   const charImg = document.getElementById("character-image");
 
-  recalculateModifiers(); // добавлено
+  recalculateModifiers(); // обновляем модификаторы
 
   const classMap = {
     archer: "archer_profile.png",
@@ -968,7 +968,7 @@ function showAboutCharacter() {
 
     if (item) {
       const iconSrc = itemIcons[item] || "Images/items/unknown.png";
-      slot.innerHTML = `<div class="equipment-item"><img src="${iconSrc}" alt="${item}" title="${item}" style="width:100%; height:100%; object-fit:contain;"/></div>`;
+      slot.innerHTML = `<div class="equipment-item"><img src="${iconSrc}" alt="${item}" title="${item}" style="width:100%; height:100%; object-fit:contain;" /></div>`;
     } else {
       const emptyIcon = slotPlaceholders[slotName] || "Images/items/unknown.png";
       slot.innerHTML = `<img src="${emptyIcon}" alt="Пусто" title="Пусто" style="width:100%; height:100%; object-fit:contain; opacity:0.4;" />`;
@@ -979,26 +979,34 @@ function showAboutCharacter() {
   if (!statsBlock) {
     statsBlock = document.createElement("div");
     statsBlock.id = "character-stats";
-    statsBlock.style.marginTop = "20px";
-    statsBlock.style.fontSize = "1.1em";
-    statsBlock.style.textAlign = "center";
     screen.appendChild(statsBlock);
   }
 
-  const stats = playerData.stats || {strength:0, agility:0, endurance:0, luck:0};
+  const stats = playerData.stats || { strength: 0, agility: 0, endurance: 0, luck: 0 };
+
   statsBlock.innerHTML = `
-  <b>Характеристики:</b>
-  <div class="stat-row"><span>🦾 Сила</span><span>${stats.strength}</span></div>
-  <div class="stat-row"><span>🗡️ Ловкость</span><span>${stats.agility}</span></div>
-  <div class="stat-row"><span>❤️ Выносливость</span><span>${stats.endurance}</span></div>
-  <div class="stat-row"><span>🍀 Удача</span><span>${stats.luck}</span></div>
-`;
+    <div class="stat-row"><span>🦾 Сила:</span> <span><b>${stats.strength}</b></span></div>
+    <div class="stat-row"><span>🗡️ Ловкость:</span> <span><b>${stats.agility}</b></span></div>
+    <div class="stat-row"><span>❤️ Выносливость:</span> <span><b>${stats.endurance}</b></span></div>
+    <div class="stat-row"><span>🍀 Удача:</span> <span><b>${stats.luck}</b></span></div>
+  `;
+
+  // Добавляем кнопку "Назад", если её нет
+  let backButton = document.getElementById("character-back");
+  if (!backButton) {
+    backButton = document.createElement("button");
+    backButton.id = "character-back";
+    backButton.innerText = "Назад";
+    backButton.onclick = backToGame;
+    screen.appendChild(backButton);
+  }
 
   screen.classList.remove("hidden");
   screen.classList.add("visible");
   document.getElementById("menu-button").classList.remove("hidden");
   document.getElementById("menu-button").classList.add("visible");
 }
+
 
 
 function getItemType(item) {
