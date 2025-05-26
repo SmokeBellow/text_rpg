@@ -906,3 +906,11 @@ button {
 .back-button:hover {
   background-color: #666;
 }
+
+@media (max-width: 480px) {
+  .back-button {
+    width: 90%;
+    font-size: 16px;
+    padding: 10px;
+  }
+}
