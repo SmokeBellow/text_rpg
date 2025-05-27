@@ -244,7 +244,7 @@ function showNpcDialog(name) {
   const questButton = document.getElementById("npc-quest");
   const questLimitMsg = document.getElementById("quest-limit-msg");
 
-  // Удаляем кастомные кнопки (не трогаем встроенный "Назад")
+  // Удаляем старые кнопки
   dialog.querySelectorAll(".custom-npc-button").forEach(btn => btn.remove());
 
   if (name === "Мудрая жаба") {
@@ -257,15 +257,15 @@ function showNpcDialog(name) {
 
     const buyBtn = document.createElement("button");
     buyBtn.innerText = "Купить";
+    buyBtn.classList.add("back-button", "custom-npc-button");
     buyBtn.onclick = () => openBuyScreen();
-    styleTradeButton(buyBtn);
-    dialog.insertBefore(buyBtn, questButton); // Добавляем выше кнопки Назад
+    dialog.appendChild(buyBtn);
 
     const sellBtn = document.createElement("button");
     sellBtn.innerText = "Продать";
+    sellBtn.classList.add("back-button", "custom-npc-button");
     sellBtn.onclick = () => openSellScreen();
-    styleTradeButton(sellBtn);
-    dialog.insertBefore(sellBtn, questButton);
+    dialog.appendChild(sellBtn);
 
   } else {
     const alreadyTaken = playerData.quests.find(q => q.npc === name);
@@ -288,7 +288,6 @@ function showNpcDialog(name) {
   dialog.classList.remove("hidden");
   dialog.classList.add("visible");
 }
-
 
 function styleTradeButton(btn) {
   btn.classList.add("custom-npc-button");
