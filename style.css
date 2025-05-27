@@ -924,3 +924,28 @@ button {
     padding: 10px;
   }
 }
+
+#level-info {
+  margin-bottom: 20px;
+}
+
+#xp-bar-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+#xp-bar {
+  background-color: #333;
+  border: 1px solid #666;
+  height: 20px;
+  position: relative;
+  width: 100%;
+}
+
+#xp-fill {
+  background-color: #4caf50;
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+

@@ -2,7 +2,6 @@ console.log("script.js loaded");
 
 let currentInventoryTab = "weapons"; // по умолчанию оружие
 
-
 // Данные NPC
 const npcData = {
   "Староста Лем": {
@@ -134,7 +133,7 @@ const itemIcons = {
   "Щит": "Images/items/shield.png",
   "Стальная броня": "Images/items/steelarmor.png",
   "Кинжал": "Images/items/daggers.png",
-  "Плащ": "Images/items/cloak.png",
+  "Плащ": "Images/items/shadowcloak.png",
   "Маска": "Images/items/mask.png",
   "Золото": "Images/items/gold.png",
 };
@@ -143,17 +142,16 @@ const itemIcons = {
 const itemDescriptions = {
   "Зелье здоровья": "Восстанавливает 50 единиц здоровья при использовании.",
   "Походные сапоги": "Увеличивают скорость передвижения на 10%.",
-	"Лук": "Оружие дальнего боя, наносит 15 урона. Только для следопыта.",
-	"Меч": "Мощное оружие ближнего боя, наносит 20 урона. Только для воина.",
-	"Кинжал": "Быстрое оружие, наносит 12 урона с шансом критического удара. Только для разбойника.",
-	"Щит": "Блокирует 30% входящего урона. Только для воина.",
-	"Кожаная броня": "Лёгкая броня, добавляет 10 защиты. Только для следопыта.",
-	"Кольчужный капюшон": "Защищает голову, добавляет 5 защиты. Только для следопыта.",
-	"Стальная броня": "Тяжёлая броня, добавляет 20 защиты. Только для воина.",
-	"Плащ": "Лёгкий плащ, улучшающий манёвренность. Только для разбойника.",
-	"Маска": "Скрывает личность, повышает скрытность. Только для разбойника.",
-	"Золото": "Монеты, используемые для покупок."
-
+  "Лук": "Оружие дальнего боя, наносит 15 урона. Только для следопыта.",
+  "Меч": "Мощное оружие ближнего боя, наносит 20 урона. Только для воина.",
+  "Кинжал": "Быстрое оружие, наносит 12 урона с шансом критического удара. Только для разбойника.",
+  "Щит": "Блокирует 30% входящего урона. Только для воина.",
+  "Кожаная броня": "Лёгкая броня, добавляет 10 защиты. Только для следопыта.",
+  "Кольчужный капюшон": "Защищает голову, добавляет 5 защиты. Только для следопыта.",
+  "Стальная броня": "Тяжёлая броня, добавляет 20 защиты. Только для воина.",
+  "Плащ": "Лёгкий плащ, улучшающий манёвренность. Только для разбойника.",
+  "Маска": "Скрывает личность, повышает скрытность. Только для разбойника.",
+  "Золото": "Монеты, используемые для покупок."
 };
 
 // Данные классов
@@ -192,7 +190,6 @@ function resetScreens() {
   document.getElementById("sidebar-menu").classList.remove("open");
   document.getElementById("menu-button").classList.add("hidden");
 }
-
 
 // Управление боковым меню
 function closeMenuOnOutsideClick(event) {
@@ -288,11 +285,29 @@ function takeQuest() {
         condition: quest.condition,
         reward: quest.reward
       });
-      saveGame();
+      gainXp(150); // фиксированная награда за квест
     }
     closeNpcDialog();
   }
 }
+
+function takeQuest() {
+  if (currentNpc && questData[currentNpc]) {
+    const quest = questData[currentNpc];
+    if (!playerData.quests.find(q => q.npc === currentNpc) && playerData.quests.length < 4) {
+      playerData.quests.push({
+        npc: currentNpc,
+        title: quest.title,
+        desc: quest.desc,
+        condition: quest.condition,
+        reward: quest.reward
+      });
+      gainXp(50); // фиксированная награда за квест
+    }
+    closeNpcDialog();
+  }
+}
+
 
 // Экран квестов
 function showQuests() {
@@ -447,6 +462,44 @@ function equipItem(item, itemType) {
   }
 }
 
+// Снятие экипировки
+function unequipItem(slot) {
+  const item = playerData.equipment[slot];
+  if (!item) return; // Нет предмета в слоте
+
+  // Определяем секцию инвентаря
+  const itemType = getItemType(item);
+  let inventorySection;
+  if (itemType === "weapon" || itemType === "twohanded") {
+    inventorySection = "weapons";
+  } else if (itemType === "armor" || itemType === "helmet" || itemType === "boots") {
+    inventorySection = "armor";
+  } else {
+    inventorySection = "keyItems";
+  }
+
+  // Особая обработка для двуручного оружия (например, Лук)
+  if (itemType === "twohanded") {
+    playerData.inventory[inventorySection].push(item);
+    playerData.equipment.weapon1 = null;
+    playerData.equipment.weapon2 = null;
+  } else if (slot === "weapon1" || slot === "weapon2") {
+    playerData.inventory[inventorySection].push(item);
+    playerData.equipment[slot] = null;
+    // Если снимаем Лук, очищаем оба слота оружия
+    if (item === "Лук") {
+      playerData.equipment.weapon1 = null;
+      playerData.equipment.weapon2 = null;
+    }
+  } else {
+    playerData.inventory[inventorySection].push(item);
+    playerData.equipment[slot] = null;
+  }
+
+  recalculateModifiers();
+  saveGame();
+  showAboutCharacter(); // Обновляем экран персонажа
+}
 
 // Экран инвентаря
 function showInventory(tabToShow) {
@@ -466,48 +519,67 @@ function showInventory(tabToShow) {
     }
   });
 
-function renderInventory(tab) {
-  inventoryList.innerHTML = "";
-  const rawItems = playerData.inventory[tab] || [];
-  inventoryEmpty.classList.add("hidden");
+  function renderInventory(tab) {
+    inventoryList.innerHTML = "";
+    const rawItems = playerData.inventory[tab] || [];
+    inventoryEmpty.classList.add("hidden");
 
-  if (rawItems.length === 0) {
-    inventoryEmpty.classList.remove("hidden");
-  } else {
-    // Группировка предметов
-    const itemMap = {};
-    rawItems.forEach(item => {
-      itemMap[item] = (itemMap[item] || 0) + 1;
-    });
+    if (rawItems.length === 0) {
+      inventoryEmpty.classList.remove("hidden");
+    } else {
+      // Группировка предметов
+      const itemMap = {};
+      rawItems.forEach(item => {
+        itemMap[item] = (itemMap[item] || 0) + 1;
+      });
 
-    const items = Object.entries(itemMap);
-    items.forEach(([item, count]) => {
-      const itemType = getItemType(item);
-      const itemElement = document.createElement("div");
-      itemElement.className = "inventory-item";
-      itemElement.innerHTML = `
-        <img src="${itemIcons[item]}" alt="${item}">
-        <div class="item-text">
-          <div class="item-name">${item} ${count > 1 ? `×${count}` : ""}</div>
-          <div class="item-desc">${itemDescriptions[item]}</div>
-        </div>
-        ${itemType !== "potion" && item !== "Золото" ? `<button onclick="equipItem('${item}', '${itemType}')">Надеть</button>` : ""}
-      `;
-      inventoryList.appendChild(itemElement);
-    });
+      const items = Object.entries(itemMap);
+      items.forEach(([item, count]) => {
+        const itemType = getItemType(item);
+        const itemElement = document.createElement("div");
+        itemElement.className = "inventory-item";
+        itemElement.innerHTML = `
+          <img src="${itemIcons[item]}" alt="${item}">
+          <div class="item-text">
+            <div class="item-name">${item} ${count > 1 ? `×${count}` : ""}</div>
+            <div class="item-desc">${itemDescriptions[item]}</div>
+          </div>
+          ${itemType !== "potion" && item !== "Золото" ? `<button onclick="equipItem('${item}', '${itemType}')">Надеть</button>` : ""}
+        `;
+        inventoryList.appendChild(itemElement);
+      });
+    }
   }
-}
 
-  // Начальный рендеринг
   renderInventory(currentTab);
 
-  // Обработчики вкладок
+  // Чит-код: 5 кликов по вкладке ключевых предметов
+  let keyTabClickCount = 0;
+  let keyTabClickTimer = null;
+
   tabs.forEach(tab => {
     tab.onclick = () => {
-      currentInventoryTab = tab.dataset.tab;
+      const selectedTab = tab.dataset.tab;
+      currentInventoryTab = selectedTab;
       tabs.forEach(t => t.classList.remove("active"));
       tab.classList.add("active");
       renderInventory(currentInventoryTab);
+
+      if (selectedTab === "keyItems") {
+        keyTabClickCount++;
+        if (keyTabClickCount === 5) {
+          gainXp(150);
+          alert("💡 Чит-код активирован: +150 XP!");
+          keyTabClickCount = 0;
+        }
+
+        clearTimeout(keyTabClickTimer);
+        keyTabClickTimer = setTimeout(() => {
+          keyTabClickCount = 0;
+        }, 3000);
+      } else {
+        keyTabClickCount = 0;
+      }
     };
   });
 
@@ -550,12 +622,14 @@ setTimeout(() => {
 let playerData = {
   class: null,
   location: "Деревня",
+  level: 1,
+  xp: 0,
   quests: [],
   inventory: {
     weapons: [],
     armor: [],
     potions: [],
-   keyItems: ["Золото"]
+    keyItems: ["Золото"]
   },
   equipment: {
     weapon1: null,
@@ -566,10 +640,10 @@ let playerData = {
     amulet: null
   },
   stats: {
-    strength: 5,     // Сила
-    agility: 5,      // Ловкость
-    endurance: 5,    // Выносливость
-    luck: 5          // Удача
+    strength: 5,
+    agility: 5,
+    endurance: 5,
+    luck: 5
   },
   modifiers: {
     speedFactor: 1.0,
@@ -702,8 +776,7 @@ function selectClass() {
     playerData.stats = { strength: 7, agility: 4, endurance: 7, luck: 4 };
     playerData.modifiers = { speedFactor: 1.0, damageReduction: 0.9, damageBoost: 1.0 };
     playerData.inventory.weapons.push("Меч", "Щит");
-	playerData.inventory.armor.push("Стальная броня");
-
+    playerData.inventory.armor.push("Стальная броня");
   } else if (playerData.class === "rogue") {
     playerData.stats = { strength: 5, agility: 7, endurance: 4, luck: 6 };
     playerData.modifiers = { speedFactor: 1.0, damageReduction: 1.0, damageBoost: 1.1 };
@@ -714,16 +787,12 @@ function selectClass() {
   playerData.inventory.potions.push("Зелье здоровья");
   playerData.inventory.armor.push("Походные сапоги");
   // Добавляем стартовое золото
-playerData.inventory.keyItems.push("Золото", "Золото", "Золото", "Золото", "Золото");
-
+  playerData.inventory.keyItems.push("Золото", "Золото", "Золото", "Золото", "Золото");
 
   saveGame();
   resetScreens();
   startGame();
 }
-
-
-
 
 function startGame() {
   resetScreens();
@@ -770,7 +839,6 @@ function showTravelScreen(targetLocation, duration) {
     }
   }, 1000);
 }
-
 
 // Локации
 const locations = {
@@ -866,7 +934,6 @@ const locations = {
   }
 };
 
-
 function updateLocation() {
   const loc = playerData.location;
   const data = locations[loc];
@@ -944,6 +1011,7 @@ function showAboutCharacter() {
   const charImg = document.getElementById("character-image");
 
   recalculateModifiers(); // обновляем модификаторы
+  updateXpDisplay();      // обновляем XP-интерфейс
 
   const classMap = {
     archer: "archer_profile.png",
@@ -966,12 +1034,18 @@ function showAboutCharacter() {
     const slotName = slot.dataset.slot;
     const item = playerData.equipment[slotName];
 
+    // Очищаем существующие обработчики событий
+    slot.style.cursor = item ? "pointer" : "default";
+    const newSlot = slot.cloneNode(true);
+    slot.parentNode.replaceChild(newSlot, slot);
+
     if (item) {
       const iconSrc = itemIcons[item] || "Images/items/unknown.png";
-      slot.innerHTML = `<div class="equipment-item"><img src="${iconSrc}" alt="${item}" title="${item}" style="width:100%; height:100%; object-fit:contain;" /></div>`;
+      newSlot.innerHTML = `<div class="equipment-item"><img src="${iconSrc}" alt="${item}" title="${item}" style="width:100%; height:100%; object-fit:contain;" /></div>`;
+      newSlot.addEventListener("click", () => unequipItem(slotName));
     } else {
       const emptyIcon = slotPlaceholders[slotName] || "Images/items/unknown.png";
-      slot.innerHTML = `<img src="${emptyIcon}" alt="Пусто" title="Пусто" style="width:100%; height:100%; object-fit:contain; opacity:0.4;" />`;
+      newSlot.innerHTML = `<img src="${emptyIcon}" alt="Пусто" title="Пусто" style="width:100%; height:100%; object-fit:contain; opacity:0.4;" />`;
     }
   });
 
@@ -995,13 +1069,12 @@ function showAboutCharacter() {
   screen.classList.add("visible");
   document.getElementById("menu-button").classList.remove("hidden");
   document.getElementById("menu-button").classList.add("visible");
+  updateXpDisplay();
 }
-
-
 
 function getItemType(item) {
   if (item === "Лук") return "twohanded";
-  if (["Меч", "Кинжал", "Щит"].includes(item)) return "weapon"; // ← добавили "Щит"
+  if (["Меч", "Кинжал", "Щит"].includes(item)) return "weapon";
   if (["Кожаная броня", "Стальная броня", "Плащ"].includes(item)) return "armor";
   if (["Кольчужный капюшон", "Маска"].includes(item)) return "helmet";
   if (["Походные сапоги"].includes(item)) return "boots";
@@ -1018,7 +1091,6 @@ function getDropChanceBonus() {
   const luck = playerData.stats?.luck || 0;
   return Math.floor(luck / 10); // +1% за каждые 10 удачи
 }
-
 
 function recalculateModifiers() {
   const baseModifiers = {
@@ -1040,3 +1112,44 @@ function recalculateModifiers() {
 
   playerData.modifiers = baseModifiers;
 }
+
+function getXpToNextLevel(level) {
+  if (level >= 20) return Infinity;
+  return 100 + (level - 1) * 75;
+}
+
+
+function gainXp(amount) {
+  playerData.xp += amount;
+  while (playerData.xp >= getXpToNextLevel(playerData.level)) {
+    playerData.xp -= getXpToNextLevel(playerData.level);
+    playerData.level++;
+    alert(`Поздравляем! Вы достигли уровня ${playerData.level}!`);
+  }
+  updateXpDisplay();
+  saveGame();
+}
+
+
+function updateXpDisplay() {
+  // Защита от отсутствующих данных
+  if (typeof playerData.level !== "number") playerData.level = 1;
+  if (typeof playerData.xp !== "number") playerData.xp = 0;
+
+  const levelEl = document.getElementById("player-level");
+  const xpEl = document.getElementById("current-xp");
+  const xpNextEl = document.getElementById("xp-to-next");
+  const xpFill = document.getElementById("xp-fill");
+
+  const xpToNext = getXpToNextLevel(playerData.level);
+
+  if (levelEl) levelEl.textContent = playerData.level;
+  if (xpEl) xpEl.textContent = playerData.xp;
+  if (xpNextEl) xpNextEl.textContent = xpToNext === Infinity ? "Макс" : xpToNext;
+
+  if (xpFill) {
+    const percent = xpToNext === Infinity ? 100 : (playerData.xp / xpToNext) * 100;
+    xpFill.style.width = `${Math.min(percent, 100)}%`;
+  }
+}
+
