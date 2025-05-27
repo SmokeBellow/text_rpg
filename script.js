@@ -48,6 +48,11 @@ const npcData = {
     text: "Кто-то из моих стражей что-то скрывает. Я вижу взгляды, слышу шёпоты. Мне нужен тот, кому я могу доверять. Помоги мне выяснить правду — пока не поздно.",
     desc: "Бывший лидер крепости, жаждущий вернуть её былую славу.",
     image: "Images/npc/commander.jpg"
+  },
+   "Торговец Гелрик": {
+    text: "У меня есть всё — от лечебных трав до трофеев пустыни! Погляди, не найдётся ли что тебе по вкусу.",
+    desc: "Старый проныра с тюками товаров и историями о далёких землях. Всегда найдет, что продать.",
+    image: "Images/npc/merchant.jpg"
   }
 };
 
@@ -239,9 +244,31 @@ function showNpcDialog(name) {
   const questButton = document.getElementById("npc-quest");
   const questLimitMsg = document.getElementById("quest-limit-msg");
 
+  // Удаляем старые кастомные кнопки (например, Купить/Продать)
+  dialog.querySelectorAll(".custom-npc-button").forEach(btn => btn.remove());
+
   if (name === "Мудрая жаба") {
     questButton.classList.add("hidden");
     questLimitMsg.classList.add("hidden");
+
+  } else if (name === "Торговец Гелрик") {
+    questButton.classList.add("hidden");
+    questLimitMsg.classList.add("hidden");
+
+    const buyBtn = document.createElement("button");
+    buyBtn.innerText = "🛒 Купить";
+    buyBtn.classList.add("custom-npc-button");
+    buyBtn.onclick = () => openBuyScreen();
+    styleTradeButton(buyBtn, 85);
+    dialog.appendChild(buyBtn);
+
+    const sellBtn = document.createElement("button");
+    sellBtn.innerText = "💰 Продать";
+    sellBtn.classList.add("custom-npc-button");
+    sellBtn.onclick = () => openSellScreen();
+    styleTradeButton(sellBtn, 45);
+    dialog.appendChild(sellBtn);
+
   } else {
     const alreadyTaken = playerData.quests.find(q => q.npc === name);
     const tooManyQuests = playerData.quests.length >= 4;
@@ -263,6 +290,146 @@ function showNpcDialog(name) {
   dialog.classList.remove("hidden");
   dialog.classList.add("visible");
 }
+
+function styleTradeButton(btn, bottomOffset) {
+  btn.style.position = "fixed";
+  btn.style.bottom = `${bottomOffset}px`;
+  btn.style.left = "50%";
+  btn.style.transform = "translateX(-50%)";
+  btn.style.width = "200px";
+  btn.style.backgroundColor = "#444";
+  btn.style.color = "white";
+  btn.style.padding = "10px 20px";
+  btn.style.cursor = "pointer";
+  btn.style.transition = "background-color 0.3s ease";
+  btn.style.zIndex = "30";
+}
+
+
+const merchantInventory = [
+  { name: "Зелье здоровья", price: 20 },
+  { name: "Укрепленные сапоги", price: 50 },
+  { name: "Хороший плащ", price: 80 }
+];
+
+function openBuyScreen() {
+  const container = document.getElementById("trade-items");
+  const title = document.getElementById("trade-title");
+  title.innerText = "Покупка предметов";
+  container.innerHTML = "";
+
+  merchantInventory.forEach(item => {
+    const el = document.createElement("div");
+    el.className = "trade-item";
+    el.innerHTML = `
+      <div style="display: flex; align-items: center;">
+        <img src="Images/items/${item.name}.png" alt="${item.name}" class="item-icon">
+        <span>${item.name}</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="display: flex; align-items: center; gap: 5px;">
+          <img src="Images/gold.png" alt="Золото" style="width: 20px; height: 20px;">
+          <span>${item.price}</span>
+        </div>
+        <button class="trade-button" onclick="buyItem('${item.name}', ${item.price})">Купить</button>
+      </div>
+    `;
+    container.appendChild(el);
+  });
+
+  document.getElementById("trade-screen").classList.remove("hidden");
+}
+
+
+
+function buyItem(itemName, price) {
+  const gold = playerData.inventory.keyItems.filter(i => i === "Золото").length;
+  if (gold < price) {
+    alert("Недостаточно золота!");
+    return;
+  }
+
+  for (let i = 0; i < price; i++) {
+    const index = playerData.inventory.keyItems.indexOf("Золото");
+    if (index !== -1) playerData.inventory.keyItems.splice(index, 1);
+  }
+
+  if (itemName.includes("сапоги") || itemName.includes("броня")) {
+    playerData.inventory.armor.push(itemName);
+  } else if (itemName.includes("Зелье")) {
+    playerData.inventory.potions.push(itemName);
+  } else {
+    playerData.inventory.weapons.push(itemName);
+  }
+
+  alert(`Вы купили ${itemName}`);
+  saveGame();
+}
+
+function openSellScreen() {
+  const container = document.getElementById("trade-items");
+  const title = document.getElementById("trade-title");
+  title.innerText = "Продажа предметов";
+  container.innerHTML = "";
+
+  const allItems = [
+    ...playerData.inventory.weapons,
+    ...playerData.inventory.armor,
+    ...playerData.inventory.potions
+  ];
+
+  if (allItems.length === 0) {
+    container.innerHTML = "<p>У вас нет ничего на продажу.</p>";
+    return;
+  }
+
+  allItems.forEach((item, index) => {
+    const el = document.createElement("div");
+    el.className = "trade-item";
+    el.innerHTML = `
+      <div style="display: flex; align-items: center;">
+        <img src="Images/items/${item}.png" alt="${item}" class="item-icon">
+        <span>${item}</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="display: flex; align-items: center; gap: 5px;">
+          <img src="Images/gold.png" alt="Золото" style="width: 20px; height: 20px;">
+          <span>10</span>
+        </div>
+        <button class="trade-button" onclick="sellItem('${item}', ${index})">Продать</button>
+      </div>
+    `;
+    container.appendChild(el);
+  });
+
+  document.getElementById("trade-screen").classList.remove("hidden");
+}
+
+
+
+function sellItem(itemName, index) {
+  const sections = ["weapons", "armor", "potions"];
+  for (let section of sections) {
+    const i = playerData.inventory[section].indexOf(itemName);
+    if (i !== -1) {
+      playerData.inventory[section].splice(i, 1);
+      break;
+    }
+  }
+
+  for (let i = 0; i < 10; i++) {
+    playerData.inventory.keyItems.push("Золото");
+  }
+
+  alert(`Вы продали ${itemName} за 10 золота`);
+  saveGame();
+  openSellScreen(); // Обновим список
+}
+
+function closeTrade() {
+  document.getElementById("trade-screen").classList.add("hidden");
+}
+
 
 function closeNpcDialog() {
   resetScreens();
@@ -842,12 +1009,12 @@ function showTravelScreen(targetLocation, duration) {
 
 // Локации
 const locations = {
-  "Деревня": {
-    desc: "Небольшая деревня с булыжными улицами и простыми каменными домами. Жители живут скромно, но дружно, поддерживая друг друга в трудные времена.",
-    paths: ["Лес", "Река"],
-    characters: ["Староста Лем", "Кузнец Бран"],
-    monsters: []
-  },
+"Деревня": {
+  desc: "Небольшая деревня с булыжными улицами и простыми каменными домами...",
+  paths: ["Лес", "Река"],
+  characters: ["Староста Лем", "Кузнец Бран", "Торговец Гелрик"],
+  monsters: []
+},
   "Лес": {
     desc: "Широкий лес, полный дичи и опасностей. Узкие тропы петляют между деревьями, а хруст веток часто не сулит ничего хорошего.",
     paths: ["Деревня", "Горы", "Поляна"],

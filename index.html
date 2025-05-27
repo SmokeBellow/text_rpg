@@ -25,7 +25,9 @@
   <div id="menu-button" class="hidden" onclick="toggleMenu()">☰</div>
 
   <div id="sidebar-menu" class="hidden">
-    <button id="sidebar-close">✖</button>
+    <button id="sidebar-close">
+  <img src="Images/close.png" alt="Закрыть" style="width: 100%; height: 100%; object-fit: contain;">
+</button>
     <button onclick="showAboutCharacter()">ℹ️ О персонаже</button>
     <button onclick="showInventory()">🎒 Инвентарь</button>
     <button onclick="showSkills()">⚔️ Умения</button>
@@ -154,5 +156,10 @@
    <button class="back-button" onclick="backToGame()">Назад</button>
 
   </div>
+ <div id="trade-screen" class="hidden">
+  <h2 id="trade-title">Торговля</h2>
+  <div id="trade-items"></div>
+  <button onclick="closeTrade()" style="margin-top: 20px;">Назад</button>
+</div>
 </body>
 </html>
