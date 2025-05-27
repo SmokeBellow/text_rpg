@@ -322,21 +322,20 @@ function openBuyScreen() {
     const el = document.createElement("div");
     el.className = "trade-item";
     el.innerHTML = `
-  <div style="display: flex; align-items: center;">
-    <img src="Images/items/${item.name}.png" alt="${item.name}" class="item-icon">
-    <span>${item.name}</span>
-  </div>
-  <button class="trade-button" onclick="buyItem('${item.name}', ${item.price})" style="display: flex; align-items: center; gap: 5px;">
-    <img src="Images/gold.png" alt="Золото" style="width: 20px; height: 20px;">
-    <span>${item.price}</span>
-  </button>
-`;
+      <div style="display: flex; align-items: center;">
+        <img src="${itemIcons[item.name] || 'Images/items/default.png'}" alt="${item.name}" class="item-icon">
+        <span>${item.name}</span>
+      </div>
+      <button class="trade-button" onclick="buyItem('${item.name}', ${item.price})">
+        <img src="${itemIcons['Золото']}" alt="Золото" style="width: 20px; height: 20px;">
+        <span>${item.price}</span>
+      </button>
+    `;
     container.appendChild(el);
   });
 
   document.getElementById("trade-screen").classList.remove("hidden");
 }
-
 
 
 function buyItem(itemName, price) {
@@ -383,22 +382,21 @@ function openSellScreen() {
   allItems.forEach((item, index) => {
     const el = document.createElement("div");
     el.className = "trade-item";
-el.innerHTML = `
-  <div style="display: flex; align-items: center;">
-    <img src="Images/items/${item}.png" alt="${item}" class="item-icon">
-    <span>${item}</span>
-  </div>
-  <button class="trade-button" onclick="sellItem('${item}', ${index})" style="display: flex; align-items: center; gap: 5px;">
-    <img src="Images/gold.png" alt="Золото" style="width: 20px; height: 20px;">
-    <span>10</span>
-  </button>
-`;
+    el.innerHTML = `
+      <div style="display: flex; align-items: center;">
+        <img src="${itemIcons[item] || 'Images/items/default.png'}" alt="${item}" class="item-icon">
+        <span>${item}</span>
+      </div>
+      <button class="trade-button" onclick="sellItem('${item}', ${index})">
+        <img src="${itemIcons['Золото']}" alt="Золото" style="width: 20px; height: 20px;">
+        <span>10</span>
+      </button>
+    `;
     container.appendChild(el);
   });
 
   document.getElementById("trade-screen").classList.remove("hidden");
 }
-
 
 
 function sellItem(itemName, index) {
