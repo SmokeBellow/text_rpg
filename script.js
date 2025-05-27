@@ -256,13 +256,13 @@ function showNpcDialog(name) {
     questLimitMsg.classList.add("hidden");
 
     const buyBtn = document.createElement("button");
-    buyBtn.innerText = "🛒 Купить";
+    buyBtn.innerText = "Купить";
     buyBtn.onclick = () => openBuyScreen();
     styleTradeButton(buyBtn);
     dialog.insertBefore(buyBtn, questButton); // Добавляем выше кнопки Назад
 
     const sellBtn = document.createElement("button");
-    sellBtn.innerText = "💰 Продать";
+    sellBtn.innerText = "Продать";
     sellBtn.onclick = () => openSellScreen();
     styleTradeButton(sellBtn);
     dialog.insertBefore(sellBtn, questButton);
