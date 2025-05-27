@@ -292,19 +292,14 @@ function showNpcDialog(name) {
 
 function styleTradeButton(btn) {
   btn.classList.add("custom-npc-button");
+  btn.classList.add("back-button"); // как у кнопки "Назад"
+  btn.style.marginBottom = "10px"; // уменьшенный отступ между кнопками
+  btn.style.width = "auto"; // можно убрать фиксированную ширину, если она мешает выравниванию
   btn.style.display = "block";
-  btn.style.width = "200px";
-  btn.style.margin = "10px auto";
-  btn.style.padding = "10px 20px";
-  btn.style.backgroundColor = "#444";
-  btn.style.color = "white";
-  btn.style.cursor = "pointer";
-  btn.style.transition = "background-color 0.3s ease";
-  btn.style.zIndex = "10";
-  btn.style.textAlign = "center";
-  btn.style.border = "none";
-  btn.style.fontSize = "16px";
+  btn.style.marginLeft = "auto";
+  btn.style.marginRight = "auto";
 }
+
 
 
 const merchantInventory = [
