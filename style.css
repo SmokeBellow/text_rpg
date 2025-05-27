@@ -970,13 +970,20 @@ button {
   padding: 5px 10px;
   border: none;
   cursor: pointer;
-  min-width: 80px;
+  width: 110px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .trade-button:hover {
   background-color: #555;
 }
+
 
 
 #trade-title {
@@ -1004,20 +1011,6 @@ button {
   height: 40px;
   object-fit: contain;
   margin-right: 10px;
-}
-
-.trade-button {
-  background-color: #444;
-  color: white;
-  padding: 5px 10px;
-  border: none;
-  cursor: pointer;
-  min-width: 80px;
-  text-align: center;
-}
-
-.trade-button:hover {
-  background-color: #555;
 }
 
 
@@ -1064,18 +1057,4 @@ button {
   height: 40px;
   object-fit: contain;
   margin-right: 10px;
-}
-
-.trade-button {
-  background-color: #444;
-  color: white;
-  padding: 5px 10px;
-  border: none;
-  cursor: pointer;
-  min-width: 80px;
-  text-align: center;
-}
-
-.trade-button:hover {
-  background-color: #555;
 }
