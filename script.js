@@ -383,19 +383,16 @@ function openSellScreen() {
   allItems.forEach((item, index) => {
     const el = document.createElement("div");
     el.className = "trade-item";
-    el.innerHTML = `
-      <div style="display: flex; align-items: center;">
-        <img src="Images/items/${item}.png" alt="${item}" class="item-icon">
-        <span>${item}</span>
-      </div>
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <div style="display: flex; align-items: center; gap: 5px;">
-          <img src="Images/gold.png" alt="Золото" style="width: 20px; height: 20px;">
-          <span>10</span>
-        </div>
-        <button class="trade-button" onclick="sellItem('${item}', ${index})">Продать</button>
-      </div>
-    `;
+el.innerHTML = `
+  <div style="display: flex; align-items: center;">
+    <img src="Images/items/${item}.png" alt="${item}" class="item-icon">
+    <span>${item}</span>
+  </div>
+  <button class="trade-button" onclick="sellItem('${item}', ${index})" style="display: flex; align-items: center; gap: 5px;">
+    <img src="Images/gold.png" alt="Золото" style="width: 20px; height: 20px;">
+    <span>10</span>
+  </button>
+`;
     container.appendChild(el);
   });
 
