@@ -288,13 +288,17 @@ function showNpcDialog(name) {
   }
 
   dialog.classList.remove("hidden");
-  dialog.classList.add("function styleTradeButton(btn, bottomOffset) {
+  dialog.classList.add("visible"); // <-- Здесь было ошибочное вставленное определение функции
+}
+
+
+function styleTradeButton(btn, bottomOffset) {
   btn.classList.add("custom-npc-button");
   btn.style.position = "fixed";
   btn.style.bottom = `${bottomOffset}px`;
   btn.style.left = "50%";
   btn.style.transform = "translateX(-50%)";
-  btn.style.width = "200px"; // Ширина как у кнопки "Назад"
+  btn.style.width = "200px"; // такая же, как у кнопки "Назад"
   btn.style.padding = "10px 20px";
   btn.style.backgroundColor = "#444";
   btn.style.color = "white";
@@ -304,21 +308,6 @@ function showNpcDialog(name) {
   btn.style.textAlign = "center";
 }
 
-function styleTradeButton(btn, bottomOffset) {
-  btn.classList.add("custom-npc-button");
-  btn.style.position = "fixed";
-  btn.style.bottom = `${bottomOffset}px`;
-  btn.style.left = "50%";
-  btn.style.transform = "translateX(-50%)";
-  btn.style.width = "200px"; // Ширина как у кнопки "Назад"
-  btn.style.padding = "10px 20px";
-  btn.style.backgroundColor = "#444";
-  btn.style.color = "white";
-  btn.style.cursor = "pointer";
-  btn.style.transition = "background-color 0.3s ease";
-  btn.style.zIndex = "30";
-  btn.style.textAlign = "center";
-}
 
 
 const merchantInventory = [
