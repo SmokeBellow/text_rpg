@@ -292,18 +292,21 @@ function showNpcDialog(name) {
 }
 
 function styleTradeButton(btn, bottomOffset) {
+  btn.classList.add("custom-npc-button");
   btn.style.position = "fixed";
   btn.style.bottom = `${bottomOffset}px`;
   btn.style.left = "50%";
   btn.style.transform = "translateX(-50%)";
-  btn.style.width = "200px";
+  btn.style.width = "200px"; // точно как #npc-exit
+  btn.style.padding = "10px 20px";
   btn.style.backgroundColor = "#444";
   btn.style.color = "white";
-  btn.style.padding = "10px 20px";
   btn.style.cursor = "pointer";
   btn.style.transition = "background-color 0.3s ease";
   btn.style.zIndex = "30";
+  btn.style.textAlign = "center";
 }
+
 
 
 const merchantInventory = [
