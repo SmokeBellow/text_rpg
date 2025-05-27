@@ -134,7 +134,7 @@ const itemIcons = {
   "Щит": "Images/items/shield.png",
   "Стальная броня": "Images/items/steelarmor.png",
   "Кинжал": "Images/items/daggers.png",
-  "Плащ": "Images/items/shadowcloak.png",
+  "Плащ": "Images/items/cloak.png",
   "Маска": "Images/items/mask.png",
   "Золото": "Images/items/gold.png",
 };
