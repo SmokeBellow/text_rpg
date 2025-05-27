@@ -244,8 +244,8 @@ function showNpcDialog(name) {
   const questButton = document.getElementById("npc-quest");
   const questLimitMsg = document.getElementById("quest-limit-msg");
 
-  // Удаляем старые кастомные кнопки (например, Купить/Продать)
-  dialog.querySelectorAll(".custom-npc-button").forEach(btn => btn.remove());
+  // Удаляем старые кастомные кнопки
+  dialog.querySelectorAll(".custom-npc-button, .custom-button-wrapper").forEach(btn => btn.remove());
 
   if (name === "Мудрая жаба") {
     questButton.classList.add("hidden");
@@ -255,19 +255,26 @@ function showNpcDialog(name) {
     questButton.classList.add("hidden");
     questLimitMsg.classList.add("hidden");
 
+    const buttonWrapper = document.createElement("div");
+    buttonWrapper.className = "custom-button-wrapper";
+    buttonWrapper.style.display = "flex";
+    buttonWrapper.style.flexDirection = "column";
+    buttonWrapper.style.alignItems = "center";
+    buttonWrapper.style.marginTop = "20px";
+
     const buyBtn = document.createElement("button");
     buyBtn.innerText = "🛒 Купить";
-    buyBtn.classList.add("custom-npc-button");
+    styleTradeButton(buyBtn);
     buyBtn.onclick = () => openBuyScreen();
-    styleTradeButton(buyBtn, 85);
-    dialog.appendChild(buyBtn);
+    buttonWrapper.appendChild(buyBtn);
 
     const sellBtn = document.createElement("button");
     sellBtn.innerText = "💰 Продать";
-    sellBtn.classList.add("custom-npc-button");
+    styleTradeButton(sellBtn);
     sellBtn.onclick = () => openSellScreen();
-    styleTradeButton(sellBtn, 45);
-    dialog.appendChild(sellBtn);
+    buttonWrapper.appendChild(sellBtn);
+
+    dialog.appendChild(buttonWrapper);
 
   } else {
     const alreadyTaken = playerData.quests.find(q => q.npc === name);
@@ -288,27 +295,22 @@ function showNpcDialog(name) {
   }
 
   dialog.classList.remove("hidden");
-  dialog.classList.add("visible"); // <-- Здесь было ошибочное вставленное определение функции
+  dialog.classList.add("visible");
 }
 
 
-function styleTradeButton(btn, bottomOffset) {
+function styleTradeButton(btn) {
   btn.classList.add("custom-npc-button");
-  btn.style.position = "fixed";
-  btn.style.bottom = `${bottomOffset}px`;
-  btn.style.left = "50%";
-  btn.style.transform = "translateX(-50%)";
-  btn.style.width = "200px"; // такая же, как у кнопки "Назад"
+  btn.style.position = "relative";
+  btn.style.width = "200px";
+  btn.style.marginBottom = "10px";
   btn.style.padding = "10px 20px";
   btn.style.backgroundColor = "#444";
   btn.style.color = "white";
   btn.style.cursor = "pointer";
   btn.style.transition = "background-color 0.3s ease";
-  btn.style.zIndex = "30";
   btn.style.textAlign = "center";
 }
-
-
 
 const merchantInventory = [
   { name: "Зелье здоровья", price: 20 },
