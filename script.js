@@ -322,18 +322,15 @@ function openBuyScreen() {
     const el = document.createElement("div");
     el.className = "trade-item";
     el.innerHTML = `
-      <div style="display: flex; align-items: center;">
-        <img src="Images/items/${item.name}.png" alt="${item.name}" class="item-icon">
-        <span>${item.name}</span>
-      </div>
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <div style="display: flex; align-items: center; gap: 5px;">
-          <img src="Images/gold.png" alt="Золото" style="width: 20px; height: 20px;">
-          <span>${item.price}</span>
-        </div>
-        <button class="trade-button" onclick="buyItem('${item.name}', ${item.price})">Купить</button>
-      </div>
-    `;
+  <div style="display: flex; align-items: center;">
+    <img src="Images/items/${item.name}.png" alt="${item.name}" class="item-icon">
+    <span>${item.name}</span>
+  </div>
+  <button class="trade-button" onclick="buyItem('${item.name}', ${item.price})" style="display: flex; align-items: center; gap: 5px;">
+    <img src="Images/gold.png" alt="Золото" style="width: 20px; height: 20px;">
+    <span>${item.price}</span>
+  </button>
+`;
     container.appendChild(el);
   });
 
