@@ -1,4 +1,4 @@
-Отconsole.log("script.js loaded");
+console.log("script.js loaded");
 
 let currentInventoryTab = "weapons"; // по умолчанию оружие
 
