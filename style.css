@@ -1065,7 +1065,38 @@ button {
 
 #monster-screen {
   text-align: center;
+  padding: 32px 16px 16px 16px; /* общий отступ вокруг */
 }
+
+#monster-image {
+  display: block;
+  width: 270px;      /* уже, чем было */
+  height: 180px;     /* делаем "уже" по вертикали */
+  object-fit: contain;
+  margin: 0 auto 20px auto;
+  padding-left: 24px;  /* отступ слева */
+  padding-right: 24px; /* отступ справа */
+  background: #222;
+  border-radius: 8px;
+  box-shadow: 0 0 8px #111;
+}
+
+#monster-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 24px;          /* расстояние между кнопками */
+  margin-top: 36px;   /* больше отступа сверху */
+}
+
+#monster-buttons button {
+  min-width: 120px;
+  padding: 12px 28px;
+  font-size: 1.1em;
+  margin: 0 10px;
+}
+
+
+
 #monster-danger {
   font-size: 1.2em;
   margin-top: 10px;
