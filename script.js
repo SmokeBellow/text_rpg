@@ -968,6 +968,8 @@ function newGame() {
   playerData = {
     class: null,
     location: "Деревня",
+    level: 1,        // ← добавь!
+    xp: 0,
     quests: [],
     inventory: {
       weapons: [],
