@@ -257,13 +257,13 @@ function showNpcDialog(name) {
 
     const buyBtn = document.createElement("button");
     buyBtn.innerText = "Купить";
-    buyBtn.classList.add("back-button", "custom-npc-button");
+    buyBtn.classList.add("back-button");
     buyBtn.onclick = () => openBuyScreen();
     dialog.appendChild(buyBtn);
 
     const sellBtn = document.createElement("button");
     sellBtn.innerText = "Продать";
-    sellBtn.classList.add("back-button", "custom-npc-button");
+    sellBtn.classList.add("back-button");
     sellBtn.onclick = () => openSellScreen();
     dialog.appendChild(sellBtn);
 
@@ -290,13 +290,8 @@ function showNpcDialog(name) {
 }
 
 function styleTradeButton(btn) {
-  btn.classList.add("custom-npc-button");
-  btn.classList.add("back-button"); // как у кнопки "Назад"
-  btn.style.marginBottom = "10px"; // уменьшенный отступ между кнопками
-  btn.style.width = "auto"; // можно убрать фиксированную ширину, если она мешает выравниванию
-  btn.style.display = "block";
-  btn.style.marginLeft = "auto";
-  btn.style.marginRight = "auto";
+  btn.className = "back-button"); // как у кнопки "Назад"
+
 }
 
 
