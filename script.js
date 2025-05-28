@@ -245,7 +245,7 @@ function showNpcDialog(name) {
   const questLimitMsg = document.getElementById("quest-limit-msg");
 
   // Удаляем старые кнопки: кастомные и кнопки назад
-  dialog.querySelectorAll(".custom-npc-button, .back-button").forEach(btn => btn.remove());
+  dialog.querySelectorAll(".back-button").forEach(btn => btn.remove());
 
   if (name === "Мудрая жаба") {
     questButton.classList.add("hidden");
@@ -257,13 +257,13 @@ function showNpcDialog(name) {
 
     const buyBtn = document.createElement("button");
     buyBtn.innerText = "Купить";
-    buyBtn.classList.add("back-button", "custom-npc-button");
+    buyBtn.classList.add("back-button");
     buyBtn.onclick = () => openBuyScreen();
     dialog.appendChild(buyBtn);
 
     const sellBtn = document.createElement("button");
     sellBtn.innerText = "Продать";
-    sellBtn.classList.add("back-button", "custom-npc-button");
+    sellBtn.classList.add("back-button");
     sellBtn.onclick = () => openSellScreen();
     dialog.appendChild(sellBtn);
 
