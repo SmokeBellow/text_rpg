@@ -2,6 +2,31 @@ console.log("script.js loaded");
 
 let currentInventoryTab = "weapons"; // по умолчанию оружие
 
+const monsterData = {
+  "Древесный ужас": {
+    level: 2,
+    desc: "Огромное существо, сросшееся с деревьями. Его шаги гремят, как гром.",
+    image: "Images/monsters/treehorror.jpg"
+  },
+  "Тенелис": {
+    level: 4,
+    desc: "Существо из тени, двигающееся бесшумно между деревьями.",
+    image: "Images/monsters/shadowbeast.jpg"
+  },
+  "Водяная тварь": {
+    level: 3,
+    desc: "Скользкое создание, скрывающееся в глубинах и способное утянуть под воду.",
+    image: "Images/monsters/waterbeast.jpg"
+  },
+  "Призрак легиона": {
+    level: 6,
+    desc: "Призрачный солдат прошлого, вечно ищущий битву.",
+    image: "Images/monsters/legionghost.jpg"
+  }
+  // Добавь остальных монстров аналогично
+};
+
+
 // Данные NPC
 const npcData = {
   "Староста Лем": {
