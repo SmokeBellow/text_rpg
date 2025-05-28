@@ -900,18 +900,22 @@ button {
   width: 200px;
   text-align: center;
 }
+
 .back-button {
   display: block;
-  margin: 30px auto 10px;
-  padding: 12px 24px;
-  font-size: 14 px;
+  width: 220px; /* фиксированная ширина для всех основных кнопок */
+  max-width: 90%;
+  margin: 10px auto;
+  padding: 10px 20px;
+  font-size: 16px;
   background-color: #444;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
+  text-align: center;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
+
 
 .back-button:hover {
   background-color: #666;
