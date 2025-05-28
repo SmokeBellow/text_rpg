@@ -212,7 +212,7 @@ const classData = {
 // Сброс всех экранов
 function resetScreens() {
   document.querySelectorAll(
-    "#splash-dev, #splash-title, #main-menu, #about-screen, #class-selection, #game-screen, #travel-screen, #npc-dialog, #character-screen, #quests-screen, #inventory-screen"
+    "#splash-dev, #splash-title, #monster-screen, #main-menu, #about-screen, #class-selection, #game-screen, #travel-screen, #npc-dialog, #character-screen, #quests-screen,  #inventory-screen"
   ).forEach(el => {
     el.classList.remove("visible");
     el.classList.add("hidden");
