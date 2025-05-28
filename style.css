@@ -1062,3 +1062,11 @@ button {
   object-fit: contain;
   margin-right: 10px;
 }
+
+#monster-screen {
+  text-align: center;
+}
+#monster-danger {
+  font-size: 1.2em;
+  margin-top: 10px;
+}
