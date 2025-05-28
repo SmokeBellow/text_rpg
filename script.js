@@ -517,6 +517,7 @@ function backToGame() {
   document.getElementById("game-screen").classList.add("visible");
   document.getElementById("menu-button").classList.remove("hidden");
   document.getElementById("menu-button").classList.add("visible");
+  document.getElementById("trade-screen").classList.add("hidden");
   document.removeEventListener("click", closeQuestDetailsOnOutsideClick);
   updateLocation();
 }
