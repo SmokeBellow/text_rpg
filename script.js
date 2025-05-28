@@ -1423,6 +1423,6 @@ function getDangerLevel(monsterLevel) {
   const diff = monsterLevel - playerData.level;
   if (diff <= -2) return { label: "низкая", color: "green" };
   if (diff <= 1) return { label: "средняя", color: "orange" };
-  if (diff <= 3) return { label: "высокая", color: "purple" };
-  return { label: "смерть", color: "black" };
+  if (diff <= 3) return { label: "высокая", color: "red" };
+  return { label: "смерть", color: purple" };
 }
