@@ -314,6 +314,29 @@ function showNpcDialog(name) {
   dialog.classList.add("visible");
 }
 
+function showMonsterScreen(name) {
+  resetScreens();
+  const monster = monsterData[name];
+  if (!monster) {
+    alert("Монстр не найден.");
+    return;
+  }
+
+  const screen = document.getElementById("monster-screen");
+  screen.querySelector("#monster-image").src = monster.image;
+  screen.querySelector("#monster-name").innerText = name;
+  screen.querySelector("#monster-level").innerText = `[${monster.level}]`;
+  screen.querySelector("#monster-desc").innerText = monster.desc;
+
+  const danger = getDangerLevel(monster.level);
+  const dangerText = screen.querySelector("#monster-danger");
+  dangerText.innerText = `Опасность: ${danger.label}`;
+  dangerText.style.color = danger.color;
+
+  screen.classList.remove("hidden");
+  screen.classList.add("visible");
+}
+
 
 function styleTradeButton(btn) {
   btn.className = "back-button"; // как у кнопки "Назад"
