@@ -22,9 +22,67 @@ const monsterData = {
     level: 6,
     desc: "Призрачный солдат прошлого, вечно ищущий битву.",
     image: "Images/monsters/legionghost.jpg"
+  },
+
+  // Добавить дальше:
+
+  "Горный голем": {
+    level: 5,
+    desc: "Мощный голем из камня и льда. Его удары разрушают скалы.",
+    image: "Images/monsters/mountaingolem.jpg"
+  },
+  "Слизень": {
+    level: 2,
+    desc: "Скользкий и почти бессмертный слизень, оставляющий ядовитый след.",
+    image: "Images/monsters/slime.jpg"
+  },
+  "Пещерный паук": {
+    level: 3,
+    desc: "Огромный паук, плетущий свои сети в темноте пещеры.",
+    image: "Images/monsters/cavespider.jpg"
+  },
+  "Служитель Тени": {
+    level: 7,
+    desc: "Древний дух, охраняющий магические тайны храма.",
+    image: "Images/monsters/shadowpriest.jpg"
+  },
+  "Страж Бездны": {
+    level: 10,
+    desc: "Ужас из другого мира, стерегущий портал.",
+    image: "Images/monsters/voidguardian.jpg"
+  },
+  "Озёрный дух": {
+    level: 4,
+    desc: "Таинственный дух, появляющийся над гладью воды в полнолуние.",
+    image: "Images/monsters/lakespirit.jpg"
+  },
+  "Болотный призрак": {
+    level: 5,
+    desc: "Полупрозрачная фигура, пугающая путников на трясине.",
+    image: "Images/monsters/swampghost.jpg"
+  },
+  "Гнилец": {
+    level: 3,
+    desc: "Оживший мертвец, источающий запах гнили и разложения.",
+    image: "Images/monsters/rotwalker.jpg"
+  },
+  "Песчаный ящер": {
+    level: 4,
+    desc: "Проворный хищник, быстро перемещающийся по скалам каньона.",
+    image: "Images/monsters/sandlizard.jpg"
+  },
+  "Степной волк": {
+    level: 3,
+    desc: "Серый волк с жёлтыми глазами, охотящийся стаей на просторах равнины.",
+    image: "Images/monsters/stepwolf.jpg"
+  },
+  "Оживший доспех": {
+    level: 8,
+    desc: "Пустые доспехи, двигающиеся по своей воле и защищающие крепость.",
+    image: "Images/monsters/armoredsuit.jpg"
   }
-  // Добавь остальных монстров аналогично
 };
+
 
 
 // Данные NPC
