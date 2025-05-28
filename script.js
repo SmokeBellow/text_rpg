@@ -290,7 +290,7 @@ function showNpcDialog(name) {
 }
 
 function styleTradeButton(btn) {
-  btn.className = "back-button"); // как у кнопки "Назад"
+  btn.className = "back-button"; // как у кнопки "Назад"
 
 }
 
