@@ -1,4 +1,4 @@
-console.log("script.js loaded");
+Отconsole.log("script.js loaded");
 
 let currentInventoryTab = "weapons"; // по умолчанию оружие
 
@@ -1182,26 +1182,30 @@ function updateLocation() {
   }
 
   if (data.monsters.length > 0) {
-    const monTitle = document.createElement("div");
-    monTitle.className = "section-title";
-    monTitle.innerText = "Монстры";
-    const content = document.createElement("div");
-    content.className = "section-content hidden";
+  const monTitle = document.createElement("div");
+  monTitle.className = "section-title";
+  monTitle.innerText = "Монстры";
+  const content = document.createElement("div");
+  content.className = "section-content hidden";
 
-    data.monsters.forEach(name => {
-      const m = document.createElement("div");
-      m.innerText = name;
-      content.appendChild(m);
-    });
+  data.monsters.forEach(name => {
+    const m = document.createElement("button");
+    m.innerText = name;
+    m.style.width = "100%";
+    m.style.margin = "5px 0";
+    m.onclick = () => showMonsterScreen(name);
+    content.appendChild(m);
+  });
 
-    monTitle.onclick = () => {
-      content.classList.toggle("hidden");
-      monTitle.classList.toggle("open");
-    };
+  monTitle.onclick = () => {
+    content.classList.toggle("hidden");
+    monTitle.classList.toggle("open");
+  };
 
-    extraContent.appendChild(monTitle);
-    extraContent.appendChild(content);
-  }
+  extraContent.appendChild(monTitle);
+  extraContent.appendChild(content);
+}
+
 }
 
 function showAboutCharacter() {
