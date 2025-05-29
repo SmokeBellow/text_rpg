@@ -1139,13 +1139,20 @@ button {
 }
 
 #battle-screen {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;   /* всё содержимое прижимается к низу */
-  min-height: 100vh;
-  height: 100vh;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  width: 100vw !important;
+  background: #111 !important;
 }
 #battle-content {
-  margin-top: 0;  
-   margin-bottom: 0;
+  margin-top: 0 !important;
+  margin-bottom: 32px !important;
+  width: 100% !important;
+  max-width: 600px !important;
+  background: #222 !important; /* Для проверки */
+  border: 2px dashed red !important; /* Для проверки */
 }
