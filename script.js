@@ -903,6 +903,26 @@ function showInventory(tabToShow) {
     }
   });
 
+function getPlayerMaxHp() {
+  // Пример формулы: базовое здоровье + бонусы за выносливость, броню и т.д.
+  // Можно усложнить на ваш вкус!
+  let baseHp = 100;
+  if (playerData.stats && playerData.stats.endurance) {
+    baseHp += playerData.stats.endurance * 10;
+  }
+  // Бонус за класс
+  if (playerData.class === "warrior") baseHp += 20;
+  if (playerData.class === "archer") baseHp += 0;
+  if (playerData.class === "rogue") baseHp -= 10;
+  // Бонусы за экипировку
+  if (playerData.equipment.armor === "Стальная броня") baseHp += 30;
+  if (playerData.equipment.armor === "Кожаная броня") baseHp += 10;
+  if (playerData.equipment.armor === "Плащ") baseHp += 0;
+  // (Добавьте ещё что хотите)
+  return baseHp;
+}
+
+  
   function renderInventory(tab) {
     inventoryList.innerHTML = "";
     const rawItems = playerData.inventory[tab] || [];
