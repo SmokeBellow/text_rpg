@@ -1140,12 +1140,12 @@ button {
 }
 
 #battle-screen {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;   /* всё содержимое прижимается к низу */
+  min-height: 100vh;
+  height: 100vh;
 }
-
 #battle-content {
-  margin-top: 50vh; /* можно подобрать под свой вкус (например, 12vh или 18vh) */
+  margin-top: 0;   /* убрать, если был */
 }
