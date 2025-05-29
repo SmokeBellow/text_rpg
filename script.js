@@ -1563,11 +1563,6 @@ function updateXpDisplay() {
   }
 }
 
-function getPlayerMaxHp() {
-  const endurance = playerData.stats?.endurance || 5;
-  return 60 + endurance * 10 + (playerData.level-1)*5;
-}
-
 
 function getDangerLevel(monsterLevel) {
   const diff = monsterLevel - playerData.level;
