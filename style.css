@@ -1109,3 +1109,35 @@ button {
   margin-right: auto;
 }
 
+.battle-background {
+  width: 100vw;            /* занимает всю ширину экрана */
+  max-width: 100%;         /* не выходит за пределы родителя */
+  height: auto;            /* высота автоматически */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  object-fit: cover;       /* картинка не искажается */
+  border-radius: 12px;     /* для красоты, можно убрать */
+  box-shadow: 0 2px 16px #2224;
+  padding-left: 8vw;       /* отступы по краям */
+  padding-right: 8vw;
+}
+
+@media (max-width: 600px) {
+  .battle-background {
+    padding-left: 3vw;
+    padding-right: 3vw;
+    border-radius: 5px;
+  }
+}
+
+.battle-background {
+  position: absolute;
+  z-index: 0;
+  top: 0; left: 0;
+}
+
+#battle-screen {
+  position: relative;
+  overflow: hidden;
+}

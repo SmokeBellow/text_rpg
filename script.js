@@ -767,6 +767,8 @@ function updateBattleScreen() {
 
   document.getElementById("battle-player-hp").innerText = `❤️ ${battleState.playerHp} / ${battleState.playerMaxHp}`;
   // document.getElementById("battle-player-mana").innerText = "Мана: ..."; // если есть мана
+  resizeBattleBackground();
+
 }
 function logBattle(text) {
   const log = document.getElementById("battle-log");
@@ -1568,3 +1570,30 @@ function getDangerLevel(monsterLevel) {
   if (diff <= 3) return { label: "высокая", color: "red" };
   return { label: "смерть", color: "purple" };
 }
+
+function resizeBattleBackground() {
+  const bg = document.getElementById("battle-background") || document.getElementById("battle-background-img");
+  if (!bg) return;
+  // для <div> с background-image
+  if (bg.tagName === "DIV") {
+    bg.style.width = (window.innerWidth - 32) + "px";  // отступы 16px слева и справа
+    bg.style.height = window.innerHeight + "px";
+    bg.style.left = "16px";
+    bg.style.right = "16px";
+    bg.style.position = "absolute";
+    bg.style.backgroundImage = "url('Images/background_battle.png')";
+    bg.style.backgroundSize = "cover";
+    bg.style.backgroundPosition = "center";
+    bg.style.zIndex = 0;
+  }
+  // для <img>
+  if (bg.tagName === "IMG") {
+    bg.style.width = (window.innerWidth - 32) + "px";
+    bg.style.height = window.innerHeight + "px";
+    bg.style.left = "16px";
+    bg.style.position = "absolute";
+    bg.style.zIndex = 0;
+  }
+}
+
+window.addEventListener('resize', resizeBattleBackground);
