@@ -763,8 +763,6 @@ let battleState = {
 function updateBattleScreen() {
   document.getElementById("battle-monster-name").innerText = currentMonsterName || "";
   document.getElementById("battle-monster-level").innerText = `[${currentMonster.level}]`;
-  document.getElementById("battle-monster-image").src = "Images/background_battle.png";
-
   document.getElementById("battle-player-hp").innerText = `❤️ ${battleState.playerHp} / ${battleState.playerMaxHp}`;
   // document.getElementById("battle-player-mana").innerText = "Мана: ..."; // если есть мана
   resizeBattleBackground();

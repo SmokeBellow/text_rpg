@@ -174,17 +174,18 @@
 </div>
 
 <div id="battle-screen" class="hidden">
+  <div id="battle-bg"></div>
   <div id="battle-header">
     <span id="battle-monster-name"></span>
     <span id="battle-monster-level"></span>
   </div>
   <div id="battle-monster-image-block">
-    <img id="battle-monster-image" src="" alt="Монстр">
+    <!-- Оставь <img> только если тут портрет монстра, иначе убери или оставь пустым -->
   </div>
   <div id="battle-log"></div>
   <div id="battle-player-stats">
     <span id="battle-player-hp"></span>
-    <span id="battle-player-mana"></span> <!-- если будет мана -->
+    <span id="battle-player-mana"></span>
   </div>
   <div id="battle-actions">
     <button onclick="playerAttack()">Атаковать</button>
@@ -193,6 +194,7 @@
     <button onclick="tryEscape()">Сбежать</button>
   </div>
 </div>
+
 
 
 </body>
