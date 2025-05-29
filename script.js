@@ -1,5 +1,7 @@
 console.log("script.js loaded");
 
+let currentMonsterName = "";
+
 let currentInventoryTab = "weapons"; // по умолчанию оружие
 
 const monsterData = {
@@ -738,9 +740,9 @@ let battleState = {
   turn: "player" // или "monster"
 };
 
-function startCombat(monsterName) {
-  // Инициализация монстра
+  function startCombat(monsterName) {
   currentMonster = monsterData[monsterName];
+  currentMonsterName = monsterName; // сохраняем имя монстра для боя
   battleState.monsterHp = 30 + currentMonster.level * 25;
   battleState.monsterMaxHp = battleState.monsterHp;
 
