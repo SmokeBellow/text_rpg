@@ -967,10 +967,14 @@ function showInventory(tabToShow) {
     };
   });
 
-  inventoryScreen.classList.remove("hidden");
+    inventoryScreen.classList.remove("hidden");
   inventoryScreen.classList.add("visible");
   document.getElementById("menu-button").classList.remove("hidden");
-  document.getElementById("menu-button").classList.add("function getPlayerMaxHp() {
+  document.getElementById("menu-button").classList.add("visible");
+}
+
+
+function getPlayerMaxHp() {
   let baseHp = 100;
   if (playerData.stats && playerData.stats.endurance) {
     baseHp += playerData.stats.endurance * 10;
@@ -983,8 +987,6 @@ function showInventory(tabToShow) {
   if (playerData.equipment.armor === "Плащ") baseHp += 0;
   return baseHp;
 }
-
-
 
 
 
