@@ -1148,11 +1148,17 @@ button {
   width: 100vw !important;
   background: #111 !important;
 }
+
 #battle-content {
-  margin-top: 0 !important;
-  margin-bottom: 32px !important;
-  width: 100% !important;
-  max-width: 600px !important;
-  background: #222 !important; /* Для проверки */
-  border: 2px dashed red !important; /* Для проверки */
+  width: 100%;
+  max-width: 600px;
+  background: #222;
+  border: 2px dashed red;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex-grow: 1; /* ВАЖНО: растягивает блок до остатка родителя */
+  padding: 16px;
+  box-sizing: border-box;
 }
+
