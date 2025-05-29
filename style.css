@@ -1101,3 +1101,11 @@ button {
   font-size: 1.2em;
   margin-top: 10px;
 }
+
+#battle-monster-image {
+  margin-top: 50px; /* или сколько тебе нужно */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
