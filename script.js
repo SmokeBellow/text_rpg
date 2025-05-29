@@ -4,6 +4,7 @@ let currentMonsterName = "";
 
 let currentInventoryTab = "weapons"; // по умолчанию оружие
 
+
 const monsterData = {
   "Древесный ужас": {
     level: 2,
