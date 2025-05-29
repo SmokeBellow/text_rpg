@@ -970,8 +970,22 @@ function showInventory(tabToShow) {
   inventoryScreen.classList.remove("hidden");
   inventoryScreen.classList.add("visible");
   document.getElementById("menu-button").classList.remove("hidden");
-  document.getElementById("menu-button").classList.add("visible");
+  document.getElementById("menu-button").classList.add("function getPlayerMaxHp() {
+  let baseHp = 100;
+  if (playerData.stats && playerData.stats.endurance) {
+    baseHp += playerData.stats.endurance * 10;
+  }
+  if (playerData.class === "warrior") baseHp += 20;
+  if (playerData.class === "archer") baseHp += 0;
+  if (playerData.class === "rogue") baseHp -= 10;
+  if (playerData.equipment.armor === "Стальная броня") baseHp += 30;
+  if (playerData.equipment.armor === "Кожаная броня") baseHp += 10;
+  if (playerData.equipment.armor === "Плащ") baseHp += 0;
+  return baseHp;
 }
+
+
+
 
 
 function showSkills() {
