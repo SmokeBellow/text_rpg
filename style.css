@@ -1145,6 +1145,7 @@ button {
   width: 100%;
   max-width: 600px;
   padding: 20px;
+   padding-bottom: calc(20px + env(safe-area-inset-bottom));
   box-sizing: border-box;
   background-color: #222;
   display: flex;
