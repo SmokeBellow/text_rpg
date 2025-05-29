@@ -719,6 +719,123 @@ function equipItem(item, itemType) {
   }
 }
 
+let currentMonster = null;
+let battleState = {
+  playerHp: 100,
+  playerMaxHp: 100,
+  monsterHp: 100,
+  monsterMaxHp: 100,
+  turn: "player" // или "monster"
+};
+
+function startCombat(monsterName) {
+  // Инициализация монстра
+  currentMonster = monsterData[monsterName];
+  battleState.monsterHp = 30 + currentMonster.level * 25;
+  battleState.monsterMaxHp = battleState.monsterHp;
+
+  // Игрок
+  battleState.playerHp = getPlayerMaxHp();  // функция посчитает на основе класса, экипировки и т.д.
+  battleState.playerMaxHp = battleState.playerHp;
+
+  battleState.turn = "player";
+  resetScreens();
+  document.getElementById("battle-screen").classList.remove("hidden");
+  document.getElementById("battle-screen").classList.add("visible");
+
+  // Отрисовка
+  updateBattleScreen();
+  logBattle(`Вас атакует ${monsterName}!`);
+}
+
+function updateBattleScreen() {
+  document.getElementById("battle-monster-name").innerText = currentMonster ? currentMonster.desc : "";
+  document.getElementById("battle-monster-level").innerText = `[${currentMonster.level}]`;
+  document.getElementById("battle-monster-image").src = currentMonster.image;
+
+  document.getElementById("battle-player-hp").innerText = `❤️ ${battleState.playerHp} / ${battleState.playerMaxHp}`;
+  // document.getElementById("battle-player-mana").innerText = "Мана: ..."; // если есть мана
+}
+function logBattle(text) {
+  const log = document.getElementById("battle-log");
+  log.innerHTML = (text ? `<div>${text}</div>` : "") + log.innerHTML;
+}
+
+function playerAttack() {
+  if (battleState.turn !== "player") return;
+
+  let dmg = getPlayerDamage(); // твоя функция, например 10-20 + бонусы класса
+  // Крит шанс
+  if (Math.random() < getCritChance() / 100) dmg = Math.round(dmg * 1.5);
+
+  battleState.monsterHp -= dmg;
+  logBattle(`Вы атакуете монстра и наносите ${dmg} урона!`);
+  updateBattleScreen();
+
+  if (battleState.monsterHp <= 0) {
+    winBattle();
+  } else {
+    battleState.turn = "monster";
+    setTimeout(monsterAttack, 900);
+  }
+}
+
+function monsterAttack() {
+  let dmg = getMonsterDamage(currentMonster); // например, 5-15
+  // Учитываем защиту игрока
+  dmg = Math.round(dmg * playerData.modifiers.damageReduction);
+
+  battleState.playerHp -= dmg;
+  logBattle(`Монстр атакует вас и наносит ${dmg} урона!`);
+  updateBattleScreen();
+
+  if (battleState.playerHp <= 0) {
+    loseBattle();
+  } else {
+    battleState.turn = "player";
+  }
+}
+
+function playerUsePotion() {
+  // Проверь есть ли зелье
+  const idx = playerData.inventory.potions.indexOf("Зелье здоровья");
+  if (idx === -1) {
+    logBattle("У вас нет зелий!");
+    return;
+  }
+  playerData.inventory.potions.splice(idx, 1);
+  battleState.playerHp = Math.min(battleState.playerHp + 50, battleState.playerMaxHp);
+  logBattle("Вы выпили зелье и восстановили 50 HP!");
+  updateBattleScreen();
+  battleState.turn = "monster";
+  setTimeout(monsterAttack, 900);
+}
+
+function playerDodge() {
+  if (Math.random() < 0.4 + getPlayerDodgeBonus()) { // 40% шанс + ловкость
+    logBattle("Вы успешно уклонились от следующей атаки!");
+    battleState.turn = "player"; // можно дать ещё ход
+  } else {
+    logBattle("Не удалось уклониться!");
+    battleState.turn = "monster";
+    setTimeout(monsterAttack, 900);
+  }
+}
+
+function winBattle() {
+  logBattle("Вы победили монстра!");
+  gainXp(currentMonster.level * 40);
+  // Дроп лут, монеты, и т.д.
+  setTimeout(backToGame, 1500);
+}
+function loseBattle() {
+  logBattle("Вы проиграли бой...");
+  // Штрафы или game over
+  setTimeout(backToGame, 1500);
+}
+
+
+
 // Снятие экипировки
 function unequipItem(slot) {
   const item = playerData.equipment[slot];
