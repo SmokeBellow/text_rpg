@@ -1147,5 +1147,6 @@ button {
   height: 100vh;
 }
 #battle-content {
-  margin-top: 0;   /* убрать, если был */
+  margin-top: 0;  
+   margin-bottom: 0;
 }
