@@ -1157,34 +1157,28 @@ button {
 }
 
 #battle-screen {
-  position: fixed; /* <--- фиксируем на весь экран */
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-
-  background: #111;
-  z-index: 100; /* выше других экранов */
+  background-color: #111;
+  z-index: 100;
 }
 
 #battle-content {
   width: 100%;
   max-width: 600px;
-  background: #222;
-  border: 2px dashed red;
-
-  /* КЛЮЧЕВЫЕ ИЗМЕНЕНИЯ: */
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #222;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  flex-grow: 1;         /* заставляет занять всё доступное пространство */
-  box-sizing: border-box;
-  padding: 20px;
+  gap: 20px;
 }
 
 
