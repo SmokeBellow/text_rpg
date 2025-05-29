@@ -761,7 +761,7 @@ function startCombat(monsterName) {
 function updateBattleScreen() {
   document.getElementById("battle-monster-name").innerText = currentMonster ? currentMonster.desc : "";
   document.getElementById("battle-monster-level").innerText = `[${currentMonster.level}]`;
-  document.getElementById("battle-monster-image").src = currentMonster.image;
+  document.getElementById("battle-monster-image").src = "Images/background_battle.png";
 
   document.getElementById("battle-player-hp").innerText = `❤️ ${battleState.playerHp} / ${battleState.playerMaxHp}`;
   // document.getElementById("battle-player-mana").innerText = "Мана: ..."; // если есть мана
@@ -903,7 +903,6 @@ function showInventory(tabToShow) {
     }
   });
 
-  
   function renderInventory(tab) {
     inventoryList.innerHTML = "";
     const rawItems = playerData.inventory[tab] || [];
@@ -1542,25 +1541,6 @@ function updateXpDisplay() {
     const percent = xpToNext === Infinity ? 100 : (playerData.xp / xpToNext) * 100;
     xpFill.style.width = `${Math.min(percent, 100)}%`;
   }
-}
-
-function getPlayerMaxHp() {
-  // Пример формулы: базовое здоровье + бонусы за выносливость, броню и т.д.
-  // Можно усложнить на ваш вкус!
-  let baseHp = 100;
-  if (playerData.stats && playerData.stats.endurance) {
-    baseHp += playerData.stats.endurance * 10;
-  }
-  // Бонус за класс
-  if (playerData.class === "warrior") baseHp += 20;
-  if (playerData.class === "archer") baseHp += 0;
-  if (playerData.class === "rogue") baseHp -= 10;
-  // Бонусы за экипировку
-  if (playerData.equipment.armor === "Стальная броня") baseHp += 30;
-  if (playerData.equipment.armor === "Кожаная броня") baseHp += 10;
-  if (playerData.equipment.armor === "Плащ") baseHp += 0;
-  // (Добавьте ещё что хотите)
-  return baseHp;
 }
 
 function getDangerLevel(monsterLevel) {
