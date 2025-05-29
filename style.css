@@ -22,6 +22,26 @@ body {
   opacity: 1;
 }
 
+#main-menu,
+#game-screen,
+#about-screen,
+#inventory-screen,
+#class-selection,
+#quests-screen,
+#character-screen,
+#npc-dialog,
+#travel-screen,
+#trade-screen,
+#monster-screen,
+#battle-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+}
+
 button {
   padding: 10px 20px;
   background-color: #444;
