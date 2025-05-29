@@ -391,6 +391,24 @@ function showMonsterScreen(name) {
   dangerText.innerText = `Опасность: ${danger.label}`;
   dangerText.style.color = danger.color;
 
+  // === КНОПКА БОЯ ===
+  let fightBtn = document.createElement("button");
+  fightBtn.innerText = "Сразиться";
+  fightBtn.className = "fight-button";
+  fightBtn.onclick = function() {
+    startCombat(name);
+  };
+
+  // Найдём или создадим блок для кнопки
+  let actionsBlock = screen.querySelector("#monster-actions");
+  if (!actionsBlock) {
+    actionsBlock = document.createElement("div");
+    actionsBlock.id = "monster-actions";
+    screen.appendChild(actionsBlock);
+  }
+  actionsBlock.innerHTML = ""; // очищаем старые действия
+  actionsBlock.appendChild(fightBtn);
+
   screen.classList.remove("hidden");
   screen.classList.add("visible");
 }
