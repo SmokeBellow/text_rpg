@@ -1579,7 +1579,7 @@ function resizeBattleBackground() {
     bg.style.left = "16px";
     bg.style.right = "16px";
     bg.style.position = "absolute";
-    bg.style.backgroundImage = "url('Images/background_battle.png')";
+    // bg.style.backgroundImage = "url('Images/background_battle.png')";
     bg.style.backgroundSize = "cover";
     bg.style.backgroundPosition = "center";
     bg.style.zIndex = 0;
