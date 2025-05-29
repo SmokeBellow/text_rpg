@@ -1162,3 +1162,7 @@ button {
   position: relative;
   z-index: 2;
 }
+
+#battle-content {
+  margin-top: 16vh; /* можно подобрать под свой вкус (например, 12vh или 18vh) */
+}
