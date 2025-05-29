@@ -1138,6 +1138,11 @@ button {
 }
 
 #battle-screen {
-  position: relative;
-  overflow: hidden;
+  background-image: url('Images/background_battle.png');
+  background-size: contain;         /* <-- ВАЖНО */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #1c2128;        /* темный цвет, если будут пустые поля */
+}
+
 }
