@@ -1508,11 +1508,6 @@ function getXpToNextLevel(level) {
   return 100 + (level - 1) * 75;
 }
 
-function startCombat() {
-  alert("Бой пока в разработке...");
-  backToGame();
-}
-
 
 function gainXp(amount) {
   playerData.xp += amount;
