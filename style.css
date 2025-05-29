@@ -1139,14 +1139,13 @@ button {
 }
 
 #battle-screen {
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: flex-end !important;
-  align-items: center !important;
-  height: 100vh !important;
-  min-height: 100vh !important;
-  width: 100vw !important;
-  background: #111 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: #111;
 }
 
 #battle-content {
@@ -1154,11 +1153,14 @@ button {
   max-width: 600px;
   background: #222;
   border: 2px dashed red;
+
+  /* КЛЮЧЕВЫЕ ИЗМЕНЕНИЯ: */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  flex-grow: 1; /* ВАЖНО: растягивает блок до остатка родителя */
-  padding: 16px;
+  flex-grow: 1;         /* заставляет занять всё доступное пространство */
   box-sizing: border-box;
+  padding: 20px;
 }
+
 
