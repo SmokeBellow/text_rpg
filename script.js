@@ -761,7 +761,7 @@ let battleState = {
 }
 
 function updateBattleScreen() {
-  document.getElementById("battle-monster-name").innerText = currentMonster : "";
+  document.getElementById("battle-monster-name").innerText = currentMonsterName || "";
   document.getElementById("battle-monster-level").innerText = `[${currentMonster.level}]`;
   document.getElementById("battle-monster-image").src = "Images/background_battle.png";
 
