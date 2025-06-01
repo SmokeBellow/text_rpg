@@ -1128,20 +1128,24 @@ button {
   margin-right: auto;
 }
 
-
 #battle-screen {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #111;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  background-color: #111;
+  padding-bottom: env(safe-area-inset-bottom); /* защита от перекрытия на iOS */
+  box-sizing: border-box;
   z-index: 100;
 }
+
 
 #battle-content {
   width: 100%;
