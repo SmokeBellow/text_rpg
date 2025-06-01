@@ -1153,4 +1153,10 @@ button {
   gap: 20px;
 }
 
+@media (max-width: 600px) {
+  #battle-actions {
+    margin-bottom: 40px; /* или больше, если нужно */
+  }
+}
+
 
