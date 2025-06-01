@@ -10,6 +10,9 @@ let player = {
   attack: 15
 };
 
+let currentMonster = null;
+
+
 let monster = {
   name: "Монстр",
   hp: 80,
