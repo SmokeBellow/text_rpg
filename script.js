@@ -765,10 +765,19 @@ function updateBattleScreen() {
   document.getElementById("battle-monster-name").innerText = currentMonsterName || "";
   document.getElementById("battle-monster-level").innerText = `[${currentMonster.level}]`;
   document.getElementById("battle-player-hp").innerText = `❤️ ${battleState.playerHp} / ${battleState.playerMaxHp}`;
-  // document.getElementById("battle-player-mana").innerText = "Мана: ..."; // если есть мана
-  resizeBattleBackground();
 
+  // Новое: установка изображения монстра
+  const monsterImg = document.getElementById("battle-monster-image");
+  if (monsterImg && currentMonster?.image) {
+    monsterImg.src = currentMonster.image;
+    monsterImg.alt = currentMonsterName;
+  }
+
+  resizeBattleBackground();
 }
+
+
+
 function logBattle(text) {
   const log = document.getElementById("battle-log");
   log.innerHTML = (text ? `<div>${text}</div>` : "") + log.innerHTML;
