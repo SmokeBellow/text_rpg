@@ -1083,7 +1083,9 @@ button {
 #monster-screen {
   text-align: center;
   padding: 32px 16px 16px 16px; /* общий отступ вокруг */
+   box-sizing: border-box;
 }
+
 
 #monster-image {
   display: block;
