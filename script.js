@@ -383,8 +383,72 @@ function showNpcDialog(name) {
   }
 
   dialog.classList.remove("hidden");
-  dialog.classList.add("visible");
+  dialog.classList.add("function createBattleUI(monsterData) {
+  const battleActions = document.getElementById("battle-actions");
+  battleActions.innerHTML = "";
+
+  // Сохраняем данные монстра
+  currentMonster = {
+    name: monsterData.name,
+    hp: monsterData.hp,
+    maxHp: monsterData.hp,
+    attack: monsterData.attack
+  };
+
+  // Создаём изображение монстра
+  const monsterImage = document.getElementById("battle-monster-image");
+  monsterImage.src = monsterData.image;
+  monsterImage.alt = monsterData.name;
+
+  // Показываем имя и хп
+  updateBattleUI();
+
+  // Кнопка "Атака"
+  const attackBtn = document.createElement("button");
+  attackBtn.textContent = "Атаковать";
+  attackBtn.onclick = () => {
+    // Герой атакует
+    const damage = Math.floor(Math.random() * 10) + 5; // случайный урон 5–14
+    currentMonster.hp -= damage;
+    if (currentMonster.hp < 0) currentMonster.hp = 0;
+    updateBattleUI();
+
+    if (currentMonster.hp <= 0) {
+      alert(`Вы победили монстра ${currentMonster.name}!`);
+      document.getElementById("battle-screen").classList.add("hidden");
+      return;
+    }
+
+    // Монстр отвечает
+    setTimeout(() => {
+      const monsterDamage = Math.floor(Math.random() * 6) + 3; // 3–8
+      player.hp -= monsterDamage;
+      if (player.hp < 0) player.hp = 0;
+      updateBattleUI();
+
+      if (player.hp <= 0) {
+        alert("Вы проиграли бой...");
+        document.getElementById("battle-screen").classList.add("hidden");
+      }
+    }, 500);
+  };
+  battleActions.appendChild(attackBtn);
+
+  // Кнопка "Выпить зелье"
+  const potionBtn = document.createElement("button");
+  potionBtn.textContent = "Выпить зелье";
+  potionBtn.onclick = () => {
+    if (player.hp < player.maxHp) {
+      player.hp += 20;
+      if (player.hp > player.maxHp) player.hp = player.maxHp;
+      updateBattleUI();
+    }
+  };
+  battleActions.appendChild(potionBtn);
 }
+
+
+
 
 function showMonsterScreen(name) {
   resetScreens();
