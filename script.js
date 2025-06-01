@@ -4,6 +4,17 @@ let currentMonsterName = "";
 
 let currentInventoryTab = "weapons"; // по умолчанию оружие
 
+let player = {
+  name: "Герой",
+  hp: 100,
+  attack: 15
+};
+
+let monster = {
+  name: "Монстр",
+  hp: 80,
+  attack: 10
+};
 
 const monsterData = {
   "Древесный ужас": {
