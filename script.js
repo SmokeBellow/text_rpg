@@ -386,9 +386,7 @@ function showNpcDialog(name) {
   }
 
   dialog.classList.remove("hidden");
-  dialog.classList.add("function createBattleUI(monsterData) {
-  const battleActions = document.getElementById("battle-actions");
-  battleActions.innerHTML = "";
+  dialog.classList.add("visible"); 
 
   // Сохраняем данные монстра
   currentMonster = {
