@@ -1153,6 +1153,15 @@ button {
   gap: 20px;
 }
 
+#battle-actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+
 @media (max-width: 600px) {
   #battle-actions {
     margin-bottom: 100px; /* или больше, если нужно */
