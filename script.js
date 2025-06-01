@@ -447,6 +447,10 @@ function showNpcDialog(name) {
   battleActions.appendChild(potionBtn);
 }
 
+function updateBattleUI() {
+  document.getElementById("player-hp").textContent = `Герой HP: ${player.hp}`;
+  document.getElementById("monster-hp").textContent = `${currentMonster.name} HP: ${currentMonster.hp}`;
+}
 
 
 
