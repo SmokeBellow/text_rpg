@@ -1086,29 +1086,32 @@ function showSkills() {
   alert("Раздел 'Умения' в разработке!");
 }
 
-// Splash-экраны
-resetScreens();
-document.getElementById("splash-dev").classList.remove("hidden");
-document.getElementById("splash-dev").classList.add("visible");
+// Splash-экраны — исправлено: теперь только после загрузки DOM
+document.addEventListener("DOMContentLoaded", () => {
+  resetScreens();
+  document.getElementById("splash-dev").classList.remove("hidden");
+  document.getElementById("splash-dev").classList.add("visible");
 
-setTimeout(() => {
-  document.getElementById("splash-dev").classList.remove("visible");
-  document.getElementById("splash-dev").classList.add("hidden");
   setTimeout(() => {
-    resetScreens();
-    document.getElementById("splash-title").classList.remove("hidden");
-    document.getElementById("splash-title").classList.add("visible");
+    document.getElementById("splash-dev").classList.remove("visible");
+    document.getElementById("splash-dev").classList.add("hidden");
     setTimeout(() => {
-      document.getElementById("splash-title").classList.remove("visible");
-      document.getElementById("splash-title").classList.add("hidden");
+      resetScreens();
+      document.getElementById("splash-title").classList.remove("hidden");
+      document.getElementById("splash-title").classList.add("visible");
       setTimeout(() => {
-        resetScreens();
-        document.getElementById("main-menu").classList.remove("hidden");
-        document.getElementById("main-menu").classList.add("visible");
-      }, 500);
-    }, 3000);
-  }, 500);
-}, 3000);
+        document.getElementById("splash-title").classList.remove("visible");
+        document.getElementById("splash-title").classList.add("hidden");
+        setTimeout(() => {
+          resetScreens();
+          document.getElementById("main-menu").classList.remove("hidden");
+          document.getElementById("main-menu").classList.add("visible");
+        }, 500);
+      }, 3000);
+    }, 500);
+  }, 3000);
+});
+
 
 // Состояние игры
 let playerData = {
